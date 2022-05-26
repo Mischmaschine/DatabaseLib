@@ -9,10 +9,14 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven("https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync")
+    maven("https://oss.sonatype.org/content/groups/public/")
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
+    implementation("org.mongodb:mongodb-driver-sync:4.6.0")
+    implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("com.google.code.gson:gson:2.9.0")
 }
 
 tasks.test {
@@ -20,5 +24,5 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
 }
