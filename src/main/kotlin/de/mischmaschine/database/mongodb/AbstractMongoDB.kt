@@ -6,8 +6,10 @@ import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.Filters
+import kotlinx.coroutines.*
 import org.bson.Document
 import java.util.concurrent.CompletableFuture
+import kotlin.coroutines.EmptyCoroutineContext
 
 abstract class AbstractMongoDB(
     host: String,
@@ -40,8 +42,8 @@ abstract class AbstractMongoDB(
         this.mongoClient?.close()
     }
 
-    fun getDocumentAsync(collection: String, key: String): CompletableFuture<Document> {
-        return CompletableFuture.supplyAsync {
+    fun getDocumentAsync(collection: String, key: String): Deferred<Document?> {
+        return CoroutineScope(EmptyCoroutineContext).async {
             getDocumentSync(collection, key)
         }
     }
@@ -50,8 +52,8 @@ abstract class AbstractMongoDB(
         return mongoDatabase?.getCollection(collection)?.find()?.filter(Filters.eq(identifier, key))?.first()
     }
 
-    fun getAllDocumentsAsync(collection: String): CompletableFuture<List<Document>> {
-        return CompletableFuture.supplyAsync {
+    fun getAllDocumentsAsync(collection: String): Deferred<List<Document>> {
+        return CoroutineScope(EmptyCoroutineContext).async {
             getAllDocumentsSync(collection)
         }
     }
@@ -68,9 +70,9 @@ abstract class AbstractMongoDB(
     }
 
     fun insertAsync(collection: String, key: String, document: Document) {
-        CompletableFuture.runAsync {
+        CoroutineScope(EmptyCoroutineContext).launch {
             insertSync(collection, key, document)
-        }.get()
+        }
     }
 
     fun insertSync(collection: String, key: String, document: Document) {
@@ -80,9 +82,9 @@ abstract class AbstractMongoDB(
     }
 
     fun updateAsync(collection: String, key: String, document: Document) {
-        CompletableFuture.runAsync {
+        CoroutineScope(EmptyCoroutineContext).launch {
             updateSync(collection, key, document)
-        }.get()
+        }
     }
 
     fun updateSync(collection: String, key: String, document: Document) {
@@ -94,24 +96,26 @@ abstract class AbstractMongoDB(
     }
 
     fun deleteAsync(collection: String, key: String) {
-        CompletableFuture.runAsync {
+        CoroutineScope(EmptyCoroutineContext).launch {
             deleteSync(collection, key)
-        }.get()
+        }
     }
 
     fun deleteSync(collection: String, key: String) {
-        CompletableFuture.runAsync {
-            val first = this.mongoDatabase?.getCollection(collection)?.find(Filters.eq(identifier, key))?.first()
-                ?: return@runAsync
-            this.mongoDatabase.getCollection(collection).deleteOne(first)
-        }.get()
+        CoroutineScope(EmptyCoroutineContext).launch {
+            val first =
+                mongoDatabase?.getCollection(collection)?.find(Filters.eq(identifier, key))?.first() ?: return@launch
+            mongoDatabase.getCollection(collection).deleteOne(first)
+        }
     }
 
-    fun existAsync(collection: String, key: String): Boolean {
-        return getDocumentSync(collection, key) != null
+    fun existAsync(collection: String, key: String): Deferred<Boolean> {
+        return CoroutineScope(EmptyCoroutineContext).async {
+            getDocumentAsync(collection, key).await() != null
+        }
     }
 
     fun existSync(collection: String, key: String): Boolean {
-        return getDocumentAsync(collection, key).get() != null
+        return getDocumentSync(collection, key) != null
     }
 }
