@@ -22,7 +22,7 @@ dependencies {
     implementation("org.postgresql:postgresql:42.3.4")
     implementation("com.h2database:h2:2.1.212")
     implementation("org.xerial:sqlite-jdbc:3.36.0.3")
-    implementation("org.mariadb.jdbc:mariadb-java-client:1.1.7")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.0.4")
     implementation("org.mongodb:mongodb-driver-sync:4.6.0")
 
     implementation("com.google.code.gson:gson:2.9.0")
