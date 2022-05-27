@@ -8,7 +8,6 @@ import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.Filters
 import kotlinx.coroutines.*
 import org.bson.Document
-import java.util.concurrent.CompletableFuture
 import kotlin.coroutines.EmptyCoroutineContext
 
 abstract class AbstractMongoDB(
@@ -18,8 +17,8 @@ abstract class AbstractMongoDB(
     password: String,
     collectionName: String,
 ) {
-    private val mongoClient: MongoClient?
-    private val mongoDatabase: MongoDatabase?
+    private val mongoClient: MongoClient
+    private val mongoDatabase: MongoDatabase
     private val identifier = "uniqueId_key"
 
     init {
@@ -39,7 +38,7 @@ abstract class AbstractMongoDB(
     }
 
     fun close() {
-        this.mongoClient?.close()
+        this.mongoClient.close()
     }
 
     fun getDocumentAsync(collection: String, key: String): Deferred<Document?> {
@@ -49,7 +48,7 @@ abstract class AbstractMongoDB(
     }
 
     fun getDocumentSync(collection: String, key: String): Document? {
-        return mongoDatabase?.getCollection(collection)?.find()?.filter(Filters.eq(identifier, key))?.first()
+        return mongoDatabase.getCollection(collection).find().filter(Filters.eq(identifier, key)).first()
     }
 
     fun getAllDocumentsAsync(collection: String): Deferred<List<Document>> {
@@ -60,11 +59,9 @@ abstract class AbstractMongoDB(
 
     fun getAllDocumentsSync(collection: String): List<Document> {
         val list = mutableListOf<Document>()
-        val findIterable = mongoDatabase?.getCollection(collection)?.find()
-        findIterable?.let {
-            it.forEach { document ->
-                list.add(document)
-            }
+        val findIterable = mongoDatabase.getCollection(collection).find()
+        findIterable.forEach { document ->
+            list.add(document)
         }
         return list
     }
@@ -77,8 +74,7 @@ abstract class AbstractMongoDB(
 
     fun insertSync(collection: String, key: String, document: Document) {
         document[identifier] = key
-        mongoDatabase?.getCollection(collection)?.insertOne(document)
-            ?: throw NullPointerException("MongoDataBase or collection is null")
+        mongoDatabase.getCollection(collection).insertOne(document)
     }
 
     fun updateAsync(collection: String, key: String, document: Document) {
@@ -90,7 +86,7 @@ abstract class AbstractMongoDB(
     fun updateSync(collection: String, key: String, document: Document) {
         document[identifier] = key
         val mongoCollection =
-            this.mongoDatabase?.getCollection(collection) ?: throw NullPointerException("MongoDataBase is null")
+            this.mongoDatabase.getCollection(collection)
         val first = mongoCollection.find(Filters.eq(identifier, key)).first()
         first?.let { mongoCollection.replaceOne(it, document) }
     }
@@ -104,18 +100,12 @@ abstract class AbstractMongoDB(
     fun deleteSync(collection: String, key: String) {
         CoroutineScope(EmptyCoroutineContext).launch {
             val first =
-                mongoDatabase?.getCollection(collection)?.find(Filters.eq(identifier, key))?.first() ?: return@launch
+                mongoDatabase.getCollection(collection).find(Filters.eq(identifier, key)).first() ?: return@launch
             mongoDatabase.getCollection(collection).deleteOne(first)
         }
     }
 
-    fun existAsync(collection: String, key: String): Deferred<Boolean> {
-        return CoroutineScope(EmptyCoroutineContext).async {
-            getDocumentAsync(collection, key).await() != null
-        }
-    }
-
-    fun existSync(collection: String, key: String): Boolean {
+    fun exist(collection: String, key: String): Boolean {
         return getDocumentSync(collection, key) != null
     }
 }
