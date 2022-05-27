@@ -84,11 +84,11 @@ abstract class AbstractSQL(
 
     fun getResultSync(tableName: String, columnName: String, key: String, additionalQuery: String = ""): MySQLResult? {
         try {
-            val connection = getFreeDatabase()
-            val queryString = "SELECT * FROM $tableName WHERE $columnName='$key' $additionalQuery"
-            val prepareStatement = connection.prepareStatement(queryString)
-            return MySQLResult(connection, prepareStatement, prepareStatement.executeQuery())
-
+            getFreeDatabase().use {
+                val queryString = "SELECT * FROM $tableName WHERE $columnName='$key' $additionalQuery"
+                val prepareStatement = it.prepareStatement(queryString)
+                return MySQLResult(it, prepareStatement, prepareStatement.executeQuery())
+            }
         } catch (e: SQLException) {
             e.printStackTrace()
         }

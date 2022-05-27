@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.6.21"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
 group = "de.mischmaschine"
@@ -16,14 +17,19 @@ repositories {
 dependencies {
     implementation("org.mongodb:mongodb-driver-sync:4.6.0")
     implementation("com.zaxxer:HikariCP:5.0.1")
-    implementation("com.google.code.gson:gson:2.9.0")
 
     implementation("mysql:mysql-connector-java:8.0.29")
     implementation("org.postgresql:postgresql:42.3.4")
 
+    implementation("com.google.code.gson:gson:2.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
 }
 
+tasks {
+    build {
+        dependsOn(shadowJar)
+    }
+}
 /*tasks.test {
     useJUnitPlatform()
 }*/
