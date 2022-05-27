@@ -1,33 +1,13 @@
 package de.mischmaschine.database.sql
 
-import com.zaxxer.hikari.HikariConfig
-import com.zaxxer.hikari.HikariDataSource
-import de.mischmaschine.database.DataBaseType
 import kotlinx.coroutines.*
 import java.sql.Connection
 import java.sql.SQLException
 import kotlin.coroutines.EmptyCoroutineContext
 
-abstract class AbstractSQL(
-    val host: String,
-    val port: Int,
-    val username: String,
-    val password: String,
-    val database: String,
-    val databaseType: DataBaseType
-) {
+abstract class AbstractSQL {
 
-    var dataSource: HikariDataSource
     private var tableData = mutableListOf<String>()
-
-    init {
-        val hikariConfig = HikariConfig()
-        val jdbcUrl = "jdbc:${databaseType.name.lowercase()}://$host:$port/$database"
-        hikariConfig.jdbcUrl = jdbcUrl
-        hikariConfig.username = this.username
-        hikariConfig.password = this.password
-        dataSource = HikariDataSource(hikariConfig)
-    }
 
     fun updateSync(
         tableName: String,
@@ -122,7 +102,7 @@ abstract class AbstractSQL(
         }
     }
 
-    fun getFreeDatabase(): Connection = dataSource.connection
+    abstract fun getFreeDatabase(): Connection
 
     fun createTable(tableData: LinkedHashMap<String, String>, tableName: String, primaryKey: String) {
         val query = StringBuilder("CREATE TABLE IF NOT EXISTS $tableName (")

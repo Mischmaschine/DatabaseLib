@@ -12,7 +12,6 @@ class MySQLResult(
 ) : AutoCloseable {
 
     override fun close() {
-        println("Close")
         try {
             this.connection.close()
             this.prepareStatement.close()

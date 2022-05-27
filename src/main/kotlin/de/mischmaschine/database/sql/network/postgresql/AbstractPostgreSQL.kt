@@ -1,7 +1,7 @@
-package de.mischmaschine.database.sql.postgresql
+package de.mischmaschine.database.sql.network.postgresql
 
-import de.mischmaschine.database.sql.AbstractSQL
-import de.mischmaschine.database.DataBaseType
+import de.mischmaschine.database.sql.DataBaseType
+import de.mischmaschine.database.sql.network.AbstractNetworkSQL
 
 abstract class AbstractPostgreSQL(
     host: String,
@@ -9,7 +9,7 @@ abstract class AbstractPostgreSQL(
     username: String,
     password: String,
     database: String,
-) : AbstractSQL(
+) : AbstractNetworkSQL(
     host,
     port,
     username,
