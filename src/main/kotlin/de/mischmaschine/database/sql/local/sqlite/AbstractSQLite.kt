@@ -1,4 +1,4 @@
-package de.mischmaschine.database.sql.local.sqllite
+package de.mischmaschine.database.sql.local.sqlite
 
 import de.mischmaschine.database.sql.DataBaseType
 import de.mischmaschine.database.sql.local.AbstractLocalSQL

@@ -60,10 +60,20 @@ abstract class AbstractMongoDB(
     fun getAllDocumentsSync(collection: String): List<Document> {
         val list = mutableListOf<Document>()
         val findIterable = mongoDatabase.getCollection(collection).find()
-        findIterable.forEach { document ->
-            list.add(document)
+        findIterable.forEach {
+            list.add(it)
         }
         return list
+    }
+
+    fun countDocumentsSync(collection: String): Long {
+        return mongoDatabase.getCollection(collection).countDocuments()
+    }
+
+    fun countDocumentsAsync(collection: String): Deferred<Long> {
+        return CoroutineScope(EmptyCoroutineContext).async {
+            countDocumentsSync(collection)
+        }
     }
 
     fun insertAsync(collection: String, key: String, document: Document) {
