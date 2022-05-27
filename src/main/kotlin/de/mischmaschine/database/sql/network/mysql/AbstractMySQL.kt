@@ -1,9 +1,9 @@
-package de.mischmaschine.database.sql.network.mariadb
+package de.mischmaschine.database.sql.network.mysql
 
 import de.mischmaschine.database.sql.DataBaseType
 import de.mischmaschine.database.sql.network.AbstractNetworkSQL
 
-abstract class AbstractMariaDB(
+abstract class AbstractMySQL(
     host: String,
     port: Int,
     username: String,
@@ -15,5 +15,5 @@ abstract class AbstractMariaDB(
     username,
     password,
     database,
-    DataBaseType.MARIADB,
+    DataBaseType.MYSQL,
 )
