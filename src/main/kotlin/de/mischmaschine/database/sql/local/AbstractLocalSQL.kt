@@ -18,11 +18,16 @@ abstract class AbstractLocalSQL(
         this.connection = if (user == null && password == null) {
             DriverManager.getConnection("jdbc:${dataBaseType.name.lowercase()}:$databasePath")
         } else {
-            DriverManager.getConnection(databasePath, user, password)
+            DriverManager.getConnection("jdbc:${dataBaseType.name.lowercase()}:$databasePath", user, password)
         }
     }
 
     override fun getFreeDatabase(): Connection {
         return this.connection
     }
+
+    override fun closeConnection(connection: Connection) {
+
+    }
+
 }

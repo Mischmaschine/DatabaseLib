@@ -22,10 +22,9 @@ abstract class AbstractSQL {
     }
 
     private fun updateQuery(query: String) {
-        getFreeDatabase().use {
-            val prepareStatement = it.prepareStatement(query)
-            prepareStatement.executeUpdate()
-        }
+        val connection = getFreeDatabase()
+        val prepareStatement = connection.prepareStatement(query)
+        prepareStatement.executeUpdate()
     }
 
     fun updateAsync(
@@ -56,19 +55,19 @@ abstract class AbstractSQL {
     }
 
     private fun insertQuery(query: String) {
-        getFreeDatabase().use {
-            val prepareStatement = it.prepareStatement(query)
-            prepareStatement.executeUpdate()
-        }
+        val connection = getFreeDatabase()
+        val prepareStatement = connection.prepareStatement(query)
+        prepareStatement.executeUpdate()
+        closeConnection(connection)
     }
 
     fun getResultSync(tableName: String, columnName: String, key: String, additionalQuery: String = ""): MySQLResult? {
         try {
-            getFreeDatabase().use {
-                val queryString = "SELECT * FROM $tableName WHERE $columnName='$key' $additionalQuery"
-                val prepareStatement = it.prepareStatement(queryString)
-                return MySQLResult(it, prepareStatement, prepareStatement.executeQuery())
-            }
+            val queryString = "SELECT * FROM $tableName WHERE $columnName='$key' $additionalQuery"
+            val connection = getFreeDatabase()
+            val prepareStatement = connection.prepareStatement(queryString)
+            return MySQLResult(connection, prepareStatement, prepareStatement.executeQuery())
+
         } catch (e: SQLException) {
             e.printStackTrace()
         }
@@ -96,13 +95,15 @@ abstract class AbstractSQL {
         }
 
     private fun deleteQuery(query: String) {
-        getFreeDatabase().use {
-            val prepareStatement = it.prepareStatement(query)
-            prepareStatement.executeUpdate()
-        }
+        val connection = getFreeDatabase()
+
+        val prepareStatement = connection.prepareStatement(query)
+        prepareStatement.executeUpdate()
+        closeConnection(connection)
     }
 
     abstract fun getFreeDatabase(): Connection
+    abstract fun closeConnection(connection: Connection)
 
     fun createTable(tableData: LinkedHashMap<String, String>, tableName: String, primaryKey: String) {
         val query = StringBuilder("CREATE TABLE IF NOT EXISTS $tableName (")
@@ -112,8 +113,8 @@ abstract class AbstractSQL {
             query.append(key).append(" ").append(tableData[key]).append(", ")
         }
         query.append("PRIMARY KEY (").append(primaryKey).append("));")
-        getFreeDatabase().use {
-            it.prepareStatement(query.toString()).use { ps -> ps.executeUpdate() }
-        }
+        val connection = getFreeDatabase()
+        connection.prepareStatement(query.toString()).use { it.executeUpdate() }
+
     }
 }

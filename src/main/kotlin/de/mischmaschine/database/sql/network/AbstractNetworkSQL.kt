@@ -29,4 +29,8 @@ abstract class AbstractNetworkSQL(
     override fun getFreeDatabase(): Connection {
         return this.dataSource.connection
     }
+
+    override fun closeConnection(connection: Connection) {
+        connection.close()
+    }
 }
