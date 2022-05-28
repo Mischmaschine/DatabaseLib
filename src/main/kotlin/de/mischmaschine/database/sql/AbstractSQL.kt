@@ -12,9 +12,9 @@ abstract class AbstractSQL {
     fun updateSync(
         tableName: String,
         columnName: String,
-        key: String,
+        key: Any,
         targetKey: String,
-        targetValue: String,
+        targetValue: String
     ) {
         val query = "UPDATE $tableName SET $columnName='$key' WHERE $targetKey='$targetValue'"
         println(query)
@@ -29,18 +29,18 @@ abstract class AbstractSQL {
 
     fun updateAsync(
         tableName: String,
-        key: String,
-        value: String,
+        columnName: String,
+        key: Any,
         targetKey: String,
-        targetValue: String,
+        targetValue: String
     ) {
         CoroutineScope(EmptyCoroutineContext).launch {
-            updateSync(tableName, key, value, targetKey, targetValue)
+            updateSync(tableName, columnName, key, targetKey, targetValue)
         }
     }
 
 
-    fun insertSync(tableName: String, tableValues: List<String>) {
+    fun insertSync(tableName: String, tableValues: List<Any>) {
         insertQuery(
             "INSERT INTO $tableName (${tableData.joinToString()}) VALUES (${
                 tableValues.joinToString("','", "'", "'")
@@ -48,7 +48,7 @@ abstract class AbstractSQL {
         )
     }
 
-    fun insertAsync(tableName: String, tableData: List<String>) {
+    fun insertAsync(tableName: String, tableData: List<Any>) {
         CoroutineScope(EmptyCoroutineContext).launch {
             insertSync(tableName, tableData)
         }
@@ -85,11 +85,11 @@ abstract class AbstractSQL {
         }
     }
 
-    fun deleteSync(tableName: String, targetKey: String, targetValue: String) =
+    fun deleteSync(tableName: String, targetKey: String, targetValue: Any) =
         deleteQuery("DELETE FROM $tableName WHERE $targetKey='$targetValue'")
 
 
-    fun deleteAsync(tableName: String, targetKey: String, targetValue: String) =
+    fun deleteAsync(tableName: String, targetKey: String, targetValue: Any) =
         CoroutineScope(EmptyCoroutineContext).launch {
             deleteSync(tableName, targetKey, targetValue)
         }
