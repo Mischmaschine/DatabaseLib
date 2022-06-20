@@ -1,7 +1,7 @@
 package de.mischmaschine.database.sql.local
 
+import de.mischmaschine.database.sql.AbstractSQL
 import de.mischmaschine.database.sql.DataBaseType
-import de.mischmaschine.database.sql.AbstractSQLNew
 import java.sql.Connection
 import java.sql.DriverManager
 
@@ -10,7 +10,7 @@ abstract class AbstractLocalSQL(
     password: String?,
     databasePath: String,
     dataBaseType: DataBaseType
-) : AbstractSQLNew() {
+) : AbstractSQL() {
 
     private val connection: Connection
 
@@ -29,5 +29,4 @@ abstract class AbstractLocalSQL(
     override fun closeConnection(connection: Connection) {
 
     }
-
 }

@@ -6,15 +6,15 @@ import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.Filters
-import kotlinx.coroutines.*
+import de.mischmaschine.database.mongodb.configuration.MongoConfiguration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import org.bson.Document
 import kotlin.coroutines.EmptyCoroutineContext
 
 abstract class AbstractMongoDB(
-    host: String,
-    port: Int,
-    username: String,
-    password: String,
     collectionName: String,
 ) {
     private val mongoClient: MongoClient
@@ -22,6 +22,11 @@ abstract class AbstractMongoDB(
     private val identifier = "uniqueId_key"
 
     init {
+        val host = MongoConfiguration.getHost() ?: ""
+        val username = MongoConfiguration.getUsername() ?: ""
+        val password = MongoConfiguration.getPassword() ?: ""
+        val port = MongoConfiguration.getPort() ?: ""
+
         if (host.isEmpty()) throw NullPointerException("Host is empty")
         if (collectionName.isEmpty()) throw NullPointerException("CollectionName is empty")
         val uri = if (username.isEmpty() && password.isEmpty()) {
@@ -29,6 +34,7 @@ abstract class AbstractMongoDB(
         } else {
             "mongodb://$username:$password@$host:$port/?authSource=$collectionName"
         }
+
         val connectionString = ConnectionString(uri)
         val settings: MongoClientSettings = MongoClientSettings.builder()
             .applyConnectionString(connectionString)

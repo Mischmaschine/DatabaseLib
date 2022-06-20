@@ -2,15 +2,15 @@ package de.mischmaschine.database.sql.network
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
+import de.mischmaschine.database.sql.AbstractSQL
 import de.mischmaschine.database.sql.DataBaseType
-import de.mischmaschine.database.sql.AbstractSQLNew
 import de.mischmaschine.database.sql.configuration.SQLConfiguration
 import java.sql.Connection
 
 abstract class AbstractNetworkSQL(
     database: String,
     dataBaseType: DataBaseType
-) : AbstractSQLNew() {
+) : AbstractSQL() {
 
     private var dataSource: HikariDataSource
 
