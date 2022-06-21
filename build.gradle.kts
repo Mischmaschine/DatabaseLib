@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version "1.6.21"
     id("com.github.johnrengelman.shadow") version "7.0.0"
     id("org.jetbrains.dokka") version "1.6.21"
+    id("maven-publish")
 }
 
 group = "de.mischmaschine"
@@ -38,6 +39,19 @@ tasks {
 /*tasks.test {
     useJUnitPlatform()
 }*/
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "de.mischmaschine"
+            artifactId = "DatabaseLib"
+            version = "1.0"
+
+            from(components["java"])
+        }
+    }
+}
+
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
