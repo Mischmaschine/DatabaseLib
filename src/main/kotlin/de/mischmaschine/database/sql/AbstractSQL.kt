@@ -1,9 +1,12 @@
 package de.mischmaschine.database.sql
 
-import kotlinx.coroutines.*
+import com.google.gson.GsonBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import java.sql.Connection
 import java.sql.SQLException
-import java.util.*
 import kotlin.coroutines.EmptyCoroutineContext
 
 abstract class AbstractSQL {
@@ -26,7 +29,12 @@ abstract class AbstractSQL {
         targetColumnName: String,
         targetValue: String
     ) {
-        val query = "UPDATE $tableName SET $columnName='$value' WHERE $targetColumnName='$targetValue'"
+        val serializedValue = if (value !is String && value !is Boolean && value !is Number) {
+            gson.toJson(value)
+        } else {
+            value
+        }
+        val query = "UPDATE $tableName SET $columnName='$serializedValue' WHERE $targetColumnName='$targetValue'"
         println(query)
         updateQuery(query)
     }
@@ -66,8 +74,17 @@ abstract class AbstractSQL {
      * @param tableValues a list from data, which will be inserted
      */
     fun insertSync(tableName: String, tableValues: List<Any>) {
+        val serializedList = mutableListOf<Any>()
+        tableValues.forEach {
+            val toAdd = if (it !is String && it !is Boolean && it !is Number) {
+                gson.toJson(it)
+            } else {
+                it
+            }
+            serializedList.add(toAdd)
+        }
         val query = "INSERT INTO $tableName (${tableData.joinToString()}) VALUES (${
-            tableValues.joinToString("','", "'", "'")
+            serializedList.joinToString("','", "'", "'")
         })"
         println(query)
         insertQuery(query)
@@ -180,4 +197,9 @@ abstract class AbstractSQL {
         connection.prepareStatement(query.toString()).use { it.executeUpdate() }
 
     }
+
+    companion object {
+        val gson = GsonBuilder().serializeNulls().create()
+    }
+
 }
