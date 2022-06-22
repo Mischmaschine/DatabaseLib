@@ -21,10 +21,10 @@ abstract class AbstractMongoDB(
         val host = MongoConfiguration.getHost() ?: ""
         val username = MongoConfiguration.getUsername() ?: ""
         val password = MongoConfiguration.getPassword() ?: ""
-        val port = MongoConfiguration.getPort() ?: ""
+        val port = MongoConfiguration.getPort() ?: "27017"
 
-        if (host.isEmpty()) throw NullPointerException("Host is empty")
-        if (collectionName.isEmpty()) throw NullPointerException("CollectionName is empty")
+        if (host.isEmpty()) throw IllegalArgumentException("Host is empty")
+        if (collectionName.isEmpty()) throw IllegalArgumentException("CollectionName is empty")
         val uri = if (username.isEmpty() && password.isEmpty()) {
             "mongodb://$host:$port/?authSource=$collectionName"
         } else {
