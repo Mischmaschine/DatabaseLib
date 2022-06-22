@@ -1,5 +1,6 @@
 package de.mischmaschine.database.sql
 
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import java.sql.Connection
 import java.sql.SQLException
@@ -196,6 +197,6 @@ abstract class AbstractSQL {
     }
 
     companion object {
-        val gson = GsonBuilder().serializeNulls().create()
+        private val gson: Gson = GsonBuilder().serializeNulls().create()
     }
 }

@@ -16,20 +16,24 @@ class MongoConfiguration(
 
     companion object {
 
-        val mongoDataMap = mutableMapOf<String, String>()
+        private val mongoDataMap = mutableMapOf<String, String>()
 
+        @JvmStatic
         fun getHost(): String? {
             return mongoDataMap["host"]
         }
 
+        @JvmStatic
         fun getPort(): String? {
             return mongoDataMap["port"]
         }
 
+        @JvmStatic
         fun getUsername(): String? {
             return mongoDataMap["username"]
         }
 
+        @JvmStatic
         fun getPassword(): String? {
             return mongoDataMap["password"]
         }
