@@ -16,20 +16,24 @@ class SQLConfiguration(
 
     companion object {
 
-        val sqlDataMap = mutableMapOf<String, String>()
+        private val sqlDataMap = mutableMapOf<String, String>()
 
+        @JvmStatic
         fun getHost(): String? {
             return sqlDataMap["host"]
         }
 
+        @JvmStatic
         fun getPort(): String? {
             return sqlDataMap["port"]
         }
 
+        @JvmStatic
         fun getUsername(): String? {
             return sqlDataMap["username"]
         }
 
+        @JvmStatic
         fun getPassword(): String? {
             return sqlDataMap["password"]
         }

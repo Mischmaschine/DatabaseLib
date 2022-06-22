@@ -7,12 +7,8 @@ import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.Filters
 import de.mischmaschine.database.mongodb.configuration.MongoConfiguration
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import org.bson.Document
-import kotlin.coroutines.EmptyCoroutineContext
+import java.util.concurrent.CompletableFuture
 
 abstract class AbstractMongoDB(
     collectionName: String,
@@ -47,8 +43,8 @@ abstract class AbstractMongoDB(
         this.mongoClient.close()
     }
 
-    fun getDocumentAsync(collection: String, key: String): Deferred<Document?> {
-        return CoroutineScope(EmptyCoroutineContext).async {
+    fun getDocumentAsync(collection: String, key: String): CompletableFuture<Document?> {
+        return CompletableFuture.supplyAsync {
             getDocumentSync(collection, key)
         }
     }
@@ -57,8 +53,8 @@ abstract class AbstractMongoDB(
         return mongoDatabase.getCollection(collection).find().filter(Filters.eq(identifier, key)).first()
     }
 
-    fun getAllDocumentsAsync(collection: String): Deferred<List<Document>> {
-        return CoroutineScope(EmptyCoroutineContext).async {
+    fun getAllDocumentsAsync(collection: String): CompletableFuture<List<Document>> {
+        return CompletableFuture.supplyAsync {
             getAllDocumentsSync(collection)
         }
     }
@@ -76,14 +72,14 @@ abstract class AbstractMongoDB(
         return mongoDatabase.getCollection(collection).countDocuments()
     }
 
-    fun countDocumentsAsync(collection: String): Deferred<Long> {
-        return CoroutineScope(EmptyCoroutineContext).async {
+    fun countDocumentsAsync(collection: String): CompletableFuture<Long> {
+        return CompletableFuture.supplyAsync {
             countDocumentsSync(collection)
         }
     }
 
     fun insertAsync(collection: String, key: String, document: Document) {
-        CoroutineScope(EmptyCoroutineContext).launch {
+        CompletableFuture.runAsync {
             insertSync(collection, key, document)
         }
     }
@@ -94,7 +90,7 @@ abstract class AbstractMongoDB(
     }
 
     fun updateAsync(collection: String, key: String, document: Document) {
-        CoroutineScope(EmptyCoroutineContext).launch {
+        CompletableFuture.runAsync {
             updateSync(collection, key, document)
         }
     }
@@ -108,15 +104,15 @@ abstract class AbstractMongoDB(
     }
 
     fun deleteAsync(collection: String, key: String) {
-        CoroutineScope(EmptyCoroutineContext).launch {
+        CompletableFuture.runAsync {
             deleteSync(collection, key)
         }
     }
 
     fun deleteSync(collection: String, key: String) {
-        CoroutineScope(EmptyCoroutineContext).launch {
+        CompletableFuture.runAsync {
             val first =
-                mongoDatabase.getCollection(collection).find(Filters.eq(identifier, key)).first() ?: return@launch
+                mongoDatabase.getCollection(collection).find(Filters.eq(identifier, key)).first() ?: return@runAsync
             mongoDatabase.getCollection(collection).deleteOne(first)
         }
     }
