@@ -1,13 +1,9 @@
 package de.mischmaschine.database.sql
 
 import com.google.gson.GsonBuilder
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import java.sql.Connection
 import java.sql.SQLException
-import kotlin.coroutines.EmptyCoroutineContext
+import java.util.concurrent.CompletableFuture
 
 abstract class AbstractSQL {
 
@@ -56,7 +52,7 @@ abstract class AbstractSQL {
         targetColumnName: String,
         targetValue: String
     ) {
-        CoroutineScope(EmptyCoroutineContext).launch {
+        CompletableFuture.runAsync {
             updateSync(tableName, columnName, value, targetColumnName, targetValue)
         }
     }
@@ -98,7 +94,7 @@ abstract class AbstractSQL {
      * @param tableValues a list from data, which will be inserted
      */
     fun insertAsync(tableName: String, tableValues: List<Any>) {
-        CoroutineScope(EmptyCoroutineContext).launch {
+        CompletableFuture.runAsync {
             insertSync(tableName, tableValues)
         }
     }
@@ -146,8 +142,8 @@ abstract class AbstractSQL {
         columnName: String,
         key: String,
         additionalQuery: String = ""
-    ): Deferred<MySQLResult?> {
-        return CoroutineScope(EmptyCoroutineContext).async {
+    ): CompletableFuture<MySQLResult?> {
+        return CompletableFuture.supplyAsync {
             getResultSync(tableName, columnName, key, additionalQuery)
         }
     }
@@ -169,10 +165,11 @@ abstract class AbstractSQL {
      * @param columnName in which column name a value should be deleted
      * @param value which row should be deleted specified by the value
      */
-    fun deleteAsync(tableName: String, columnName: String, value: Any) =
-        CoroutineScope(EmptyCoroutineContext).launch {
+    fun deleteAsync(tableName: String, columnName: String, value: Any) {
+        CompletableFuture.supplyAsync {
             deleteSync(tableName, columnName, value)
         }
+    }
 
     private fun deleteQuery(query: String) {
         val connection = getFreeDatabase()
@@ -201,5 +198,4 @@ abstract class AbstractSQL {
     companion object {
         val gson = GsonBuilder().serializeNulls().create()
     }
-
 }
