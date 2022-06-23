@@ -78,24 +78,24 @@ abstract class AbstractMongoDB(
         }
     }
 
-    fun insertAsync(collection: String, key: String, document: Document) {
+    fun insertDocumentAsync(collection: String, key: String, document: Document) {
         CompletableFuture.runAsync {
-            insertSync(collection, key, document)
+            insertDocumentSync(collection, key, document)
         }
     }
 
-    fun insertSync(collection: String, key: String, document: Document) {
+    fun insertDocumentSync(collection: String, key: String, document: Document) {
         document[identifier] = key
         mongoDatabase.getCollection(collection).insertOne(document)
     }
 
-    fun updateAsync(collection: String, key: String, document: Document) {
+    fun updateDocumentAsync(collection: String, key: String, document: Document) {
         CompletableFuture.runAsync {
-            updateSync(collection, key, document)
+            updateDocumentSync(collection, key, document)
         }
     }
 
-    fun updateSync(collection: String, key: String, document: Document) {
+    fun updateDocumentSync(collection: String, key: String, document: Document) {
         document[identifier] = key
         val mongoCollection =
             this.mongoDatabase.getCollection(collection)
@@ -103,13 +103,13 @@ abstract class AbstractMongoDB(
         first?.let { mongoCollection.replaceOne(it, document) }
     }
 
-    fun deleteAsync(collection: String, key: String) {
+    fun deleteDocumentAsync(collection: String, key: String) {
         CompletableFuture.runAsync {
-            deleteSync(collection, key)
+            deleteDocumentSync(collection, key)
         }
     }
 
-    fun deleteSync(collection: String, key: String) {
+    fun deleteDocumentSync(collection: String, key: String) {
         CompletableFuture.runAsync {
             val first =
                 mongoDatabase.getCollection(collection).find(Filters.eq(identifier, key)).first() ?: return@runAsync
