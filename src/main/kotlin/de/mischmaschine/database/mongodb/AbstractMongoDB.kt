@@ -35,7 +35,7 @@ abstract class AbstractMongoDB(
         }
 
         val connectionString = ConnectionString(uri)
-        val settings: MongoClientSettings = MongoClientSettings.builder()
+        val settings = MongoClientSettings.builder()
             .applyConnectionString(connectionString)
             .build()
         this.mongoClient = MongoClients.create(settings)
@@ -92,15 +92,15 @@ abstract class AbstractMongoDB(
         mongoDatabase.getCollection(collection).insertOne(document)
     }
 
-    fun insertDocumentArraySync(collection: String, key: String, documents: Collection<Document>) {
+    fun insertDocumentCollectionSync(collection: String, key: String, documents: Collection<Document>) {
         documents.filter { documents.isNotEmpty() }.forEach { it[identifier] = key }
         mongoDatabase.getCollection(collection).insertMany(documents.toList())
     }
 
 
-    fun insertDocumentArrayAsync(collection: String, key: String, documents: Collection<Document>) {
+    fun insertDocumentCollectionAsync(collection: String, key: String, documents: Collection<Document>) {
         CompletableFuture.runAsync {
-            insertDocumentArraySync(collection, key, documents)
+            insertDocumentCollectionSync(collection, key, documents)
         }
     }
 
