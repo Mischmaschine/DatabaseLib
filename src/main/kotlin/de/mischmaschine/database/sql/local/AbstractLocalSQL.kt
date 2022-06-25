@@ -18,6 +18,7 @@ abstract class AbstractLocalSQL(
         this.connection = createConnection()
     }
 
+
     override fun getFreeDatabase(): Connection {
         return if (this.connection.isClosed) {
             createConnection().also { this.connection = it }
@@ -25,6 +26,7 @@ abstract class AbstractLocalSQL(
             this.connection
         }
     }
+
 
     private fun createConnection(): Connection {
         return if (user == null && password == null) {

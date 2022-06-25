@@ -180,7 +180,14 @@ abstract class AbstractSQL {
         closeConnection(connection)
     }
 
+    /**
+     * @return the connection to the database
+     */
     abstract fun getFreeDatabase(): Connection
+
+    /**
+     * @return closes the connection
+     */
     abstract fun closeConnection(connection: Connection)
 
     fun createTable(tableData: LinkedHashMap<String, String>, tableName: String, primaryKey: String) {

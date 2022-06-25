@@ -42,6 +42,9 @@ abstract class AbstractMongoDB(
         this.mongoDatabase = this.mongoClient.getDatabase(dataBaseName)
     }
 
+    /**
+     * Closes the connection to the database.
+     */
     fun close() {
         this.mongoClient.close()
     }
@@ -52,16 +55,22 @@ abstract class AbstractMongoDB(
         }
     }
 
+    /**
+     * @param collection The collection to get the document from.
+     * @param key The key of the document.
+     * Returns the document with the given key.
+     */
     fun getDocumentSync(collection: String, key: String): Document? {
         return mongoDatabase.getCollection(collection).find().filter(Filters.eq(identifier, key)).first()
     }
 
-    fun getAllDocumentsAsync(collection: String): CompletableFuture<List<Document>> {
-        return CompletableFuture.supplyAsync {
-            getAllDocumentsSync(collection)
-        }
-    }
 
+    /**
+     * @param collection The collection to get the document from.
+     * @param key The key of the document.
+     *
+     * @return A list of documents with the given key.
+     */
     fun getAllDocumentsSync(collection: String): List<Document> {
         val list = mutableListOf<Document>()
         val findIterable = mongoDatabase.getCollection(collection).find()
@@ -71,6 +80,16 @@ abstract class AbstractMongoDB(
         return list
     }
 
+    fun getAllDocumentsAsync(collection: String): CompletableFuture<List<Document>> {
+        return CompletableFuture.supplyAsync {
+            getAllDocumentsSync(collection)
+        }
+    }
+
+    /**
+     * @param collection The collection to count the documents.
+     * Counts the number of documents in the collection.
+     */
     fun countDocumentsSync(collection: String): Long {
         return mongoDatabase.getCollection(collection).countDocuments()
     }
@@ -81,17 +100,29 @@ abstract class AbstractMongoDB(
         }
     }
 
+    /**
+     * @param collection The collection to insert the document into.
+     * @param key The key of the document.
+     *
+     * Inserts a document into the collection.
+     */
+    fun insertDocumentSync(collection: String, key: String, document: Document) {
+        document[identifier] = key
+        mongoDatabase.getCollection(collection).insertOne(document)
+    }
+
     fun insertDocumentAsync(collection: String, key: String, document: Document) {
         CompletableFuture.runAsync {
             insertDocumentSync(collection, key, document)
         }
     }
 
-    fun insertDocumentSync(collection: String, key: String, document: Document) {
-        document[identifier] = key
-        mongoDatabase.getCollection(collection).insertOne(document)
-    }
-
+    /**
+     * @param collection The collection to insert the documents into.
+     * @param documents The documents to insert.
+     *
+     * Inserts a Collection of documents into the given collection.
+     */
     fun insertDocumentCollectionSync(collection: String, key: String, documents: Collection<Document>) {
         documents.filter { documents.isNotEmpty() }.forEach { it[identifier] = key }
         mongoDatabase.getCollection(collection).insertMany(documents.toList())
@@ -104,6 +135,16 @@ abstract class AbstractMongoDB(
         }
     }
 
+    /**
+     * @param collection The collection to insert the documents into.
+     * @param writeModelList The list of write models to insert.
+     *
+     * @return The result of the bulk insert.
+     */
+    fun bulkWriteSync(collection: String, writeModelList: List<WriteModel<Document>>): BulkWriteResult {
+        return mongoDatabase.getCollection(collection).bulkWrite(writeModelList)
+    }
+
     fun bulkWriteAsync(
         collection: String,
         writeModelList: List<WriteModel<Document>>
@@ -113,10 +154,9 @@ abstract class AbstractMongoDB(
         }
     }
 
-    fun bulkWriteSync(collection: String, writeModelList: List<WriteModel<Document>>): BulkWriteResult {
-        return mongoDatabase.getCollection(collection).bulkWrite(writeModelList)
-    }
-
+    /**
+     * Deletes all documents in the collection which equal the key.
+     */
     fun deleteManySync(collection: String, key: String) {
         mongoDatabase.getCollection(collection).deleteMany(Filters.eq(identifier, key))
     }
@@ -127,6 +167,11 @@ abstract class AbstractMongoDB(
         }
     }
 
+    /**
+     * @param collection The collection which should be renamed.
+     *
+     * Renames a collection.
+     */
     fun renameCollectionSync(collection: String, newCollectionName: String) {
         mongoDatabase.getCollection(collection).renameCollection(MongoNamespace(newCollectionName))
     }
@@ -137,6 +182,9 @@ abstract class AbstractMongoDB(
         }
     }
 
+    /**
+     * @param collection The collection which should be dropped.
+     */
     fun dropCollectionSync(collection: String) {
         mongoDatabase.getCollection(collection).drop()
     }
@@ -147,12 +195,13 @@ abstract class AbstractMongoDB(
         }
     }
 
-    fun updateDocumentAsync(collection: String, key: String, document: Document) {
-        CompletableFuture.runAsync {
-            updateDocumentSync(collection, key, document)
-        }
-    }
-
+    /**
+     * @param collection The collection to update the document in.
+     * @param key The key of the document.
+     * @param document The document to update.
+     *
+     * Updates a document in the collection.
+     */
     fun updateDocumentSync(collection: String, key: String, document: Document) {
         document[identifier] = key
         val mongoCollection =
@@ -161,12 +210,18 @@ abstract class AbstractMongoDB(
         first?.let { mongoCollection.replaceOne(it, document) }
     }
 
-    fun deleteDocumentAsync(collection: String, key: String) {
+    fun updateDocumentAsync(collection: String, key: String, document: Document) {
         CompletableFuture.runAsync {
-            deleteDocumentSync(collection, key)
+            updateDocumentSync(collection, key, document)
         }
     }
 
+    /**
+     * @param collection The collection to delete the document from.
+     * @param key The key of the document.
+     *
+     * Deletes a document from the collection.
+     */
     fun deleteDocumentSync(collection: String, key: String) {
         CompletableFuture.runAsync {
             val first =
@@ -175,14 +230,29 @@ abstract class AbstractMongoDB(
         }
     }
 
+    fun deleteDocumentAsync(collection: String, key: String) {
+        CompletableFuture.runAsync {
+            deleteDocumentSync(collection, key)
+        }
+    }
+
+    /**
+     * @return the MongoDatabase
+     */
     fun getMongoDatabase(): MongoDatabase {
         return this.mongoDatabase
     }
 
+    /**
+     * @return the MongoClient
+     */
     fun getMongoClient(): MongoClient {
         return this.mongoClient
     }
 
+    /**
+     * @return returns true if document exist else false
+     */
     fun exist(collection: String, key: String): Boolean {
         return getDocumentSync(collection, key) != null
     }
