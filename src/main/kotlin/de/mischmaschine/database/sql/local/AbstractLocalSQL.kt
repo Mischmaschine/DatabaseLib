@@ -6,27 +6,36 @@ import java.sql.Connection
 import java.sql.DriverManager
 
 abstract class AbstractLocalSQL(
-    user: String?,
-    password: String?,
-    databasePath: String,
-    dataBaseType: DataBaseType
+    private val user: String?,
+    private val password: String?,
+    private val databasePath: String,
+    private val dataBaseType: DataBaseType
 ) : AbstractSQL() {
 
-    private val connection: Connection
+    private var connection: Connection
 
     init {
-        this.connection = if (user == null && password == null) {
+        this.connection = createConnection()
+    }
+
+    override fun getFreeDatabase(): Connection {
+        return if (this.connection.isClosed) {
+            createConnection().also { this.connection = it }
+        } else {
+            this.connection
+        }
+    }
+
+    private fun createConnection(): Connection {
+        return if (user == null && password == null) {
             DriverManager.getConnection("jdbc:${dataBaseType.name.lowercase()}:$databasePath")
         } else {
             DriverManager.getConnection("jdbc:${dataBaseType.name.lowercase()}:$databasePath", user, password)
         }
     }
 
-    override fun getFreeDatabase(): Connection {
-        return this.connection
-    }
 
     override fun closeConnection(connection: Connection) {
-
+        this.connection.close()
     }
 }
