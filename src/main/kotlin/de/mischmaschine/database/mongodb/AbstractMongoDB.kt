@@ -67,7 +67,6 @@ abstract class AbstractMongoDB(
 
     /**
      * @param collection The collection to get the document from.
-     * @param key The key of the document.
      *
      * @return A list of documents with the given key.
      */
