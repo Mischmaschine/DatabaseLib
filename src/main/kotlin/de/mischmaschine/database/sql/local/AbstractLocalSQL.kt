@@ -18,6 +18,13 @@ abstract class AbstractLocalSQL(
         this.connection = createConnection()
     }
 
+
+    /**
+     * Creates a connection to the database.
+     * @return the connection
+     * @see DriverManager.getConnection
+     * @see Connection
+     */
     override fun getFreeDatabase(): Connection {
         return if (this.connection.isClosed) {
             createConnection().also { this.connection = it }
@@ -25,6 +32,7 @@ abstract class AbstractLocalSQL(
             this.connection
         }
     }
+
 
     private fun createConnection(): Connection {
         return if (user == null && password == null) {
