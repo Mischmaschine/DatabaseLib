@@ -71,12 +71,7 @@ abstract class AbstractMongoDB(
      * @return A list of documents with the given key.
      */
     fun getAllDocumentsSync(collection: String): List<Document> {
-        val list = mutableListOf<Document>()
-        val findIterable = mongoDatabase.getCollection(collection).find()
-        findIterable.forEach {
-            list.add(it)
-        }
-        return list
+        return mongoDatabase.getCollection(collection).find().toList()
     }
 
     fun getAllDocumentsAsync(collection: String): CompletableFuture<List<Document>> {
@@ -126,7 +121,6 @@ abstract class AbstractMongoDB(
         documents.filter { documents.isNotEmpty() }.forEach { it[identifier] = key }
         mongoDatabase.getCollection(collection).insertMany(documents.toList())
     }
-
 
     fun insertDocumentCollectionAsync(collection: String, key: String, documents: Collection<Document>) {
         CompletableFuture.runAsync {
@@ -203,10 +197,7 @@ abstract class AbstractMongoDB(
      */
     fun updateDocumentSync(collection: String, key: String, document: Document) {
         document[identifier] = key
-        val mongoCollection =
-            this.mongoDatabase.getCollection(collection)
-        val first = mongoCollection.find(Filters.eq(identifier, key)).first()
-        first?.let { mongoCollection.replaceOne(it, document) }
+        this.mongoDatabase.getCollection(collection).findOneAndReplace(Filters.eq(identifier, key), document)
     }
 
     fun updateDocumentAsync(collection: String, key: String, document: Document) {
@@ -220,17 +211,15 @@ abstract class AbstractMongoDB(
      * @param key The key of the document.
      *
      * Deletes a document from the collection.
+     *
+     * @return The result of the deletion.
      */
-    fun deleteDocumentSync(collection: String, key: String) {
-        CompletableFuture.runAsync {
-            val first =
-                mongoDatabase.getCollection(collection).find(Filters.eq(identifier, key)).first() ?: return@runAsync
-            mongoDatabase.getCollection(collection).deleteOne(first)
-        }
+    fun deleteDocumentSync(collection: String, key: String): Document? {
+        return mongoDatabase.getCollection(collection).findOneAndDelete(Filters.eq(identifier, key))
     }
 
-    fun deleteDocumentAsync(collection: String, key: String) {
-        CompletableFuture.runAsync {
+    fun deleteDocumentAsync(collection: String, key: String): CompletableFuture<Document?> {
+        return CompletableFuture.supplyAsync {
             deleteDocumentSync(collection, key)
         }
     }
@@ -252,7 +241,11 @@ abstract class AbstractMongoDB(
     /**
      * @return returns true if document exist else false
      */
-    fun exist(collection: String, key: String): Boolean {
+    fun existSync(collection: String, key: String): Boolean {
         return getDocumentSync(collection, key) != null
+    }
+
+    fun existAsync(collection: String, key: String): CompletableFuture<Boolean> {
+        return CompletableFuture.supplyAsync { getDocumentSync(collection, key) != null }
     }
 }
