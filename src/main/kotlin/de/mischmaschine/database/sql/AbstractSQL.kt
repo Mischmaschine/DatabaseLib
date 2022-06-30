@@ -32,7 +32,6 @@ abstract class AbstractSQL {
             value
         }
         val query = "UPDATE $tableName SET $columnName='$serializedValue' WHERE $targetColumnName='$targetValue'"
-        println(query)
         updateQuery(query)
     }
 
@@ -83,7 +82,6 @@ abstract class AbstractSQL {
         val query = "INSERT INTO $tableName (${tableData.joinToString()}) VALUES (${
             serializedList.joinToString("','", "'", "'")
         })"
-        println(query)
         insertQuery(query)
     }
 
