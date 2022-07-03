@@ -16,11 +16,14 @@ import java.sql.SQLException
  * @see SQLException
  */
 class MySQLResult(
-    val connection: Connection,
-    val prepareStatement: PreparedStatement,
-    val resultSet: ResultSet
+    private val connection: Connection,
+    private val prepareStatement: PreparedStatement,
+    private val resultSet: ResultSet
 ) : AutoCloseable {
 
+    /**
+     * Closes everything from to connection to the database.
+     */
     override fun close() {
         try {
             this.connection.close()
@@ -31,4 +34,24 @@ class MySQLResult(
         }
     }
 
+    /**
+     * @return The result set of the query.
+     */
+    fun getResultSet(): ResultSet {
+        return this.resultSet
+    }
+
+    /**
+     * @return The prepare statement of the query.
+     */
+    fun getPrepareStatement(): PreparedStatement {
+        return this.prepareStatement
+    }
+
+    /**
+     * @return The connection to the database.
+     */
+    fun getConnection(): Connection {
+        return this.connection
+    }
 }

@@ -1,5 +1,6 @@
 package de.mischmaschine.database.mongodb.configuration
 
+@Deprecated("Use de.mischmaschine.database.database.configuration.Configuration instead")
 class MongoConfiguration(
     host: String,
     port: Int,
@@ -8,6 +9,7 @@ class MongoConfiguration(
 ) {
 
     init {
+        throw UnsupportedOperationException("Use de.mischmaschine.database.database.configuration.Configuration instead")
         mongoDataMap["host"] = host
         mongoDataMap["port"] = port.toString()
         mongoDataMap["username"] = username
