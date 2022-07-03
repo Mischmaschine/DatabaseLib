@@ -35,7 +35,6 @@ abstract class AbstractSQL {
         updateQuery(query)
     }
 
-
     /**
      * This method is for updating asynchronously a row in the database.
      *

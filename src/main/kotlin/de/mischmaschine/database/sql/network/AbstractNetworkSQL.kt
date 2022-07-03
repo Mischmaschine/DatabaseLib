@@ -4,10 +4,13 @@ import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import de.mischmaschine.database.sql.AbstractSQL
 import de.mischmaschine.database.sql.DataBaseType
-import de.mischmaschine.database.sql.configuration.SQLConfiguration
 import java.sql.Connection
 
 abstract class AbstractNetworkSQL(
+    host: String,
+    port: Int,
+    username: String,
+    password: String,
     database: String,
     dataBaseType: DataBaseType
 ) : AbstractSQL() {
@@ -17,9 +20,9 @@ abstract class AbstractNetworkSQL(
     init {
         val hikariConfig = HikariConfig().apply {
             this.jdbcUrl =
-                "jdbc:${dataBaseType.name.lowercase()}://${SQLConfiguration.getHost()}:${SQLConfiguration.getPort()}/$database"
-            this.username = SQLConfiguration.getUsername()
-            this.password = SQLConfiguration.getPassword()
+                "jdbc:${dataBaseType.name.lowercase()}://${host}:${port}/$database"
+            this.username = username
+            this.password = password
         }
         this.dataSource = HikariDataSource(hikariConfig)
     }

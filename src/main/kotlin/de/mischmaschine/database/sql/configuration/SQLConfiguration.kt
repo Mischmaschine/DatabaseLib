@@ -1,5 +1,9 @@
 package de.mischmaschine.database.sql.configuration
 
+@Deprecated(
+    "Use de.mischmaschine.database.database.configuration.Configuration instead",
+    level = DeprecationLevel.ERROR
+)
 class SQLConfiguration(
     host: String,
     port: Int,
