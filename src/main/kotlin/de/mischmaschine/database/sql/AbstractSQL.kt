@@ -3,7 +3,6 @@ package de.mischmaschine.database.sql
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import java.sql.Connection
-import java.sql.SQLException
 import java.util.concurrent.CompletableFuture
 
 abstract class AbstractSQL {
@@ -114,15 +113,11 @@ abstract class AbstractSQL {
      * @return the MySQLResult or null
      */
     fun getResultSync(tableName: String, columnName: String, key: String, additionalQuery: String = ""): MySQLResult? {
-        try {
-            val queryString = "SELECT * FROM $tableName WHERE $columnName='$key' $additionalQuery"
-            val connection = getFreeDatabase()
-            val prepareStatement = connection.prepareStatement(queryString)
-            return MySQLResult(connection, prepareStatement, prepareStatement.executeQuery())
+        val queryString = "SELECT * FROM $tableName WHERE $columnName='$key' $additionalQuery"
+        val connection = getFreeDatabase()
+        val prepareStatement = connection.prepareStatement(queryString)
+        return MySQLResult(connection, prepareStatement, prepareStatement.executeQuery())
 
-        } catch (e: SQLException) {
-            e.printStackTrace()
-        }
         return null
     }
 
