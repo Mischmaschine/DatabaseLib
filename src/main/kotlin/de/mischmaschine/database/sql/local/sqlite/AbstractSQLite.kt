@@ -5,6 +5,10 @@ import de.mischmaschine.database.database.Database
 import de.mischmaschine.database.sql.DataBaseType
 import de.mischmaschine.database.sql.local.AbstractLocalSQL
 
+/**
+ * ## AbstractSQLite
+ * This class is a wrapper for the SQLite JDBC driver.
+ */
 abstract class AbstractSQLite(
     databasePath: String
 ) : AbstractLocalSQL(

@@ -110,6 +110,7 @@ abstract class AbstractSQL {
      * @param tableName Indicates on which table the SQL command is executed
      * @param columnName Specifies to which column name a value should be changed.
      * @param key where the database should get a result from
+     *
      * @return the MySQLResult or null
      */
     fun getResultSync(tableName: String, columnName: String, key: String, additionalQuery: String = ""): MySQLResult? {
@@ -117,8 +118,6 @@ abstract class AbstractSQL {
         val connection = getFreeDatabase()
         val prepareStatement = connection.prepareStatement(queryString)
         return MySQLResult(connection, prepareStatement, prepareStatement.executeQuery())
-
-        return null
     }
 
     /**

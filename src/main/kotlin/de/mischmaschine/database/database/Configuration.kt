@@ -4,13 +4,13 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 
 /**
- * @param host The host of the database.
- * @param port The port of the database.
- * @param username The username of the database.
- * @param password The password of the database.
- * @param kClazz The class of the database.
- *
  * This class is used to save the connection data details to a database.
+ *
+ * @property host The host of the database.
+ * @property port The port of the database.
+ * @property username The username of the database.
+ * @property password The password of the database.
+ * @property kClazz The class of the database.
  *
  * @see [JvmStatic]
  * @see [KClass]
@@ -26,11 +26,11 @@ class Configuration(
 ) {
 
     /**
-     * @param host The host of the database.
-     * @param port The port of the database.
-     * @param username The username of the database.
-     * @param password The password of the database.
-     * @param clazz The class of the database.
+     * @property host The host of the database.
+     * @property port The port of the database.
+     * @property username The username of the database.
+     * @property password The password of the database.
+     * @property clazz The class of the database.
      *
      * This constructor the same as above, but you can use a java Class instead of a KClass.
      *
@@ -71,13 +71,8 @@ class Configuration(
 
     /**
      * This method is used to set the connection credentials.
-     * @param host The host of the database.
-     * @param port The port of the database.
-     * @param username The username of the database.
-     * @param password The password of the database.
      *
      * @see [resolveConfigurationSimpleName]
-     * @see [Database]
      * @see [connectionMap]
      * @see [mutableMapOf]
      */
@@ -90,6 +85,7 @@ class Configuration(
 
         /**
          * This method is used to get the host of the database.
+         *
          * @param kClass The class of the database.
          * @return The host of the database.
          * @throws IllegalArgumentException If the class is not a subclass of [Database].
@@ -102,6 +98,7 @@ class Configuration(
 
         /**
          * This method is used to get the port of the database.
+         *
          * @param kClass The class of the database.
          * @return The port of the database.
          * @throws IllegalArgumentException If the class is not a subclass of [Database].
@@ -114,6 +111,7 @@ class Configuration(
 
         /**
          * This method is used to get the username of the database.
+         *
          * @param kClass The class of the database.
          * @return The username of the database.
          * @throws IllegalArgumentException If the class is not a subclass of [Database].
@@ -126,6 +124,7 @@ class Configuration(
 
         /**
          * This method is used to get the password of the database.
+         *
          * @param kClass The class of the database.
          * @return The password of the database.
          * @throws IllegalArgumentException If the class is not a subclass of [Database].
