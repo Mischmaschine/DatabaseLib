@@ -15,6 +15,10 @@ import de.mischmaschine.database.database.Database
 import org.bson.Document
 import java.util.concurrent.CompletableFuture
 
+/**
+ * ## AbstractMongoDB
+ * This class is an abstract base class for MongoDB implementations.
+ */
 abstract class AbstractMongoDB(
     dataBaseName: String,
 ) : Database {
@@ -46,11 +50,37 @@ abstract class AbstractMongoDB(
 
     /**
      * Closes the connection to the database.
+     * @see MongoClient
      */
     fun close() {
         this.mongoClient.close()
     }
 
+    /**
+     * @param collection The collection to get the document from.
+     * @param key The key of the document.
+     *
+     * @see MongoCollection
+     * @see Filters
+     * @see Document
+     *
+     * @return The document with the given key.
+     */
+    fun getDocumentSync(collection: String, key: String): Document? {
+        return this.getCollection(collection).find().filter(Filters.eq(identifier, key)).first()
+    }
+
+    /**
+     * @param collection The collection to get the document from.
+     * @param key The key of the document.
+     *
+     * @see MongoCollection
+     * @see Filters
+     * @see Document
+     * @see CompletableFuture
+     *
+     * @return A future that will contain the document with the given key.
+     */
     fun getDocumentAsync(collection: String, key: String): CompletableFuture<Document?> {
         return CompletableFuture.supplyAsync {
             getDocumentSync(collection, key)
@@ -58,24 +88,29 @@ abstract class AbstractMongoDB(
     }
 
     /**
-     * @param collection The collection to get the document from.
-     * @param key The key of the document.
-     * Returns the document with the given key.
-     */
-    fun getDocumentSync(collection: String, key: String): Document? {
-        return this.getCollection(collection).find().filter(Filters.eq(identifier, key)).first()
-    }
-
-
-    /**
+     * This function returns a list with the documents from the collection blocking.
      * @param collection The collection to get the document from.
      *
-     * @return A list of documents with the given key.
+     * @see MongoCollection
+     * @see Document
+     *
+     * @return A list with the documents from the collection.
      */
     fun getAllDocumentsSync(collection: String): List<Document> {
         return this.getCollection(collection).find().toList()
     }
 
+    /**
+     * This function returns a list with the documents from the collection non-blocking.
+     *
+     * @param collection The collection to get the document from.
+     *
+     * @see MongoCollection
+     * @see Document
+     * @see CompletableFuture
+     *
+     * @return A list with the documents from the collection.
+     */
     fun getAllDocumentsAsync(collection: String): CompletableFuture<List<Document>> {
         return CompletableFuture.supplyAsync {
             getAllDocumentsSync(collection)
@@ -84,12 +119,23 @@ abstract class AbstractMongoDB(
 
     /**
      * @param collection The collection to count the documents.
-     * Counts the number of documents in the collection.
+     *
+     * @see MongoCollection
+     *
+     * @return The number of documents in the collection.
      */
     fun countDocumentsSync(collection: String): Long {
         return this.getCollection(collection).countDocuments()
     }
 
+    /**
+     * @param collection The collection to count the documents.
+     *
+     * @see MongoCollection
+     * @see CompletableFuture
+     *
+     * @return A future that will contain the number of documents in the given collection.
+     */
     fun countDocumentsAsync(collection: String): CompletableFuture<Long> {
         return CompletableFuture.supplyAsync {
             countDocumentsSync(collection)
@@ -97,16 +143,31 @@ abstract class AbstractMongoDB(
     }
 
     /**
+     * This function inserts the document blocking into the given collection.
+     *
      * @param collection The collection to insert the document into.
      * @param key The key of the document.
+     * @param document The document to insert.
      *
-     * Inserts a document into the collection.
+     * @see MongoCollection
+     * @see Document
      */
     fun insertDocumentSync(collection: String, key: String, document: Document) {
         document[identifier] = key
         this.getCollection(collection).insertOne(document)
     }
 
+    /**
+     * This function inserts the document non-blocking into the given collection.
+     *
+     * @param collection The collection to insert the document into.
+     * @param key The key of the document.
+     * @param document The document to insert.
+     *
+     * @see MongoCollection
+     * @see Document
+     * @see CompletableFuture
+     */
     fun insertDocumentAsync(collection: String, key: String, document: Document) {
         CompletableFuture.runAsync {
             insertDocumentSync(collection, key, document)
@@ -114,16 +175,30 @@ abstract class AbstractMongoDB(
     }
 
     /**
+     * This function inserts the documents blocking into the given collection.
+     *
      * @param collection The collection to insert the documents into.
      * @param documents The documents to insert.
      *
-     * Inserts a Collection of documents into the given collection.
+     * @see MongoCollection
+     * @see Document
      */
     fun insertDocumentCollectionSync(collection: String, key: String, documents: Collection<Document>) {
         documents.filter { documents.isNotEmpty() }.forEach { it[identifier] = key }
         this.getCollection(collection).insertMany(documents.toList())
     }
 
+    /**
+     * This function inserts the documents non-blocking into the given collection.
+     *
+     * @param collection The collection to insert the documents into.
+     * @param key The key of the document.
+     * @param documents The documents to insert.
+     *
+     * @see MongoCollection
+     * @see Document
+     * @see CompletableFuture
+     */
     fun insertDocumentCollectionAsync(collection: String, key: String, documents: Collection<Document>) {
         CompletableFuture.runAsync {
             insertDocumentCollectionSync(collection, key, documents)
@@ -131,8 +206,14 @@ abstract class AbstractMongoDB(
     }
 
     /**
+     * This function create a bulk write operation and inserts the documents blocking into the given collection.
+     *
      * @param collection The collection to insert the documents into.
      * @param writeModelList The list of write models to insert.
+     *
+     * @see MongoCollection
+     * @see WriteModel
+     * @see BulkWriteResult
      *
      * @return The result of the bulk insert.
      */
@@ -140,6 +221,19 @@ abstract class AbstractMongoDB(
         return this.getCollection(collection).bulkWrite(writeModelList)
     }
 
+    /**
+     * This function create a bulk write operation and inserts the documents non-blocking into the given collection.
+     *
+     * @param collection The collection to insert the documents into.
+     * @param writeModelList The list of write models to insert.
+     *
+     * @see MongoCollection
+     * @see WriteModel
+     * @see BulkWriteResult
+     * @see CompletableFuture
+     *
+     * @return The result of the bulk insert.
+     */
     fun bulkWriteAsync(
         collection: String,
         writeModelList: List<WriteModel<Document>>
@@ -150,12 +244,28 @@ abstract class AbstractMongoDB(
     }
 
     /**
-     * Deletes all documents in the collection which equal the key.
+     * This function deletes the document's blocking with the given key.
+     *
+     * @param collection The collection to update the document in.
+     * @param key The key of the document.
+     *
+     * @see MongoCollection
+     * @see Filters
      */
     fun deleteManySync(collection: String, key: String) {
         this.getCollection(collection).deleteMany(Filters.eq(identifier, key))
     }
 
+    /**
+     * This function deletes the document's non-blocking with the given key.
+     *
+     * @param collection The collection to delete the document from.
+     * @param key The key of the document.
+     *
+     * @see MongoCollection
+     * @see Filters
+     * @see CompletableFuture
+     */
     fun deleteManyAsync(collection: String, key: String) {
         CompletableFuture.runAsync {
             deleteManySync(collection, key)
@@ -163,14 +273,27 @@ abstract class AbstractMongoDB(
     }
 
     /**
-     * @param collection The collection which should be renamed.
+     * This function renames the collection blocking.
      *
-     * Renames a collection.
+     * @param collection The collection which should be renamed.
+     * @param newCollectionName The new name of the collection.
+     *
+     * @see MongoCollection
+     * @see MongoNamespace
      */
     fun renameCollectionSync(collection: String, newCollectionName: String) {
         this.getCollection(collection).renameCollection(MongoNamespace(newCollectionName))
     }
 
+    /**
+     * This function renames the collection non-blocking.
+     *
+     * @param collection The collection which should be renamed.
+     * @param newCollectionName The new name of the collection.
+     *
+     * @see MongoCollection
+     * @see MongoNamespace
+     */
     fun renameCollectionAsync(collection: String, newCollectionName: String) {
         CompletableFuture.runAsync {
             renameCollectionSync(collection, newCollectionName)
@@ -178,12 +301,24 @@ abstract class AbstractMongoDB(
     }
 
     /**
+     * This function drops the collection blocking.
+     *
      * @param collection The collection which should be dropped.
+     *
+     * @see MongoCollection
      */
     fun dropCollectionSync(collection: String) {
         this.getCollection(collection).drop()
     }
 
+    /**
+     * This function drops the collection non-blocking.
+     *
+     * @param collection The collection which should be dropped.
+     *
+     * @see MongoCollection
+     * @see CompletableFuture
+     */
     fun dropCollectionAsync(collection: String) {
         CompletableFuture.runAsync {
             dropCollectionSync(collection)
@@ -191,39 +326,66 @@ abstract class AbstractMongoDB(
     }
 
     /**
+     * This function updates the document blocking with the given key.
+     *
      * @param collection The collection to update the document in.
      * @param key The key of the document.
      * @param document The document to update.
      *
-     * Updates a document in the collection.
+     * @see MongoCollection
+     * @see Document
+     * @see Filters
      */
     fun updateDocumentSync(collection: String, key: String, document: Document) {
         document[identifier] = key
         this.getCollection(collection).findOneAndReplace(Filters.eq(identifier, key), document)
     }
 
+    /**
+     * This function updates the document non-blocking with the given key.
+     *
+     * @param collection The collection to update the document in.
+     * @param key The key of the document.
+     *
+     * @see MongoCollection
+     * @see Document
+     * @see Filters
+     * @see CompletableFuture
+     */
     fun updateDocumentAsync(collection: String, key: String, document: Document) {
         CompletableFuture.runAsync {
             updateDocumentSync(collection, key, document)
         }
     }
 
-    fun getCollection(collection: String): MongoCollection<Document> {
-        return this.mongoDatabase.getCollection(collection)
-    }
-
     /**
+     * This function deletes the document blocking with the given key.
+     *
      * @param collection The collection to delete the document from.
      * @param key The key of the document.
+     * @return A nullable result of the deletion.
      *
-     * Deletes a document from the collection.
-     *
-     * @return The result of the deletion.
+     * @see MongoCollection
+     * @see Filters
+     * @see Document
      */
     fun deleteDocumentSync(collection: String, key: String): Document? {
         return this.getCollection(collection).findOneAndDelete(Filters.eq(identifier, key))
     }
 
+    /**
+     * This function deletes the document non-blocking with the given key.
+     *
+     * @param collection The collection to delete the document from.
+     * @param key The key of the document.
+     *
+     * @see MongoCollection
+     * @see Filters
+     * @see Document
+     * @see CompletableFuture
+     *
+     * @return A nullable result of the deletion.
+     */
     fun deleteDocumentAsync(collection: String, key: String): CompletableFuture<Document?> {
         return CompletableFuture.supplyAsync {
             deleteDocumentSync(collection, key)
@@ -231,6 +393,19 @@ abstract class AbstractMongoDB(
     }
 
     /**
+     * @param collection The collection to get
+     *
+     * @see MongoCollection
+     * @see Document
+     *
+     * @return The mongo collection.
+     */
+    fun getCollection(collection: String): MongoCollection<Document> {
+        return this.mongoDatabase.getCollection(collection)
+    }
+
+    /**
+     * @see MongoDatabase
      * @return the MongoDatabase
      */
     fun getMongoDatabase(): MongoDatabase {
@@ -238,6 +413,7 @@ abstract class AbstractMongoDB(
     }
 
     /**
+     * @see MongoClient
      * @return the MongoClient
      */
     fun getMongoClient(): MongoClient {
@@ -245,12 +421,30 @@ abstract class AbstractMongoDB(
     }
 
     /**
-     * @return returns true if document exist else false
+     * This function checks if the document exist blocking.
+     *
+     * @param collection The collection to get
+     *
+     * @see MongoCollection
+     * @see Document
+     *
+     * @return a boolean if the document exist else false
      */
     fun existSync(collection: String, key: String): Boolean {
         return getDocumentSync(collection, key) != null
     }
 
+    /**
+     * This function checks if the document exist non-blocking.
+
+     * @param collection The collection to get
+     *
+     * @see MongoCollection
+     * @see Document
+     * @see CompletableFuture
+     *
+     * @return a boolean if the document exist else false
+     */
     fun existAsync(collection: String, key: String): CompletableFuture<Boolean> {
         return CompletableFuture.supplyAsync { getDocumentSync(collection, key) != null }
     }
