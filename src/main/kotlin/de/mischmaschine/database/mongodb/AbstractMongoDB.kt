@@ -23,7 +23,6 @@ abstract class AbstractMongoDB(
     private val identifier = "uniqueId_key"
 
     init {
-        println(AbstractMongoDB::class.simpleName)
         val host = Configuration.getHost(AbstractMongoDB::class)
         val username = Configuration.getUsername(AbstractMongoDB::class)
         val password = Configuration.getPassword(AbstractMongoDB::class)
