@@ -18,10 +18,10 @@ import kotlin.reflect.full.isSubclassOf
  * @see [Int]
  */
 class Configuration(
-    host: String,
-    port: Int,
-    username: String,
-    password: String,
+    private val host: String,
+    private val port: Int,
+    private val username: String,
+    private val password: String,
     private val kClazz: KClass<*>
 ) {
 
@@ -48,15 +48,17 @@ class Configuration(
     ) : this(host, port, username, password, clazz.kotlin)
 
     init {
+        // Checks if the class is abstract.
         if (!this.kClazz.isAbstract) {
             throw IllegalArgumentException("Class must be abstract")
         }
 
+        // Check if the class is a subclass of the Database interface
         if (!this.kClazz.isSubclassOf(Database::class)) {
             throw IllegalArgumentException("Class must be subclass of Configuration")
         }
 
-        setConnectionCredentials(host, port, username, password)
+        setConnectionCredentials()
     }
 
     /**
@@ -79,18 +81,12 @@ class Configuration(
      * @see [connectionMap]
      * @see [mutableMapOf]
      */
-    private fun setConnectionCredentials(host: String, port: Int, username: String, password: String) {
-        val classSimpleName = resolveConfigurationSimpleName()
-        val connectionMapForClass = connectionMap[classSimpleName] ?: mutableMapOf()
-        connectionMapForClass["host"] = host
-        connectionMapForClass["port"] = port.toString()
-        connectionMapForClass["username"] = username
-        connectionMapForClass["password"] = password
-        connectionMap[classSimpleName] = connectionMapForClass
+    private fun setConnectionCredentials() {
+        connectionMap[resolveConfigurationSimpleName()] = this
     }
 
     companion object {
-        val connectionMap = mutableMapOf<String, MutableMap<String, String>>()
+        val connectionMap = mutableMapOf<String, Configuration>()
 
         /**
          * This method is used to get the host of the database.
@@ -100,8 +96,8 @@ class Configuration(
          */
         @JvmStatic
         fun getHost(kClass: KClass<*>): String {
-            return connectionMap[kClass.simpleName]?.get("host")
-                ?: throw IllegalArgumentException("Class is not configured 1")
+            return (connectionMap[kClass.simpleName]?.host
+                ?: throw IllegalArgumentException("Class is not configured"))
         }
 
         /**
@@ -112,8 +108,8 @@ class Configuration(
          */
         @JvmStatic
         fun getPort(kClass: KClass<*>): Int {
-            return connectionMap[kClass.simpleName]?.get("port")?.toInt()
-                ?: throw IllegalArgumentException("Class is not configured 2")
+            return (connectionMap[kClass.simpleName]?.port
+                ?: throw IllegalArgumentException("Class is not configured"))
         }
 
         /**
@@ -124,8 +120,8 @@ class Configuration(
          */
         @JvmStatic
         fun getUsername(kClass: KClass<*>): String {
-            return connectionMap[kClass.simpleName]?.get("username")
-                ?: throw IllegalArgumentException("Class is not configured 3")
+            return (connectionMap[kClass.simpleName]?.username
+                ?: throw IllegalArgumentException("Class is not configured"))
         }
 
         /**
@@ -136,8 +132,8 @@ class Configuration(
          */
         @JvmStatic
         fun getPassword(kClass: KClass<*>): String {
-            return connectionMap[kClass.simpleName]?.get("password")
-                ?: throw IllegalArgumentException("Class is not configured 4")
+            return (connectionMap[kClass.simpleName]?.password
+                ?: throw IllegalArgumentException("Class is not configured"))
         }
     }
 
