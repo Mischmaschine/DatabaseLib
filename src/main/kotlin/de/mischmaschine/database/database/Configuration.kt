@@ -4,27 +4,55 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 
 /**
+ * @param host The host of the database.
+ * @param port The port of the database.
+ * @param username The username of the database.
+ * @param password The password of the database.
+ * @param kClazz The class of the database.
+ *
  * This class is used to save the connection data details to a database.
- * It also is usable in java.
+ *
  * @see [JvmStatic]
  * @see [KClass]
- * @see [KClass.isSubclassOf]
- * @see [KClass.simpleName]
+ * @see [String]
+ * @see [Int]
  */
 class Configuration(
     host: String,
     port: Int,
     username: String,
     password: String,
-    private val clazz: KClass<*>
+    private val kClazz: KClass<*>
 ) {
 
+    /**
+     * @param host The host of the database.
+     * @param port The port of the database.
+     * @param username The username of the database.
+     * @param password The password of the database.
+     * @param clazz The class of the database.
+     *
+     * This constructor the same as above, but you can use a java Class instead of a KClass.
+     *
+     * @see [Class]
+     * @see [Class.kotlin]
+     * @see [String]
+     * @see [Int]
+     */
+    constructor(
+        host: String,
+        port: Int,
+        username: String,
+        password: String,
+        clazz: Class<*>
+    ) : this(host, port, username, password, clazz.kotlin)
+
     init {
-        if (!this.clazz.isAbstract) {
+        if (!this.kClazz.isAbstract) {
             throw IllegalArgumentException("Class must be abstract")
         }
 
-        if (!this.clazz.isSubclassOf(Database::class)) {
+        if (!this.kClazz.isSubclassOf(Database::class)) {
             throw IllegalArgumentException("Class must be subclass of Configuration")
         }
 
@@ -36,7 +64,7 @@ class Configuration(
      * @return The simple name of the class.
      */
     private fun resolveConfigurationSimpleName(): String {
-        return this.clazz.simpleName ?: throw IllegalArgumentException("Class must have a simple name")
+        return this.kClazz.simpleName ?: throw IllegalArgumentException("Class must have a simple name")
     }
 
     /**

@@ -10,6 +10,7 @@
 #### <b><u>Step 1. Add the repository</u></b>
 
 ```xml
+
 <repositories>
     <repository>
         <id>jitpack.io</id>
@@ -21,6 +22,7 @@
 #### <b><u>Step 2. Add the dependency</u></b>
 
 ```xml
+
 <dependency>
     <groupId>com.github.Mischmaschine</groupId>
     <artifactId>DatabaseLib</artifactId>
@@ -66,6 +68,26 @@ repositories {
 dependencies {
     implementation("com.github.Mischmaschine:DatabaseLib:master-SNAPSHOT")
 }
+```
+
+## Usage
+
+### Set the connection credentials
+
+#### Kotlin
+
+```kotlin
+import de.mischmaschine.database.database.configuration.Configuration
+
+Configuration("host", port, "username", "password", AbstractMySQL::class)
+```
+
+#### Java
+
+```java
+import de.mischmaschine.database.database.configuration.Configuration;
+
+new Configuration("host",port,"username","password",AbstractMySQL.class);
 ```
 
 ## Contributing
