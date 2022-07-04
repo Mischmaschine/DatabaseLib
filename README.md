@@ -87,7 +87,7 @@ Configuration("host", port, "username", "password", AbstractMySQL::class)
 ```java
 import de.mischmaschine.database.database.configuration.Configuration;
 
-new Configuration("host",port,"username","password",AbstractMySQL.class);
+new Configuration("host", port, "username", "password", AbstractMySQL.class);
 ```
 
 ## Contributing

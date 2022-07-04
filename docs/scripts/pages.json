@@ -1,0 +1,1002 @@
+[
+  {
+    "name": "AbstractH2SQL AbstractH2SQL(String databasePath)",
+    "description": "de.mischmaschine.database.sql.local.h2.AbstractH2SQL.AbstractH2SQL",
+    "location": "-database-lib/de.mischmaschine.database.sql.local.h2/-abstract-h2-s-q-l/-abstract-h2-s-q-l.html",
+    "searchKeys": [
+      "AbstractH2SQL",
+      "AbstractH2SQL AbstractH2SQL(String databasePath)",
+      "de.mischmaschine.database.sql.local.h2.AbstractH2SQL.AbstractH2SQL"
+    ]
+  },
+  {
+    "name": "AbstractLocalSQL AbstractLocalSQL(String user, String password, String databasePath, DataBaseType dataBaseType)",
+    "description": "de.mischmaschine.database.sql.local.AbstractLocalSQL.AbstractLocalSQL",
+    "location": "-database-lib/de.mischmaschine.database.sql.local/-abstract-local-s-q-l/-abstract-local-s-q-l.html",
+    "searchKeys": [
+      "AbstractLocalSQL",
+      "AbstractLocalSQL AbstractLocalSQL(String user, String password, String databasePath, DataBaseType dataBaseType)",
+      "de.mischmaschine.database.sql.local.AbstractLocalSQL.AbstractLocalSQL"
+    ]
+  },
+  {
+    "name": "AbstractMariaDB AbstractMariaDB(String database)",
+    "description": "de.mischmaschine.database.sql.network.mariadb.AbstractMariaDB.AbstractMariaDB",
+    "location": "-database-lib/de.mischmaschine.database.sql.network.mariadb/-abstract-maria-d-b/-abstract-maria-d-b.html",
+    "searchKeys": [
+      "AbstractMariaDB",
+      "AbstractMariaDB AbstractMariaDB(String database)",
+      "de.mischmaschine.database.sql.network.mariadb.AbstractMariaDB.AbstractMariaDB"
+    ]
+  },
+  {
+    "name": "AbstractMongoDB AbstractMongoDB(String dataBaseName)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.AbstractMongoDB",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/-abstract-mongo-d-b.html",
+    "searchKeys": [
+      "AbstractMongoDB",
+      "AbstractMongoDB AbstractMongoDB(String dataBaseName)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.AbstractMongoDB"
+    ]
+  },
+  {
+    "name": "AbstractMySQL AbstractMySQL(String database)",
+    "description": "de.mischmaschine.database.sql.network.mysql.AbstractMySQL.AbstractMySQL",
+    "location": "-database-lib/de.mischmaschine.database.sql.network.mysql/-abstract-my-s-q-l/-abstract-my-s-q-l.html",
+    "searchKeys": [
+      "AbstractMySQL",
+      "AbstractMySQL AbstractMySQL(String database)",
+      "de.mischmaschine.database.sql.network.mysql.AbstractMySQL.AbstractMySQL"
+    ]
+  },
+  {
+    "name": "AbstractNetworkSQL AbstractNetworkSQL(String host, Integer port, String username, String password, String database, DataBaseType dataBaseType)",
+    "description": "de.mischmaschine.database.sql.network.AbstractNetworkSQL.AbstractNetworkSQL",
+    "location": "-database-lib/de.mischmaschine.database.sql.network/-abstract-network-s-q-l/-abstract-network-s-q-l.html",
+    "searchKeys": [
+      "AbstractNetworkSQL",
+      "AbstractNetworkSQL AbstractNetworkSQL(String host, Integer port, String username, String password, String database, DataBaseType dataBaseType)",
+      "de.mischmaschine.database.sql.network.AbstractNetworkSQL.AbstractNetworkSQL"
+    ]
+  },
+  {
+    "name": "AbstractPostgreSQL AbstractPostgreSQL(String database)",
+    "description": "de.mischmaschine.database.sql.network.postgresql.AbstractPostgreSQL.AbstractPostgreSQL",
+    "location": "-database-lib/de.mischmaschine.database.sql.network.postgresql/-abstract-postgre-s-q-l/-abstract-postgre-s-q-l.html",
+    "searchKeys": [
+      "AbstractPostgreSQL",
+      "AbstractPostgreSQL AbstractPostgreSQL(String database)",
+      "de.mischmaschine.database.sql.network.postgresql.AbstractPostgreSQL.AbstractPostgreSQL"
+    ]
+  },
+  {
+    "name": "AbstractSQLite AbstractSQLite(String databasePath)",
+    "description": "de.mischmaschine.database.sql.local.sqlite.AbstractSQLite.AbstractSQLite",
+    "location": "-database-lib/de.mischmaschine.database.sql.local.sqlite/-abstract-s-q-lite/-abstract-s-q-lite.html",
+    "searchKeys": [
+      "AbstractSQLite",
+      "AbstractSQLite AbstractSQLite(String databasePath)",
+      "de.mischmaschine.database.sql.local.sqlite.AbstractSQLite.AbstractSQLite"
+    ]
+  },
+  {
+    "name": "AbstractSQL AbstractSQL()",
+    "description": "de.mischmaschine.database.sql.AbstractSQL.AbstractSQL",
+    "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/-abstract-s-q-l.html",
+    "searchKeys": [
+      "AbstractSQL",
+      "AbstractSQL AbstractSQL()",
+      "de.mischmaschine.database.sql.AbstractSQL.AbstractSQL"
+    ]
+  },
+  {
+    "name": "Configuration Configuration(String host, Integer port, String username, String password, Class<?> clazz)",
+    "description": "de.mischmaschine.database.database.Configuration.Configuration",
+    "location": "-database-lib/de.mischmaschine.database.database/-configuration/-configuration.html",
+    "searchKeys": [
+      "Configuration",
+      "Configuration Configuration(String host, Integer port, String username, String password, Class<?> clazz)",
+      "de.mischmaschine.database.database.Configuration.Configuration"
+    ]
+  },
+  {
+    "name": "Configuration Configuration(String host, Integer port, String username, String password, KClass<?> kClazz)",
+    "description": "de.mischmaschine.database.database.Configuration.Configuration",
+    "location": "-database-lib/de.mischmaschine.database.database/-configuration/-configuration.html",
+    "searchKeys": [
+      "Configuration",
+      "Configuration Configuration(String host, Integer port, String username, String password, KClass<?> kClazz)",
+      "de.mischmaschine.database.database.Configuration.Configuration"
+    ]
+  },
+  {
+    "name": "Connection getFreeDatabase()",
+    "description": "de.mischmaschine.database.sql.local.AbstractLocalSQL.getFreeDatabase",
+    "location": "-database-lib/de.mischmaschine.database.sql.local/-abstract-local-s-q-l/get-free-database.html",
+    "searchKeys": [
+      "getFreeDatabase",
+      "Connection getFreeDatabase()",
+      "de.mischmaschine.database.sql.local.AbstractLocalSQL.getFreeDatabase"
+    ]
+  },
+  {
+    "name": "Connection getFreeDatabase()",
+    "description": "de.mischmaschine.database.sql.network.AbstractNetworkSQL.getFreeDatabase",
+    "location": "-database-lib/de.mischmaschine.database.sql.network/-abstract-network-s-q-l/get-free-database.html",
+    "searchKeys": [
+      "getFreeDatabase",
+      "Connection getFreeDatabase()",
+      "de.mischmaschine.database.sql.network.AbstractNetworkSQL.getFreeDatabase"
+    ]
+  },
+  {
+    "name": "H2",
+    "description": "de.mischmaschine.database.sql.DataBaseType.H2",
+    "location": "-database-lib/de.mischmaschine.database.sql/-data-base-type/-h2/index.html",
+    "searchKeys": [
+      "H2",
+      "H2",
+      "de.mischmaschine.database.sql.DataBaseType.H2"
+    ]
+  },
+  {
+    "name": "MARIADB",
+    "description": "de.mischmaschine.database.sql.DataBaseType.MARIADB",
+    "location": "-database-lib/de.mischmaschine.database.sql/-data-base-type/-m-a-r-i-a-d-b/index.html",
+    "searchKeys": [
+      "MARIADB",
+      "MARIADB",
+      "de.mischmaschine.database.sql.DataBaseType.MARIADB"
+    ]
+  },
+  {
+    "name": "MYSQL",
+    "description": "de.mischmaschine.database.sql.DataBaseType.MYSQL",
+    "location": "-database-lib/de.mischmaschine.database.sql/-data-base-type/-m-y-s-q-l/index.html",
+    "searchKeys": [
+      "MYSQL",
+      "MYSQL",
+      "de.mischmaschine.database.sql.DataBaseType.MYSQL"
+    ]
+  },
+  {
+    "name": "MongoConfiguration MongoConfiguration(String host, Integer port, String username, String password)",
+    "description": "de.mischmaschine.database.mongodb.configuration.MongoConfiguration.MongoConfiguration",
+    "location": "-database-lib/de.mischmaschine.database.mongodb.configuration/-mongo-configuration/-mongo-configuration.html",
+    "searchKeys": [
+      "MongoConfiguration",
+      "MongoConfiguration MongoConfiguration(String host, Integer port, String username, String password)",
+      "de.mischmaschine.database.mongodb.configuration.MongoConfiguration.MongoConfiguration"
+    ]
+  },
+  {
+    "name": "MySQLResult MySQLResult(Connection connection, PreparedStatement prepareStatement, ResultSet resultSet)",
+    "description": "de.mischmaschine.database.sql.MySQLResult.MySQLResult",
+    "location": "-database-lib/de.mischmaschine.database.sql/-my-s-q-l-result/-my-s-q-l-result.html",
+    "searchKeys": [
+      "MySQLResult",
+      "MySQLResult MySQLResult(Connection connection, PreparedStatement prepareStatement, ResultSet resultSet)",
+      "de.mischmaschine.database.sql.MySQLResult.MySQLResult"
+    ]
+  },
+  {
+    "name": "POSTGRESQL",
+    "description": "de.mischmaschine.database.sql.DataBaseType.POSTGRESQL",
+    "location": "-database-lib/de.mischmaschine.database.sql/-data-base-type/-p-o-s-t-g-r-e-s-q-l/index.html",
+    "searchKeys": [
+      "POSTGRESQL",
+      "POSTGRESQL",
+      "de.mischmaschine.database.sql.DataBaseType.POSTGRESQL"
+    ]
+  },
+  {
+    "name": "SQLConfiguration SQLConfiguration(String host, Integer port, String username, String password)",
+    "description": "de.mischmaschine.database.sql.configuration.SQLConfiguration.SQLConfiguration",
+    "location": "-database-lib/de.mischmaschine.database.sql.configuration/-s-q-l-configuration/-s-q-l-configuration.html",
+    "searchKeys": [
+      "SQLConfiguration",
+      "SQLConfiguration SQLConfiguration(String host, Integer port, String username, String password)",
+      "de.mischmaschine.database.sql.configuration.SQLConfiguration.SQLConfiguration"
+    ]
+  },
+  {
+    "name": "SQLITE",
+    "description": "de.mischmaschine.database.sql.DataBaseType.SQLITE",
+    "location": "-database-lib/de.mischmaschine.database.sql/-data-base-type/-s-q-l-i-t-e/index.html",
+    "searchKeys": [
+      "SQLITE",
+      "SQLITE",
+      "de.mischmaschine.database.sql.DataBaseType.SQLITE"
+    ]
+  },
+  {
+    "name": "Unit close()",
+    "description": "de.mischmaschine.database.sql.MySQLResult.close",
+    "location": "-database-lib/de.mischmaschine.database.sql/-my-s-q-l-result/close.html",
+    "searchKeys": [
+      "close",
+      "Unit close()",
+      "de.mischmaschine.database.sql.MySQLResult.close"
+    ]
+  },
+  {
+    "name": "Unit closeConnection(Connection connection)",
+    "description": "de.mischmaschine.database.sql.local.AbstractLocalSQL.closeConnection",
+    "location": "-database-lib/de.mischmaschine.database.sql.local/-abstract-local-s-q-l/close-connection.html",
+    "searchKeys": [
+      "closeConnection",
+      "Unit closeConnection(Connection connection)",
+      "de.mischmaschine.database.sql.local.AbstractLocalSQL.closeConnection"
+    ]
+  },
+  {
+    "name": "Unit closeConnection(Connection connection)",
+    "description": "de.mischmaschine.database.sql.network.AbstractNetworkSQL.closeConnection",
+    "location": "-database-lib/de.mischmaschine.database.sql.network/-abstract-network-s-q-l/close-connection.html",
+    "searchKeys": [
+      "closeConnection",
+      "Unit closeConnection(Connection connection)",
+      "de.mischmaschine.database.sql.network.AbstractNetworkSQL.closeConnection"
+    ]
+  },
+  {
+    "name": "abstract Connection getFreeDatabase()",
+    "description": "de.mischmaschine.database.sql.AbstractSQL.getFreeDatabase",
+    "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/get-free-database.html",
+    "searchKeys": [
+      "getFreeDatabase",
+      "abstract Connection getFreeDatabase()",
+      "de.mischmaschine.database.sql.AbstractSQL.getFreeDatabase"
+    ]
+  },
+  {
+    "name": "abstract Unit closeConnection(Connection connection)",
+    "description": "de.mischmaschine.database.sql.AbstractSQL.closeConnection",
+    "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/close-connection.html",
+    "searchKeys": [
+      "closeConnection",
+      "abstract Unit closeConnection(Connection connection)",
+      "de.mischmaschine.database.sql.AbstractSQL.closeConnection"
+    ]
+  },
+  {
+    "name": "final Boolean existSync(String collection, String key)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.existSync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/exist-sync.html",
+    "searchKeys": [
+      "existSync",
+      "final Boolean existSync(String collection, String key)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.existSync"
+    ]
+  },
+  {
+    "name": "final BulkWriteResult bulkWriteSync(String collection, List<WriteModel<Document>> writeModelList)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.bulkWriteSync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/bulk-write-sync.html",
+    "searchKeys": [
+      "bulkWriteSync",
+      "final BulkWriteResult bulkWriteSync(String collection, List<WriteModel<Document>> writeModelList)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.bulkWriteSync"
+    ]
+  },
+  {
+    "name": "final CompletableFuture<Boolean> existAsync(String collection, String key)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.existAsync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/exist-async.html",
+    "searchKeys": [
+      "existAsync",
+      "final CompletableFuture<Boolean> existAsync(String collection, String key)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.existAsync"
+    ]
+  },
+  {
+    "name": "final CompletableFuture<BulkWriteResult> bulkWriteAsync(String collection, List<WriteModel<Document>> writeModelList)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.bulkWriteAsync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/bulk-write-async.html",
+    "searchKeys": [
+      "bulkWriteAsync",
+      "final CompletableFuture<BulkWriteResult> bulkWriteAsync(String collection, List<WriteModel<Document>> writeModelList)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.bulkWriteAsync"
+    ]
+  },
+  {
+    "name": "final CompletableFuture<Document> deleteDocumentAsync(String collection, String key)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.deleteDocumentAsync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/delete-document-async.html",
+    "searchKeys": [
+      "deleteDocumentAsync",
+      "final CompletableFuture<Document> deleteDocumentAsync(String collection, String key)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.deleteDocumentAsync"
+    ]
+  },
+  {
+    "name": "final CompletableFuture<Document> getDocumentAsync(String collection, String key)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.getDocumentAsync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/get-document-async.html",
+    "searchKeys": [
+      "getDocumentAsync",
+      "final CompletableFuture<Document> getDocumentAsync(String collection, String key)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.getDocumentAsync"
+    ]
+  },
+  {
+    "name": "final CompletableFuture<List<Document>> getAllDocumentsAsync(String collection)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.getAllDocumentsAsync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/get-all-documents-async.html",
+    "searchKeys": [
+      "getAllDocumentsAsync",
+      "final CompletableFuture<List<Document>> getAllDocumentsAsync(String collection)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.getAllDocumentsAsync"
+    ]
+  },
+  {
+    "name": "final CompletableFuture<Long> countDocumentsAsync(String collection)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.countDocumentsAsync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/count-documents-async.html",
+    "searchKeys": [
+      "countDocumentsAsync",
+      "final CompletableFuture<Long> countDocumentsAsync(String collection)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.countDocumentsAsync"
+    ]
+  },
+  {
+    "name": "final CompletableFuture<MySQLResult> getResultAsync(String tableName, String columnName, String key, String additionalQuery)",
+    "description": "de.mischmaschine.database.sql.AbstractSQL.getResultAsync",
+    "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/get-result-async.html",
+    "searchKeys": [
+      "getResultAsync",
+      "final CompletableFuture<MySQLResult> getResultAsync(String tableName, String columnName, String key, String additionalQuery)",
+      "de.mischmaschine.database.sql.AbstractSQL.getResultAsync"
+    ]
+  },
+  {
+    "name": "final Connection getConnection()",
+    "description": "de.mischmaschine.database.sql.MySQLResult.getConnection",
+    "location": "-database-lib/de.mischmaschine.database.sql/-my-s-q-l-result/get-connection.html",
+    "searchKeys": [
+      "getConnection",
+      "final Connection getConnection()",
+      "de.mischmaschine.database.sql.MySQLResult.getConnection"
+    ]
+  },
+  {
+    "name": "final Document deleteDocumentSync(String collection, String key)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.deleteDocumentSync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/delete-document-sync.html",
+    "searchKeys": [
+      "deleteDocumentSync",
+      "final Document deleteDocumentSync(String collection, String key)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.deleteDocumentSync"
+    ]
+  },
+  {
+    "name": "final Document getDocumentSync(String collection, String key)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.getDocumentSync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/get-document-sync.html",
+    "searchKeys": [
+      "getDocumentSync",
+      "final Document getDocumentSync(String collection, String key)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.getDocumentSync"
+    ]
+  },
+  {
+    "name": "final Integer getOrdinal()",
+    "description": "kotlin.DataBaseType.getOrdinal",
+    "location": "-database-lib/de.mischmaschine.database.sql/-data-base-type/get-ordinal.html",
+    "searchKeys": [
+      "getOrdinal",
+      "final Integer getOrdinal()",
+      "kotlin.DataBaseType.getOrdinal"
+    ]
+  },
+  {
+    "name": "final Integer getPort(KClass<?> kClass)",
+    "description": "de.mischmaschine.database.database.Configuration.Companion.getPort",
+    "location": "-database-lib/de.mischmaschine.database.database/-configuration/-companion/get-port.html",
+    "searchKeys": [
+      "getPort",
+      "final Integer getPort(KClass<?> kClass)",
+      "de.mischmaschine.database.database.Configuration.Companion.getPort"
+    ]
+  },
+  {
+    "name": "final List<Document> getAllDocumentsSync(String collection)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.getAllDocumentsSync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/get-all-documents-sync.html",
+    "searchKeys": [
+      "getAllDocumentsSync",
+      "final List<Document> getAllDocumentsSync(String collection)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.getAllDocumentsSync"
+    ]
+  },
+  {
+    "name": "final Long countDocumentsSync(String collection)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.countDocumentsSync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/count-documents-sync.html",
+    "searchKeys": [
+      "countDocumentsSync",
+      "final Long countDocumentsSync(String collection)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.countDocumentsSync"
+    ]
+  },
+  {
+    "name": "final Map<String, Configuration> getConnectionMap()",
+    "description": "de.mischmaschine.database.database.Configuration.Companion.getConnectionMap",
+    "location": "-database-lib/de.mischmaschine.database.database/-configuration/-companion/get-connection-map.html",
+    "searchKeys": [
+      "getConnectionMap",
+      "final Map<String, Configuration> getConnectionMap()",
+      "de.mischmaschine.database.database.Configuration.Companion.getConnectionMap"
+    ]
+  },
+  {
+    "name": "final MongoClient getMongoClient()",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.getMongoClient",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/get-mongo-client.html",
+    "searchKeys": [
+      "getMongoClient",
+      "final MongoClient getMongoClient()",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.getMongoClient"
+    ]
+  },
+  {
+    "name": "final MongoCollection<Document> getCollection(String collection)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.getCollection",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/get-collection.html",
+    "searchKeys": [
+      "getCollection",
+      "final MongoCollection<Document> getCollection(String collection)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.getCollection"
+    ]
+  },
+  {
+    "name": "final MongoDatabase getMongoDatabase()",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.getMongoDatabase",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/get-mongo-database.html",
+    "searchKeys": [
+      "getMongoDatabase",
+      "final MongoDatabase getMongoDatabase()",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.getMongoDatabase"
+    ]
+  },
+  {
+    "name": "final MySQLResult getResultSync(String tableName, String columnName, String key, String additionalQuery)",
+    "description": "de.mischmaschine.database.sql.AbstractSQL.getResultSync",
+    "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/get-result-sync.html",
+    "searchKeys": [
+      "getResultSync",
+      "final MySQLResult getResultSync(String tableName, String columnName, String key, String additionalQuery)",
+      "de.mischmaschine.database.sql.AbstractSQL.getResultSync"
+    ]
+  },
+  {
+    "name": "final PreparedStatement getPrepareStatement()",
+    "description": "de.mischmaschine.database.sql.MySQLResult.getPrepareStatement",
+    "location": "-database-lib/de.mischmaschine.database.sql/-my-s-q-l-result/get-prepare-statement.html",
+    "searchKeys": [
+      "getPrepareStatement",
+      "final PreparedStatement getPrepareStatement()",
+      "de.mischmaschine.database.sql.MySQLResult.getPrepareStatement"
+    ]
+  },
+  {
+    "name": "final ResultSet getResultSet()",
+    "description": "de.mischmaschine.database.sql.MySQLResult.getResultSet",
+    "location": "-database-lib/de.mischmaschine.database.sql/-my-s-q-l-result/get-result-set.html",
+    "searchKeys": [
+      "getResultSet",
+      "final ResultSet getResultSet()",
+      "de.mischmaschine.database.sql.MySQLResult.getResultSet"
+    ]
+  },
+  {
+    "name": "final String getHost()",
+    "description": "de.mischmaschine.database.mongodb.configuration.MongoConfiguration.Companion.getHost",
+    "location": "-database-lib/de.mischmaschine.database.mongodb.configuration/-mongo-configuration/-companion/get-host.html",
+    "searchKeys": [
+      "getHost",
+      "final String getHost()",
+      "de.mischmaschine.database.mongodb.configuration.MongoConfiguration.Companion.getHost"
+    ]
+  },
+  {
+    "name": "final String getHost()",
+    "description": "de.mischmaschine.database.sql.configuration.SQLConfiguration.Companion.getHost",
+    "location": "-database-lib/de.mischmaschine.database.sql.configuration/-s-q-l-configuration/-companion/get-host.html",
+    "searchKeys": [
+      "getHost",
+      "final String getHost()",
+      "de.mischmaschine.database.sql.configuration.SQLConfiguration.Companion.getHost"
+    ]
+  },
+  {
+    "name": "final String getHost(KClass<?> kClass)",
+    "description": "de.mischmaschine.database.database.Configuration.Companion.getHost",
+    "location": "-database-lib/de.mischmaschine.database.database/-configuration/-companion/get-host.html",
+    "searchKeys": [
+      "getHost",
+      "final String getHost(KClass<?> kClass)",
+      "de.mischmaschine.database.database.Configuration.Companion.getHost"
+    ]
+  },
+  {
+    "name": "final String getName()",
+    "description": "kotlin.DataBaseType.getName",
+    "location": "-database-lib/de.mischmaschine.database.sql/-data-base-type/get-name.html",
+    "searchKeys": [
+      "getName",
+      "final String getName()",
+      "kotlin.DataBaseType.getName"
+    ]
+  },
+  {
+    "name": "final String getPassword()",
+    "description": "de.mischmaschine.database.mongodb.configuration.MongoConfiguration.Companion.getPassword",
+    "location": "-database-lib/de.mischmaschine.database.mongodb.configuration/-mongo-configuration/-companion/get-password.html",
+    "searchKeys": [
+      "getPassword",
+      "final String getPassword()",
+      "de.mischmaschine.database.mongodb.configuration.MongoConfiguration.Companion.getPassword"
+    ]
+  },
+  {
+    "name": "final String getPassword()",
+    "description": "de.mischmaschine.database.sql.configuration.SQLConfiguration.Companion.getPassword",
+    "location": "-database-lib/de.mischmaschine.database.sql.configuration/-s-q-l-configuration/-companion/get-password.html",
+    "searchKeys": [
+      "getPassword",
+      "final String getPassword()",
+      "de.mischmaschine.database.sql.configuration.SQLConfiguration.Companion.getPassword"
+    ]
+  },
+  {
+    "name": "final String getPassword(KClass<?> kClass)",
+    "description": "de.mischmaschine.database.database.Configuration.Companion.getPassword",
+    "location": "-database-lib/de.mischmaschine.database.database/-configuration/-companion/get-password.html",
+    "searchKeys": [
+      "getPassword",
+      "final String getPassword(KClass<?> kClass)",
+      "de.mischmaschine.database.database.Configuration.Companion.getPassword"
+    ]
+  },
+  {
+    "name": "final String getPort()",
+    "description": "de.mischmaschine.database.mongodb.configuration.MongoConfiguration.Companion.getPort",
+    "location": "-database-lib/de.mischmaschine.database.mongodb.configuration/-mongo-configuration/-companion/get-port.html",
+    "searchKeys": [
+      "getPort",
+      "final String getPort()",
+      "de.mischmaschine.database.mongodb.configuration.MongoConfiguration.Companion.getPort"
+    ]
+  },
+  {
+    "name": "final String getPort()",
+    "description": "de.mischmaschine.database.sql.configuration.SQLConfiguration.Companion.getPort",
+    "location": "-database-lib/de.mischmaschine.database.sql.configuration/-s-q-l-configuration/-companion/get-port.html",
+    "searchKeys": [
+      "getPort",
+      "final String getPort()",
+      "de.mischmaschine.database.sql.configuration.SQLConfiguration.Companion.getPort"
+    ]
+  },
+  {
+    "name": "final String getUsername()",
+    "description": "de.mischmaschine.database.mongodb.configuration.MongoConfiguration.Companion.getUsername",
+    "location": "-database-lib/de.mischmaschine.database.mongodb.configuration/-mongo-configuration/-companion/get-username.html",
+    "searchKeys": [
+      "getUsername",
+      "final String getUsername()",
+      "de.mischmaschine.database.mongodb.configuration.MongoConfiguration.Companion.getUsername"
+    ]
+  },
+  {
+    "name": "final String getUsername()",
+    "description": "de.mischmaschine.database.sql.configuration.SQLConfiguration.Companion.getUsername",
+    "location": "-database-lib/de.mischmaschine.database.sql.configuration/-s-q-l-configuration/-companion/get-username.html",
+    "searchKeys": [
+      "getUsername",
+      "final String getUsername()",
+      "de.mischmaschine.database.sql.configuration.SQLConfiguration.Companion.getUsername"
+    ]
+  },
+  {
+    "name": "final String getUsername(KClass<?> kClass)",
+    "description": "de.mischmaschine.database.database.Configuration.Companion.getUsername",
+    "location": "-database-lib/de.mischmaschine.database.database/-configuration/-companion/get-username.html",
+    "searchKeys": [
+      "getUsername",
+      "final String getUsername(KClass<?> kClass)",
+      "de.mischmaschine.database.database.Configuration.Companion.getUsername"
+    ]
+  },
+  {
+    "name": "final Unit close()",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.close",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/close.html",
+    "searchKeys": [
+      "close",
+      "final Unit close()",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.close"
+    ]
+  },
+  {
+    "name": "final Unit createTable(LinkedHashMap<String, String> tableData, String tableName, String primaryKey)",
+    "description": "de.mischmaschine.database.sql.AbstractSQL.createTable",
+    "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/create-table.html",
+    "searchKeys": [
+      "createTable",
+      "final Unit createTable(LinkedHashMap<String, String> tableData, String tableName, String primaryKey)",
+      "de.mischmaschine.database.sql.AbstractSQL.createTable"
+    ]
+  },
+  {
+    "name": "final Unit deleteAsync(String tableName, String columnName, Object value)",
+    "description": "de.mischmaschine.database.sql.AbstractSQL.deleteAsync",
+    "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/delete-async.html",
+    "searchKeys": [
+      "deleteAsync",
+      "final Unit deleteAsync(String tableName, String columnName, Object value)",
+      "de.mischmaschine.database.sql.AbstractSQL.deleteAsync"
+    ]
+  },
+  {
+    "name": "final Unit deleteManyAsync(String collection, String key)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.deleteManyAsync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/delete-many-async.html",
+    "searchKeys": [
+      "deleteManyAsync",
+      "final Unit deleteManyAsync(String collection, String key)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.deleteManyAsync"
+    ]
+  },
+  {
+    "name": "final Unit deleteManySync(String collection, String key)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.deleteManySync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/delete-many-sync.html",
+    "searchKeys": [
+      "deleteManySync",
+      "final Unit deleteManySync(String collection, String key)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.deleteManySync"
+    ]
+  },
+  {
+    "name": "final Unit deleteSync(String tableName, String columnName, Object value)",
+    "description": "de.mischmaschine.database.sql.AbstractSQL.deleteSync",
+    "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/delete-sync.html",
+    "searchKeys": [
+      "deleteSync",
+      "final Unit deleteSync(String tableName, String columnName, Object value)",
+      "de.mischmaschine.database.sql.AbstractSQL.deleteSync"
+    ]
+  },
+  {
+    "name": "final Unit dropCollectionAsync(String collection)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.dropCollectionAsync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/drop-collection-async.html",
+    "searchKeys": [
+      "dropCollectionAsync",
+      "final Unit dropCollectionAsync(String collection)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.dropCollectionAsync"
+    ]
+  },
+  {
+    "name": "final Unit dropCollectionSync(String collection)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.dropCollectionSync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/drop-collection-sync.html",
+    "searchKeys": [
+      "dropCollectionSync",
+      "final Unit dropCollectionSync(String collection)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.dropCollectionSync"
+    ]
+  },
+  {
+    "name": "final Unit insertAsync(String tableName, List<Object> tableValues)",
+    "description": "de.mischmaschine.database.sql.AbstractSQL.insertAsync",
+    "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/insert-async.html",
+    "searchKeys": [
+      "insertAsync",
+      "final Unit insertAsync(String tableName, List<Object> tableValues)",
+      "de.mischmaschine.database.sql.AbstractSQL.insertAsync"
+    ]
+  },
+  {
+    "name": "final Unit insertDocumentAsync(String collection, String key, Document document)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.insertDocumentAsync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/insert-document-async.html",
+    "searchKeys": [
+      "insertDocumentAsync",
+      "final Unit insertDocumentAsync(String collection, String key, Document document)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.insertDocumentAsync"
+    ]
+  },
+  {
+    "name": "final Unit insertDocumentCollectionAsync(String collection, String key, Collection<Document> documents)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.insertDocumentCollectionAsync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/insert-document-collection-async.html",
+    "searchKeys": [
+      "insertDocumentCollectionAsync",
+      "final Unit insertDocumentCollectionAsync(String collection, String key, Collection<Document> documents)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.insertDocumentCollectionAsync"
+    ]
+  },
+  {
+    "name": "final Unit insertDocumentCollectionSync(String collection, String key, Collection<Document> documents)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.insertDocumentCollectionSync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/insert-document-collection-sync.html",
+    "searchKeys": [
+      "insertDocumentCollectionSync",
+      "final Unit insertDocumentCollectionSync(String collection, String key, Collection<Document> documents)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.insertDocumentCollectionSync"
+    ]
+  },
+  {
+    "name": "final Unit insertDocumentSync(String collection, String key, Document document)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.insertDocumentSync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/insert-document-sync.html",
+    "searchKeys": [
+      "insertDocumentSync",
+      "final Unit insertDocumentSync(String collection, String key, Document document)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.insertDocumentSync"
+    ]
+  },
+  {
+    "name": "final Unit insertSync(String tableName, List<Object> tableValues)",
+    "description": "de.mischmaschine.database.sql.AbstractSQL.insertSync",
+    "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/insert-sync.html",
+    "searchKeys": [
+      "insertSync",
+      "final Unit insertSync(String tableName, List<Object> tableValues)",
+      "de.mischmaschine.database.sql.AbstractSQL.insertSync"
+    ]
+  },
+  {
+    "name": "final Unit renameCollectionAsync(String collection, String newCollectionName)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.renameCollectionAsync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/rename-collection-async.html",
+    "searchKeys": [
+      "renameCollectionAsync",
+      "final Unit renameCollectionAsync(String collection, String newCollectionName)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.renameCollectionAsync"
+    ]
+  },
+  {
+    "name": "final Unit renameCollectionSync(String collection, String newCollectionName)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.renameCollectionSync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/rename-collection-sync.html",
+    "searchKeys": [
+      "renameCollectionSync",
+      "final Unit renameCollectionSync(String collection, String newCollectionName)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.renameCollectionSync"
+    ]
+  },
+  {
+    "name": "final Unit updateAsync(String tableName, String columnName, Object value, String targetColumnName, String targetValue)",
+    "description": "de.mischmaschine.database.sql.AbstractSQL.updateAsync",
+    "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/update-async.html",
+    "searchKeys": [
+      "updateAsync",
+      "final Unit updateAsync(String tableName, String columnName, Object value, String targetColumnName, String targetValue)",
+      "de.mischmaschine.database.sql.AbstractSQL.updateAsync"
+    ]
+  },
+  {
+    "name": "final Unit updateDocumentAsync(String collection, String key, Document document)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.updateDocumentAsync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/update-document-async.html",
+    "searchKeys": [
+      "updateDocumentAsync",
+      "final Unit updateDocumentAsync(String collection, String key, Document document)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.updateDocumentAsync"
+    ]
+  },
+  {
+    "name": "final Unit updateDocumentSync(String collection, String key, Document document)",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.updateDocumentSync",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/update-document-sync.html",
+    "searchKeys": [
+      "updateDocumentSync",
+      "final Unit updateDocumentSync(String collection, String key, Document document)",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB.updateDocumentSync"
+    ]
+  },
+  {
+    "name": "final Unit updateSync(String tableName, String columnName, Object value, String targetColumnName, String targetValue)",
+    "description": "de.mischmaschine.database.sql.AbstractSQL.updateSync",
+    "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/update-sync.html",
+    "searchKeys": [
+      "updateSync",
+      "final Unit updateSync(String tableName, String columnName, Object value, String targetColumnName, String targetValue)",
+      "de.mischmaschine.database.sql.AbstractSQL.updateSync"
+    ]
+  },
+  {
+    "name": "public abstract class AbstractH2SQL extends AbstractLocalSQL implements Database",
+    "description": "de.mischmaschine.database.sql.local.h2.AbstractH2SQL",
+    "location": "-database-lib/de.mischmaschine.database.sql.local.h2/-abstract-h2-s-q-l/index.html",
+    "searchKeys": [
+      "AbstractH2SQL",
+      "public abstract class AbstractH2SQL extends AbstractLocalSQL implements Database",
+      "de.mischmaschine.database.sql.local.h2.AbstractH2SQL"
+    ]
+  },
+  {
+    "name": "public abstract class AbstractLocalSQL extends AbstractSQL",
+    "description": "de.mischmaschine.database.sql.local.AbstractLocalSQL",
+    "location": "-database-lib/de.mischmaschine.database.sql.local/-abstract-local-s-q-l/index.html",
+    "searchKeys": [
+      "AbstractLocalSQL",
+      "public abstract class AbstractLocalSQL extends AbstractSQL",
+      "de.mischmaschine.database.sql.local.AbstractLocalSQL"
+    ]
+  },
+  {
+    "name": "public abstract class AbstractMariaDB extends AbstractNetworkSQL implements Database",
+    "description": "de.mischmaschine.database.sql.network.mariadb.AbstractMariaDB",
+    "location": "-database-lib/de.mischmaschine.database.sql.network.mariadb/-abstract-maria-d-b/index.html",
+    "searchKeys": [
+      "AbstractMariaDB",
+      "public abstract class AbstractMariaDB extends AbstractNetworkSQL implements Database",
+      "de.mischmaschine.database.sql.network.mariadb.AbstractMariaDB"
+    ]
+  },
+  {
+    "name": "public abstract class AbstractMongoDB implements Database",
+    "description": "de.mischmaschine.database.mongodb.AbstractMongoDB",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/index.html",
+    "searchKeys": [
+      "AbstractMongoDB",
+      "public abstract class AbstractMongoDB implements Database",
+      "de.mischmaschine.database.mongodb.AbstractMongoDB"
+    ]
+  },
+  {
+    "name": "public abstract class AbstractMySQL extends AbstractNetworkSQL implements Database",
+    "description": "de.mischmaschine.database.sql.network.mysql.AbstractMySQL",
+    "location": "-database-lib/de.mischmaschine.database.sql.network.mysql/-abstract-my-s-q-l/index.html",
+    "searchKeys": [
+      "AbstractMySQL",
+      "public abstract class AbstractMySQL extends AbstractNetworkSQL implements Database",
+      "de.mischmaschine.database.sql.network.mysql.AbstractMySQL"
+    ]
+  },
+  {
+    "name": "public abstract class AbstractNetworkSQL extends AbstractSQL",
+    "description": "de.mischmaschine.database.sql.network.AbstractNetworkSQL",
+    "location": "-database-lib/de.mischmaschine.database.sql.network/-abstract-network-s-q-l/index.html",
+    "searchKeys": [
+      "AbstractNetworkSQL",
+      "public abstract class AbstractNetworkSQL extends AbstractSQL",
+      "de.mischmaschine.database.sql.network.AbstractNetworkSQL"
+    ]
+  },
+  {
+    "name": "public abstract class AbstractPostgreSQL extends AbstractNetworkSQL implements Database",
+    "description": "de.mischmaschine.database.sql.network.postgresql.AbstractPostgreSQL",
+    "location": "-database-lib/de.mischmaschine.database.sql.network.postgresql/-abstract-postgre-s-q-l/index.html",
+    "searchKeys": [
+      "AbstractPostgreSQL",
+      "public abstract class AbstractPostgreSQL extends AbstractNetworkSQL implements Database",
+      "de.mischmaschine.database.sql.network.postgresql.AbstractPostgreSQL"
+    ]
+  },
+  {
+    "name": "public abstract class AbstractSQL",
+    "description": "de.mischmaschine.database.sql.AbstractSQL",
+    "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/index.html",
+    "searchKeys": [
+      "AbstractSQL",
+      "public abstract class AbstractSQL",
+      "de.mischmaschine.database.sql.AbstractSQL"
+    ]
+  },
+  {
+    "name": "public abstract class AbstractSQLite extends AbstractLocalSQL implements Database",
+    "description": "de.mischmaschine.database.sql.local.sqlite.AbstractSQLite",
+    "location": "-database-lib/de.mischmaschine.database.sql.local.sqlite/-abstract-s-q-lite/index.html",
+    "searchKeys": [
+      "AbstractSQLite",
+      "public abstract class AbstractSQLite extends AbstractLocalSQL implements Database",
+      "de.mischmaschine.database.sql.local.sqlite.AbstractSQLite"
+    ]
+  },
+  {
+    "name": "public class Companion",
+    "description": "de.mischmaschine.database.database.Configuration.Companion",
+    "location": "-database-lib/de.mischmaschine.database.database/-configuration/-companion/index.html",
+    "searchKeys": [
+      "Companion",
+      "public class Companion",
+      "de.mischmaschine.database.database.Configuration.Companion"
+    ]
+  },
+  {
+    "name": "public class Companion",
+    "description": "de.mischmaschine.database.mongodb.configuration.MongoConfiguration.Companion",
+    "location": "-database-lib/de.mischmaschine.database.mongodb.configuration/-mongo-configuration/-companion/index.html",
+    "searchKeys": [
+      "Companion",
+      "public class Companion",
+      "de.mischmaschine.database.mongodb.configuration.MongoConfiguration.Companion"
+    ]
+  },
+  {
+    "name": "public class Companion",
+    "description": "de.mischmaschine.database.sql.AbstractSQL.Companion",
+    "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/-companion/index.html",
+    "searchKeys": [
+      "Companion",
+      "public class Companion",
+      "de.mischmaschine.database.sql.AbstractSQL.Companion"
+    ]
+  },
+  {
+    "name": "public class Companion",
+    "description": "de.mischmaschine.database.sql.configuration.SQLConfiguration.Companion",
+    "location": "-database-lib/de.mischmaschine.database.sql.configuration/-s-q-l-configuration/-companion/index.html",
+    "searchKeys": [
+      "Companion",
+      "public class Companion",
+      "de.mischmaschine.database.sql.configuration.SQLConfiguration.Companion"
+    ]
+  },
+  {
+    "name": "public enum DataBaseType extends Enum<DataBaseType>",
+    "description": "de.mischmaschine.database.sql.DataBaseType",
+    "location": "-database-lib/de.mischmaschine.database.sql/-data-base-type/index.html",
+    "searchKeys": [
+      "DataBaseType",
+      "public enum DataBaseType extends Enum<DataBaseType>",
+      "de.mischmaschine.database.sql.DataBaseType"
+    ]
+  },
+  {
+    "name": "public final class Configuration",
+    "description": "de.mischmaschine.database.database.Configuration",
+    "location": "-database-lib/de.mischmaschine.database.database/-configuration/index.html",
+    "searchKeys": [
+      "Configuration",
+      "public final class Configuration",
+      "de.mischmaschine.database.database.Configuration"
+    ]
+  },
+  {
+    "name": "public final class MongoConfiguration",
+    "description": "de.mischmaschine.database.mongodb.configuration.MongoConfiguration",
+    "location": "-database-lib/de.mischmaschine.database.mongodb.configuration/-mongo-configuration/index.html",
+    "searchKeys": [
+      "MongoConfiguration",
+      "public final class MongoConfiguration",
+      "de.mischmaschine.database.mongodb.configuration.MongoConfiguration"
+    ]
+  },
+  {
+    "name": "public final class MySQLResult implements AutoCloseable",
+    "description": "de.mischmaschine.database.sql.MySQLResult",
+    "location": "-database-lib/de.mischmaschine.database.sql/-my-s-q-l-result/index.html",
+    "searchKeys": [
+      "MySQLResult",
+      "public final class MySQLResult implements AutoCloseable",
+      "de.mischmaschine.database.sql.MySQLResult"
+    ]
+  },
+  {
+    "name": "public final class SQLConfiguration",
+    "description": "de.mischmaschine.database.sql.configuration.SQLConfiguration",
+    "location": "-database-lib/de.mischmaschine.database.sql.configuration/-s-q-l-configuration/index.html",
+    "searchKeys": [
+      "SQLConfiguration",
+      "public final class SQLConfiguration",
+      "de.mischmaschine.database.sql.configuration.SQLConfiguration"
+    ]
+  },
+  {
+    "name": "public interface Database",
+    "description": "de.mischmaschine.database.database.Database",
+    "location": "-database-lib/de.mischmaschine.database.database/-database/index.html",
+    "searchKeys": [
+      "Database",
+      "public interface Database",
+      "de.mischmaschine.database.database.Database"
+    ]
+  }
+]
