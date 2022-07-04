@@ -1,14 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "1.7.0"
     id("com.github.johnrengelman.shadow") version "7.0.0"
     id("org.jetbrains.dokka") version "1.6.21"
     id("maven-publish")
+    id("org.ajoberstar.reckon") version "0.16.1"
 }
 
 group = "de.mischmaschine"
-version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -28,6 +28,7 @@ dependencies {
     testImplementation("org.mongodb:mongodb-driver-sync:4.6.0")
 
     implementation("com.google.code.gson:gson:2.9.0")
+    implementation("com.google.code.gson:gson:2.9.0")
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.21")
     implementation(kotlin("reflect"))
 }
@@ -40,6 +41,13 @@ tasks {
 /*tasks.test {
     useJUnitPlatform()
 }*/
+
+reckon {
+    stages("beta", "rc", "final")
+
+    setScopeCalc(calcScopeFromProp().or(calcScopeFromCommitMessages()))
+    setStageCalc(calcStageFromProp())
+}
 
 publishing {
     publications {
@@ -55,5 +63,5 @@ publishing {
 
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+    kotlinOptions.jvmTarget = "17"
 }
