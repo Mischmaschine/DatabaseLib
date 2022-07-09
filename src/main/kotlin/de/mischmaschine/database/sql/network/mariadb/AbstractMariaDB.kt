@@ -5,6 +5,10 @@ import de.mischmaschine.database.database.Database
 import de.mischmaschine.database.sql.DataBaseType
 import de.mischmaschine.database.sql.network.AbstractNetworkSQL
 
+/**
+ * ## AbstractMariaDB
+ * This class is a wrapper for the MariaDB JDBC driver.
+ */
 abstract class AbstractMariaDB(
     database: String,
 ) : AbstractNetworkSQL(

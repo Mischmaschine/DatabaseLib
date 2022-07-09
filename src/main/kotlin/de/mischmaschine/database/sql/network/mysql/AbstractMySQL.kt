@@ -5,6 +5,10 @@ import de.mischmaschine.database.database.Database
 import de.mischmaschine.database.sql.DataBaseType
 import de.mischmaschine.database.sql.network.AbstractNetworkSQL
 
+/**
+ * ## AbstractMySQL
+ * This class is a wrapper for the MySQL JDBC driver.
+ */
 abstract class AbstractMySQL(
     database: String,
 ) : AbstractNetworkSQL(

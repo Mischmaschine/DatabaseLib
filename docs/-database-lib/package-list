@@ -1,0 +1,127 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:de.mischmaschine.database.database////PointingToDeclaration/-database-lib/de.mischmaschine.database.database/index.html
+$dokka.location:de.mischmaschine.database.database/Configuration.Companion///PointingToDeclaration/-database-lib/de.mischmaschine.database.database/-configuration/-companion/index.html
+$dokka.location:de.mischmaschine.database.database/Configuration.Companion/getConnectionMap/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.database/-configuration/-companion/get-connection-map.html
+$dokka.location:de.mischmaschine.database.database/Configuration.Companion/getHost/#kotlin.reflect.KClass[*]/PointingToDeclaration/-database-lib/de.mischmaschine.database.database/-configuration/-companion/get-host.html
+$dokka.location:de.mischmaschine.database.database/Configuration.Companion/getPassword/#kotlin.reflect.KClass[*]/PointingToDeclaration/-database-lib/de.mischmaschine.database.database/-configuration/-companion/get-password.html
+$dokka.location:de.mischmaschine.database.database/Configuration.Companion/getPort/#kotlin.reflect.KClass[*]/PointingToDeclaration/-database-lib/de.mischmaschine.database.database/-configuration/-companion/get-port.html
+$dokka.location:de.mischmaschine.database.database/Configuration.Companion/getUsername/#kotlin.reflect.KClass[*]/PointingToDeclaration/-database-lib/de.mischmaschine.database.database/-configuration/-companion/get-username.html
+$dokka.location:de.mischmaschine.database.database/Configuration///PointingToDeclaration/-database-lib/de.mischmaschine.database.database/-configuration/index.html
+$dokka.location:de.mischmaschine.database.database/Configuration/Configuration/#kotlin.String#kotlin.Int#kotlin.String#kotlin.String#java.lang.Class[*]/PointingToDeclaration/-database-lib/de.mischmaschine.database.database/-configuration/-configuration.html
+$dokka.location:de.mischmaschine.database.database/Configuration/Configuration/#kotlin.String#kotlin.Int#kotlin.String#kotlin.String#kotlin.reflect.KClass[*]/PointingToDeclaration/-database-lib/de.mischmaschine.database.database/-configuration/-configuration.html
+$dokka.location:de.mischmaschine.database.database/Database///PointingToDeclaration/-database-lib/de.mischmaschine.database.database/-database/index.html
+$dokka.location:de.mischmaschine.database.mongodb.configuration////PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb.configuration/index.html
+$dokka.location:de.mischmaschine.database.mongodb.configuration/MongoConfiguration.Companion///PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb.configuration/-mongo-configuration/-companion/index.html
+$dokka.location:de.mischmaschine.database.mongodb.configuration/MongoConfiguration.Companion/getHost/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb.configuration/-mongo-configuration/-companion/get-host.html
+$dokka.location:de.mischmaschine.database.mongodb.configuration/MongoConfiguration.Companion/getPassword/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb.configuration/-mongo-configuration/-companion/get-password.html
+$dokka.location:de.mischmaschine.database.mongodb.configuration/MongoConfiguration.Companion/getPort/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb.configuration/-mongo-configuration/-companion/get-port.html
+$dokka.location:de.mischmaschine.database.mongodb.configuration/MongoConfiguration.Companion/getUsername/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb.configuration/-mongo-configuration/-companion/get-username.html
+$dokka.location:de.mischmaschine.database.mongodb.configuration/MongoConfiguration///PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb.configuration/-mongo-configuration/index.html
+$dokka.location:de.mischmaschine.database.mongodb.configuration/MongoConfiguration/MongoConfiguration/#kotlin.String#kotlin.Int#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb.configuration/-mongo-configuration/-mongo-configuration.html
+$dokka.location:de.mischmaschine.database.mongodb////PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/index.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB///PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/index.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/AbstractMongoDB/#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/-abstract-mongo-d-b.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/bulkWriteAsync/#kotlin.String#kotlin.collections.List[com.mongodb.client.model.WriteModel[org.bson.Document]]/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/bulk-write-async.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/bulkWriteSync/#kotlin.String#kotlin.collections.List[com.mongodb.client.model.WriteModel[org.bson.Document]]/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/bulk-write-sync.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/close/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/close.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/countDocumentsAsync/#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/count-documents-async.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/countDocumentsSync/#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/count-documents-sync.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/deleteDocumentAsync/#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/delete-document-async.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/deleteDocumentSync/#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/delete-document-sync.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/deleteManyAsync/#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/delete-many-async.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/deleteManySync/#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/delete-many-sync.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/dropCollectionAsync/#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/drop-collection-async.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/dropCollectionSync/#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/drop-collection-sync.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/existAsync/#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/exist-async.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/existSync/#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/exist-sync.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/getAllDocumentsAsync/#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/get-all-documents-async.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/getAllDocumentsSync/#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/get-all-documents-sync.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/getCollection/#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/get-collection.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/getDocumentAsync/#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/get-document-async.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/getDocumentSync/#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/get-document-sync.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/getMongoClient/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/get-mongo-client.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/getMongoDatabase/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/get-mongo-database.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/insertDocumentAsync/#kotlin.String#kotlin.String#org.bson.Document/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/insert-document-async.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/insertDocumentCollectionAsync/#kotlin.String#kotlin.String#kotlin.collections.Collection[org.bson.Document]/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/insert-document-collection-async.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/insertDocumentCollectionSync/#kotlin.String#kotlin.String#kotlin.collections.Collection[org.bson.Document]/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/insert-document-collection-sync.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/insertDocumentSync/#kotlin.String#kotlin.String#org.bson.Document/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/insert-document-sync.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/renameCollectionAsync/#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/rename-collection-async.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/renameCollectionSync/#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/rename-collection-sync.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/updateDocumentAsync/#kotlin.String#kotlin.String#org.bson.Document/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/update-document-async.html
+$dokka.location:de.mischmaschine.database.mongodb/AbstractMongoDB/updateDocumentSync/#kotlin.String#kotlin.String#org.bson.Document/PointingToDeclaration/-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/update-document-sync.html
+$dokka.location:de.mischmaschine.database.sql.configuration////PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.configuration/index.html
+$dokka.location:de.mischmaschine.database.sql.configuration/SQLConfiguration.Companion///PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.configuration/-s-q-l-configuration/-companion/index.html
+$dokka.location:de.mischmaschine.database.sql.configuration/SQLConfiguration.Companion/getHost/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.configuration/-s-q-l-configuration/-companion/get-host.html
+$dokka.location:de.mischmaschine.database.sql.configuration/SQLConfiguration.Companion/getPassword/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.configuration/-s-q-l-configuration/-companion/get-password.html
+$dokka.location:de.mischmaschine.database.sql.configuration/SQLConfiguration.Companion/getPort/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.configuration/-s-q-l-configuration/-companion/get-port.html
+$dokka.location:de.mischmaschine.database.sql.configuration/SQLConfiguration.Companion/getUsername/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.configuration/-s-q-l-configuration/-companion/get-username.html
+$dokka.location:de.mischmaschine.database.sql.configuration/SQLConfiguration///PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.configuration/-s-q-l-configuration/index.html
+$dokka.location:de.mischmaschine.database.sql.configuration/SQLConfiguration/SQLConfiguration/#kotlin.String#kotlin.Int#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.configuration/-s-q-l-configuration/-s-q-l-configuration.html
+$dokka.location:de.mischmaschine.database.sql.local.h2////PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.local.h2/index.html
+$dokka.location:de.mischmaschine.database.sql.local.h2/AbstractH2SQL///PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.local.h2/-abstract-h2-s-q-l/index.html
+$dokka.location:de.mischmaschine.database.sql.local.h2/AbstractH2SQL/AbstractH2SQL/#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.local.h2/-abstract-h2-s-q-l/-abstract-h2-s-q-l.html
+$dokka.location:de.mischmaschine.database.sql.local.sqlite////PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.local.sqlite/index.html
+$dokka.location:de.mischmaschine.database.sql.local.sqlite/AbstractSQLite///PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.local.sqlite/-abstract-s-q-lite/index.html
+$dokka.location:de.mischmaschine.database.sql.local.sqlite/AbstractSQLite/AbstractSQLite/#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.local.sqlite/-abstract-s-q-lite/-abstract-s-q-lite.html
+$dokka.location:de.mischmaschine.database.sql.local////PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.local/index.html
+$dokka.location:de.mischmaschine.database.sql.local/AbstractLocalSQL///PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.local/-abstract-local-s-q-l/index.html
+$dokka.location:de.mischmaschine.database.sql.local/AbstractLocalSQL/AbstractLocalSQL/#kotlin.String?#kotlin.String?#kotlin.String#de.mischmaschine.database.sql.DataBaseType/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.local/-abstract-local-s-q-l/-abstract-local-s-q-l.html
+$dokka.location:de.mischmaschine.database.sql.local/AbstractLocalSQL/closeConnection/#java.sql.Connection/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.local/-abstract-local-s-q-l/close-connection.html
+$dokka.location:de.mischmaschine.database.sql.local/AbstractLocalSQL/getFreeDatabase/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.local/-abstract-local-s-q-l/get-free-database.html
+$dokka.location:de.mischmaschine.database.sql.network.mariadb////PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.network.mariadb/index.html
+$dokka.location:de.mischmaschine.database.sql.network.mariadb/AbstractMariaDB///PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.network.mariadb/-abstract-maria-d-b/index.html
+$dokka.location:de.mischmaschine.database.sql.network.mariadb/AbstractMariaDB/AbstractMariaDB/#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.network.mariadb/-abstract-maria-d-b/-abstract-maria-d-b.html
+$dokka.location:de.mischmaschine.database.sql.network.mysql////PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.network.mysql/index.html
+$dokka.location:de.mischmaschine.database.sql.network.mysql/AbstractMySQL///PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.network.mysql/-abstract-my-s-q-l/index.html
+$dokka.location:de.mischmaschine.database.sql.network.mysql/AbstractMySQL/AbstractMySQL/#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.network.mysql/-abstract-my-s-q-l/-abstract-my-s-q-l.html
+$dokka.location:de.mischmaschine.database.sql.network.postgresql////PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.network.postgresql/index.html
+$dokka.location:de.mischmaschine.database.sql.network.postgresql/AbstractPostgreSQL///PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.network.postgresql/-abstract-postgre-s-q-l/index.html
+$dokka.location:de.mischmaschine.database.sql.network.postgresql/AbstractPostgreSQL/AbstractPostgreSQL/#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.network.postgresql/-abstract-postgre-s-q-l/-abstract-postgre-s-q-l.html
+$dokka.location:de.mischmaschine.database.sql.network////PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.network/index.html
+$dokka.location:de.mischmaschine.database.sql.network/AbstractNetworkSQL///PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.network/-abstract-network-s-q-l/index.html
+$dokka.location:de.mischmaschine.database.sql.network/AbstractNetworkSQL/AbstractNetworkSQL/#kotlin.String#kotlin.Int#kotlin.String#kotlin.String#kotlin.String#de.mischmaschine.database.sql.DataBaseType/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.network/-abstract-network-s-q-l/-abstract-network-s-q-l.html
+$dokka.location:de.mischmaschine.database.sql.network/AbstractNetworkSQL/closeConnection/#java.sql.Connection/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.network/-abstract-network-s-q-l/close-connection.html
+$dokka.location:de.mischmaschine.database.sql.network/AbstractNetworkSQL/getFreeDatabase/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql.network/-abstract-network-s-q-l/get-free-database.html
+$dokka.location:de.mischmaschine.database.sql////PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/index.html
+$dokka.location:de.mischmaschine.database.sql/AbstractSQL.Companion///PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/-companion/index.html
+$dokka.location:de.mischmaschine.database.sql/AbstractSQL///PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/index.html
+$dokka.location:de.mischmaschine.database.sql/AbstractSQL/AbstractSQL/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/-abstract-s-q-l.html
+$dokka.location:de.mischmaschine.database.sql/AbstractSQL/closeConnection/#java.sql.Connection/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/close-connection.html
+$dokka.location:de.mischmaschine.database.sql/AbstractSQL/createTable/#java.util.LinkedHashMap[kotlin.String,kotlin.String]#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/create-table.html
+$dokka.location:de.mischmaschine.database.sql/AbstractSQL/deleteAsync/#kotlin.String#kotlin.String#kotlin.Any/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/delete-async.html
+$dokka.location:de.mischmaschine.database.sql/AbstractSQL/deleteSync/#kotlin.String#kotlin.String#kotlin.Any/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/delete-sync.html
+$dokka.location:de.mischmaschine.database.sql/AbstractSQL/getFreeDatabase/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/get-free-database.html
+$dokka.location:de.mischmaschine.database.sql/AbstractSQL/getResultAsync/#kotlin.String#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/get-result-async.html
+$dokka.location:de.mischmaschine.database.sql/AbstractSQL/getResultSync/#kotlin.String#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/get-result-sync.html
+$dokka.location:de.mischmaschine.database.sql/AbstractSQL/insertAsync/#kotlin.String#kotlin.collections.List[kotlin.Any]/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/insert-async.html
+$dokka.location:de.mischmaschine.database.sql/AbstractSQL/insertSync/#kotlin.String#kotlin.collections.List[kotlin.Any]/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/insert-sync.html
+$dokka.location:de.mischmaschine.database.sql/AbstractSQL/updateAsync/#kotlin.String#kotlin.String#kotlin.Any#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/update-async.html
+$dokka.location:de.mischmaschine.database.sql/AbstractSQL/updateSync/#kotlin.String#kotlin.String#kotlin.Any#kotlin.String#kotlin.String/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/update-sync.html
+$dokka.location:de.mischmaschine.database.sql/DataBaseType.H2///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-database-lib/de.mischmaschine.database.sql/-data-base-type/-h2/index.html
+$dokka.location:de.mischmaschine.database.sql/DataBaseType.MARIADB///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-database-lib/de.mischmaschine.database.sql/-data-base-type/-m-a-r-i-a-d-b/index.html
+$dokka.location:de.mischmaschine.database.sql/DataBaseType.MYSQL///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-database-lib/de.mischmaschine.database.sql/-data-base-type/-m-y-s-q-l/index.html
+$dokka.location:de.mischmaschine.database.sql/DataBaseType.POSTGRESQL///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-database-lib/de.mischmaschine.database.sql/-data-base-type/-p-o-s-t-g-r-e-s-q-l/index.html
+$dokka.location:de.mischmaschine.database.sql/DataBaseType.SQLITE///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-database-lib/de.mischmaschine.database.sql/-data-base-type/-s-q-l-i-t-e/index.html
+$dokka.location:de.mischmaschine.database.sql/DataBaseType///PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-data-base-type/index.html
+$dokka.location:de.mischmaschine.database.sql/MySQLResult///PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-my-s-q-l-result/index.html
+$dokka.location:de.mischmaschine.database.sql/MySQLResult/MySQLResult/#java.sql.Connection#java.sql.PreparedStatement#java.sql.ResultSet/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-my-s-q-l-result/-my-s-q-l-result.html
+$dokka.location:de.mischmaschine.database.sql/MySQLResult/close/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-my-s-q-l-result/close.html
+$dokka.location:de.mischmaschine.database.sql/MySQLResult/getConnection/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-my-s-q-l-result/get-connection.html
+$dokka.location:de.mischmaschine.database.sql/MySQLResult/getPrepareStatement/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-my-s-q-l-result/get-prepare-statement.html
+$dokka.location:de.mischmaschine.database.sql/MySQLResult/getResultSet/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-my-s-q-l-result/get-result-set.html
+$dokka.location:kotlin/DataBaseType/getName/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-data-base-type/get-name.html
+$dokka.location:kotlin/DataBaseType/getOrdinal/#/PointingToDeclaration/-database-lib/de.mischmaschine.database.sql/-data-base-type/get-ordinal.html
+de.mischmaschine.database.database
+de.mischmaschine.database.mongodb
+de.mischmaschine.database.mongodb.configuration
+de.mischmaschine.database.sql
+de.mischmaschine.database.sql.configuration
+de.mischmaschine.database.sql.local
+de.mischmaschine.database.sql.local.h2
+de.mischmaschine.database.sql.local.sqlite
+de.mischmaschine.database.sql.network
+de.mischmaschine.database.sql.network.mariadb
+de.mischmaschine.database.sql.network.mysql
+de.mischmaschine.database.sql.network.postgresql
+

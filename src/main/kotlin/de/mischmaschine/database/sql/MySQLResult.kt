@@ -6,9 +6,10 @@ import java.sql.ResultSet
 import java.sql.SQLException
 
 /**
- * @param connection The connection to the database.
- * @param prepareStatement The prepare statement to use.
- * @param resultSet The result set to use.
+ * ## MySQLResult
+ * @property connection The connection to the database.
+ * @property prepareStatement The prepare statement to use.
+ * @property resultSet The result set to use.
  *
  * @see Connection
  * @see PreparedStatement
