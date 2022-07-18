@@ -8,50 +8,38 @@ import java.util.concurrent.CompletableFuture
 abstract class AbstractSQL {
 
     private var tableData = mutableListOf<String>()
+    private var uniqueId = "unique_id"
 
     /**
      * This method is for updating synchronized  row in the database.
      *
      * @param tableName Indicates on which table the SQL command is executed
+     * @param key       Indicates the key of the row which is updated
      * @param columnName Specifies to which column name a value should be changed.
-     * @param value Data to be updated
-     * @param targetColumnName Column name where for which row the data should be updated
-     * @param targetValue Value to find the row, where the data should be updated
+     * @param updatedValue Specifies the new value which should be set to the column.
      */
-    fun updateSync(
-        tableName: String,
-        columnName: String,
-        value: Any,
-        targetColumnName: String,
-        targetValue: String
-    ) {
-        val serializedValue = if (value !is String && value !is Boolean && value !is Number) {
-            gson.toJson(value)
+    fun updateSync(tableName: String, key: String, columnName: String, updatedValue: Any) {
+        val serializedValue = if (updatedValue !is String && updatedValue !is Boolean && updatedValue !is Number) {
+            gson.toJson(updatedValue)
         } else {
-            value
+            updatedValue
         }
-        val query = "UPDATE $tableName SET $columnName='$serializedValue' WHERE $targetColumnName='$targetValue'"
+        if (!tableData.contains(columnName)) throw IllegalArgumentException("Column $columnName does not exist in table $tableName")
+        val query = "UPDATE $tableName SET $columnName='$serializedValue' WHERE $uniqueId='$key'"
         updateQuery(query)
     }
 
     /**
-     * This method is for updating asynchronously a row in the database.
+     * This method is for updating synchronized  row in the database.
      *
      * @param tableName Indicates on which table the SQL command is executed
+     * @param key       Indicates the key of the row which is updated
      * @param columnName Specifies to which column name a value should be changed.
-     * @param value Data to be updated
-     * @param targetColumnName Column name where for which row the data should be updated
-     * @param targetValue Value to find the row, where the data should be updated
+     * @param updatedValue Specifies the new value which should be set to the column.
      */
-    fun updateAsync(
-        tableName: String,
-        columnName: String,
-        value: Any,
-        targetColumnName: String,
-        targetValue: String
-    ) {
+    fun updateAsync(tableName: String, key: String, columnName: String, updatedValue: Any) {
         CompletableFuture.runAsync {
-            updateSync(tableName, columnName, value, targetColumnName, targetValue)
+            updateSync(tableName, key, columnName, updatedValue)
         }
     }
 
@@ -108,13 +96,12 @@ abstract class AbstractSQL {
      * This method is for getting synchronized data from the database
      *
      * @param tableName Indicates on which table the SQL command is executed
-     * @param columnName Specifies to which column name a value should be changed.
      * @param key where the database should get a result from
      *
      * @return the MySQLResult or null
      */
-    fun getResultSync(tableName: String, columnName: String, key: String, additionalQuery: String = ""): MySQLResult? {
-        val queryString = "SELECT * FROM $tableName WHERE $columnName='$key' $additionalQuery"
+    fun getResultSync(tableName: String, key: String, additionalQuery: String = ""): MySQLResult {
+        val queryString = "SELECT * FROM $tableName WHERE $uniqueId='$key' $additionalQuery"
         val connection = getFreeDatabase()
         val prepareStatement = connection.prepareStatement(queryString)
         return MySQLResult(connection, prepareStatement, prepareStatement.executeQuery())
@@ -125,18 +112,16 @@ abstract class AbstractSQL {
      * This method is for getting asynchronously data from the database
      *
      * @param tableName Indicates on which table the SQL command is executed
-     * @param columnName Specifies to which column name a value should be changed.
      * @param key where the database should get a result from
-     * @return the MySQLResult or null
+     * @return the MySQLResult
      */
     fun getResultAsync(
         tableName: String,
-        columnName: String,
         key: String,
         additionalQuery: String = ""
     ): CompletableFuture<MySQLResult?> {
         return CompletableFuture.supplyAsync {
-            getResultSync(tableName, columnName, key, additionalQuery)
+            getResultSync(tableName, key, additionalQuery)
         }
     }
 
@@ -144,22 +129,20 @@ abstract class AbstractSQL {
      * This method is for deleting synchronized data from the database
      *
      * @param tableName Indicates on which table the SQL command is executed
-     * @param columnName in which column name a value should be deleted
-     * @param value which row should be deleted specified by the value
+     * @param key which row should be deleted specified by the key
      */
-    fun deleteSync(tableName: String, columnName: String, value: Any) =
-        deleteQuery("DELETE FROM $tableName WHERE $columnName='$value'")
+    fun deleteSync(tableName: String, key: String) =
+        deleteQuery("DELETE FROM $tableName WHERE $uniqueId='$key'")
 
     /**
      * This method is for deleting asynchronously data from the database
      *
      * @param tableName Indicates on which table the SQL command is executed
-     * @param columnName in which column name a value should be deleted
-     * @param value which row should be deleted specified by the value
+     * @param key which row should be deleted specified by the key
      */
-    fun deleteAsync(tableName: String, columnName: String, value: Any) {
+    fun deleteAsync(tableName: String, key: String) {
         CompletableFuture.supplyAsync {
-            deleteSync(tableName, columnName, value)
+            deleteSync(tableName, key)
         }
     }
 
