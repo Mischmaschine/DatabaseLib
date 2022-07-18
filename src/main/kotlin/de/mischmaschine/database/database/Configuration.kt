@@ -17,12 +17,12 @@ import kotlin.reflect.full.isSubclassOf
  * @see [String]
  * @see [Int]
  */
-class Configuration(
+class Configuration<T : Database>(
     private val host: String,
     private val port: Int,
     private val username: String,
     private val password: String,
-    private val kClazz: KClass<*>
+    private val kClazz: KClass<T>
 ) {
 
     /**
@@ -44,7 +44,7 @@ class Configuration(
         port: Int,
         username: String,
         password: String,
-        clazz: Class<*>
+        clazz: Class<T>
     ) : this(host, port, username, password, clazz.kotlin)
 
     init {
@@ -81,7 +81,7 @@ class Configuration(
     }
 
     companion object {
-        val connectionMap = mutableMapOf<String, Configuration>()
+        val connectionMap = mutableMapOf<String, Configuration<*>>()
 
         /**
          * This method is used to get the host of the database.
