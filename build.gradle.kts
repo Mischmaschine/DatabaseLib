@@ -24,6 +24,8 @@ dependencies {
     compileOnly("org.xerial:sqlite-jdbc:3.36.0.3")
     compileOnly("org.mariadb.jdbc:mariadb-java-client:3.0.5")
     compileOnly("org.mongodb:mongodb-driver-sync:4.6.0")
+    compileOnly("org.redisson:redisson:3.17.4")
+
     testImplementation("org.mongodb:mongodb-driver-sync:4.6.0")
 
     implementation("com.google.code.gson:gson:2.9.0")
