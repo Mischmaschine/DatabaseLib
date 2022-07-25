@@ -1,7 +1,7 @@
 # DatabaseLib
 
     This project is a library for working with databases.
-    It supports MariaDB, MySQL, PostgreSQL, H2SQL, SQLite and MongoDB.
+    It supports MariaDB, MySQL, PostgreSQL, H2SQL, SQLite MongoDB and Redis.
 
 ## Import
 
