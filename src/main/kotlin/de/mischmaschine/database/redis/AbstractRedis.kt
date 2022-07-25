@@ -39,15 +39,14 @@ abstract class AbstractRedis(database: Int) : Database {
                 port
             ).withPassword(password.toCharArray()).withDatabase(database).build()
         ).also {
-            it.run {
-                this@AbstractRedis.connection = this.connect().also { statefulRedisConnection ->
-                    statefulRedisConnection.run {
-                        this@AbstractRedis.redisAsync = this.async()
-                        this@AbstractRedis.redisSync = this.sync()
-                    }
+            this@AbstractRedis.connection = it.connect().also { statefulRedisConnection ->
+                statefulRedisConnection.run {
+                    this@AbstractRedis.redisAsync = this.async()
+                    this@AbstractRedis.redisSync = this.sync()
                 }
-                this@AbstractRedis.pubSub = this.connectPubSub().also { pubSub -> pubSub.addListener(Listener()) }
             }
+            this@AbstractRedis.pubSub = it.connectPubSub().also { pubSub -> pubSub.addListener(Listener()) }
+
         }
 
     }
