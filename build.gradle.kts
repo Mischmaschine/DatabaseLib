@@ -26,6 +26,7 @@ dependencies {
     compileOnly("org.mongodb:mongodb-driver-sync:4.6.0")
     compileOnly("io.lettuce:lettuce-core:6.1.8.RELEASE")
 
+    testImplementation("io.lettuce:lettuce-core:6.1.8.RELEASE")
     testImplementation("org.mongodb:mongodb-driver-sync:4.6.0")
 
     implementation("com.google.code.gson:gson:2.9.0")
