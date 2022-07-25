@@ -29,7 +29,6 @@ abstract class AbstractRedis(database: Int) : Database {
     private val pubSub: StatefulRedisPubSubConnection<String, String>
 
     init {
-
         val host = Configuration.getHost(AbstractRedis::class)
         val port = Configuration.getPort(AbstractRedis::class)
         val password = Configuration.getPassword(AbstractRedis::class)
@@ -39,11 +38,18 @@ abstract class AbstractRedis(database: Int) : Database {
                 host,
                 port
             ).withPassword(password.toCharArray()).withDatabase(database).build()
-        )
-        this.connection = client.connect()
-        this.redisAsync = connection.async()
-        this.redisSync = connection.sync()
-        this.pubSub = client.connectPubSub().also { it.addListener(Listener()) }
+        ).also {
+            it.run {
+                this@AbstractRedis.connection = this.connect().also { statefulRedisConnection ->
+                    statefulRedisConnection.run {
+                        this@AbstractRedis.redisAsync = this.async()
+                        this@AbstractRedis.redisSync = this.sync()
+                    }
+                }
+                this@AbstractRedis.pubSub = this.connectPubSub().also { pubSub -> pubSub.addListener(Listener()) }
+            }
+        }
+
     }
 
 
