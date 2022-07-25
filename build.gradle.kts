@@ -24,7 +24,7 @@ dependencies {
     compileOnly("org.xerial:sqlite-jdbc:3.36.0.3")
     compileOnly("org.mariadb.jdbc:mariadb-java-client:3.0.5")
     compileOnly("org.mongodb:mongodb-driver-sync:4.6.0")
-    compileOnly("org.redisson:redisson:3.17.4")
+    compileOnly("io.lettuce:lettuce-core:6.1.8.RELEASE")
 
     testImplementation("org.mongodb:mongodb-driver-sync:4.6.0")
 
