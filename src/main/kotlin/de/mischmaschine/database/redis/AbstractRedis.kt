@@ -80,7 +80,7 @@ abstract class AbstractRedis(database: Int) : Database {
     }
 
     /**
-     * Gets the value of the given key asynchronously.
+     * Gets the value of the given key synchronously.
      *
      * @param key The key to get the value of.
      *
@@ -89,7 +89,7 @@ abstract class AbstractRedis(database: Int) : Database {
     fun getValueSync(key: String): String? = redisSync.get(key)
 
     /**
-     * Gets the value of the given key synchronously.
+     * Gets the value of the given key asynchronously.
      *
      * @param key The key to get the value of.
      *
