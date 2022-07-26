@@ -70,6 +70,16 @@
     ]
   },
   {
+    "name": "AbstractRedis AbstractRedis(Integer database)",
+    "description": "de.mischmaschine.database.redis.AbstractRedis.AbstractRedis",
+    "location": "-database-lib/de.mischmaschine.database.redis/-abstract-redis/-abstract-redis.html",
+    "searchKeys": [
+      "AbstractRedis",
+      "AbstractRedis AbstractRedis(Integer database)",
+      "de.mischmaschine.database.redis.AbstractRedis.AbstractRedis"
+    ]
+  },
+  {
     "name": "AbstractSQLite AbstractSQLite(String databasePath)",
     "description": "de.mischmaschine.database.sql.local.sqlite.AbstractSQLite.AbstractSQLite",
     "location": "-database-lib/de.mischmaschine.database.sql.local.sqlite/-abstract-s-q-lite/-abstract-s-q-lite.html",
@@ -90,22 +100,22 @@
     ]
   },
   {
-    "name": "Configuration Configuration(String host, Integer port, String username, String password, Class<?> clazz)",
+    "name": "Configuration<T> Configuration<T extends Database>(String host, Integer port, String username, String password, Class<T> clazz)",
     "description": "de.mischmaschine.database.database.Configuration.Configuration",
     "location": "-database-lib/de.mischmaschine.database.database/-configuration/-configuration.html",
     "searchKeys": [
       "Configuration",
-      "Configuration Configuration(String host, Integer port, String username, String password, Class<?> clazz)",
+      "Configuration<T> Configuration<T extends Database>(String host, Integer port, String username, String password, Class<T> clazz)",
       "de.mischmaschine.database.database.Configuration.Configuration"
     ]
   },
   {
-    "name": "Configuration Configuration(String host, Integer port, String username, String password, KClass<?> kClazz)",
+    "name": "Configuration<T> Configuration<T extends Database>(String host, Integer port, String username, String password, KClass<T> kClazz)",
     "description": "de.mischmaschine.database.database.Configuration.Configuration",
     "location": "-database-lib/de.mischmaschine.database.database/-configuration/-configuration.html",
     "searchKeys": [
       "Configuration",
-      "Configuration Configuration(String host, Integer port, String username, String password, KClass<?> kClazz)",
+      "Configuration<T> Configuration<T extends Database>(String host, Integer port, String username, String password, KClass<T> kClazz)",
       "de.mischmaschine.database.database.Configuration.Configuration"
     ]
   },
@@ -137,6 +147,86 @@
       "H2",
       "H2",
       "de.mischmaschine.database.sql.DataBaseType.H2"
+    ]
+  },
+  {
+    "name": "Logger getLogger()",
+    "description": "de.mischmaschine.database.database.AbstractH2SQL.getLogger",
+    "location": "-database-lib/de.mischmaschine.database.sql.local.h2/-abstract-h2-s-q-l/get-logger.html",
+    "searchKeys": [
+      "getLogger",
+      "Logger getLogger()",
+      "de.mischmaschine.database.database.AbstractH2SQL.getLogger"
+    ]
+  },
+  {
+    "name": "Logger getLogger()",
+    "description": "de.mischmaschine.database.database.AbstractMariaDB.getLogger",
+    "location": "-database-lib/de.mischmaschine.database.sql.network.mariadb/-abstract-maria-d-b/get-logger.html",
+    "searchKeys": [
+      "getLogger",
+      "Logger getLogger()",
+      "de.mischmaschine.database.database.AbstractMariaDB.getLogger"
+    ]
+  },
+  {
+    "name": "Logger getLogger()",
+    "description": "de.mischmaschine.database.database.AbstractMongoDB.getLogger",
+    "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/get-logger.html",
+    "searchKeys": [
+      "getLogger",
+      "Logger getLogger()",
+      "de.mischmaschine.database.database.AbstractMongoDB.getLogger"
+    ]
+  },
+  {
+    "name": "Logger getLogger()",
+    "description": "de.mischmaschine.database.database.AbstractMySQL.getLogger",
+    "location": "-database-lib/de.mischmaschine.database.sql.network.mysql/-abstract-my-s-q-l/get-logger.html",
+    "searchKeys": [
+      "getLogger",
+      "Logger getLogger()",
+      "de.mischmaschine.database.database.AbstractMySQL.getLogger"
+    ]
+  },
+  {
+    "name": "Logger getLogger()",
+    "description": "de.mischmaschine.database.database.AbstractPostgreSQL.getLogger",
+    "location": "-database-lib/de.mischmaschine.database.sql.network.postgresql/-abstract-postgre-s-q-l/get-logger.html",
+    "searchKeys": [
+      "getLogger",
+      "Logger getLogger()",
+      "de.mischmaschine.database.database.AbstractPostgreSQL.getLogger"
+    ]
+  },
+  {
+    "name": "Logger getLogger()",
+    "description": "de.mischmaschine.database.database.AbstractRedis.getLogger",
+    "location": "-database-lib/de.mischmaschine.database.redis/-abstract-redis/get-logger.html",
+    "searchKeys": [
+      "getLogger",
+      "Logger getLogger()",
+      "de.mischmaschine.database.database.AbstractRedis.getLogger"
+    ]
+  },
+  {
+    "name": "Logger getLogger()",
+    "description": "de.mischmaschine.database.database.AbstractSQLite.getLogger",
+    "location": "-database-lib/de.mischmaschine.database.sql.local.sqlite/-abstract-s-q-lite/get-logger.html",
+    "searchKeys": [
+      "getLogger",
+      "Logger getLogger()",
+      "de.mischmaschine.database.database.AbstractSQLite.getLogger"
+    ]
+  },
+  {
+    "name": "Logger getLogger()",
+    "description": "de.mischmaschine.database.database.Database.getLogger",
+    "location": "-database-lib/de.mischmaschine.database.database/-database/get-logger.html",
+    "searchKeys": [
+      "getLogger",
+      "Logger getLogger()",
+      "de.mischmaschine.database.database.Database.getLogger"
     ]
   },
   {
@@ -340,12 +430,12 @@
     ]
   },
   {
-    "name": "final CompletableFuture<MySQLResult> getResultAsync(String tableName, String columnName, String key, String additionalQuery)",
+    "name": "final CompletableFuture<MySQLResult> getResultAsync(String tableName, String key, String additionalQuery)",
     "description": "de.mischmaschine.database.sql.AbstractSQL.getResultAsync",
     "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/get-result-async.html",
     "searchKeys": [
       "getResultAsync",
-      "final CompletableFuture<MySQLResult> getResultAsync(String tableName, String columnName, String key, String additionalQuery)",
+      "final CompletableFuture<MySQLResult> getResultAsync(String tableName, String key, String additionalQuery)",
       "de.mischmaschine.database.sql.AbstractSQL.getResultAsync"
     ]
   },
@@ -420,12 +510,12 @@
     ]
   },
   {
-    "name": "final Map<String, Configuration> getConnectionMap()",
+    "name": "final Map<String, Configuration<?>> getConnectionMap()",
     "description": "de.mischmaschine.database.database.Configuration.Companion.getConnectionMap",
     "location": "-database-lib/de.mischmaschine.database.database/-configuration/-companion/get-connection-map.html",
     "searchKeys": [
       "getConnectionMap",
-      "final Map<String, Configuration> getConnectionMap()",
+      "final Map<String, Configuration<?>> getConnectionMap()",
       "de.mischmaschine.database.database.Configuration.Companion.getConnectionMap"
     ]
   },
@@ -460,12 +550,12 @@
     ]
   },
   {
-    "name": "final MySQLResult getResultSync(String tableName, String columnName, String key, String additionalQuery)",
+    "name": "final MySQLResult getResultSync(String tableName, String key, String additionalQuery)",
     "description": "de.mischmaschine.database.sql.AbstractSQL.getResultSync",
     "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/get-result-sync.html",
     "searchKeys": [
       "getResultSync",
-      "final MySQLResult getResultSync(String tableName, String columnName, String key, String additionalQuery)",
+      "final MySQLResult getResultSync(String tableName, String key, String additionalQuery)",
       "de.mischmaschine.database.sql.AbstractSQL.getResultSync"
     ]
   },
@@ -477,6 +567,36 @@
       "getPrepareStatement",
       "final PreparedStatement getPrepareStatement()",
       "de.mischmaschine.database.sql.MySQLResult.getPrepareStatement"
+    ]
+  },
+  {
+    "name": "final RedisAsyncCommands<String, String> getAsyncClient()",
+    "description": "de.mischmaschine.database.redis.AbstractRedis.getAsyncClient",
+    "location": "-database-lib/de.mischmaschine.database.redis/-abstract-redis/get-async-client.html",
+    "searchKeys": [
+      "getAsyncClient",
+      "final RedisAsyncCommands<String, String> getAsyncClient()",
+      "de.mischmaschine.database.redis.AbstractRedis.getAsyncClient"
+    ]
+  },
+  {
+    "name": "final RedisCommands<String, String> getSyncClient()",
+    "description": "de.mischmaschine.database.redis.AbstractRedis.getSyncClient",
+    "location": "-database-lib/de.mischmaschine.database.redis/-abstract-redis/get-sync-client.html",
+    "searchKeys": [
+      "getSyncClient",
+      "final RedisCommands<String, String> getSyncClient()",
+      "de.mischmaschine.database.redis.AbstractRedis.getSyncClient"
+    ]
+  },
+  {
+    "name": "final RedisFuture<String> getValueAsync(String key)",
+    "description": "de.mischmaschine.database.redis.AbstractRedis.getValueAsync",
+    "location": "-database-lib/de.mischmaschine.database.redis/-abstract-redis/get-value-async.html",
+    "searchKeys": [
+      "getValueAsync",
+      "final RedisFuture<String> getValueAsync(String key)",
+      "de.mischmaschine.database.redis.AbstractRedis.getValueAsync"
     ]
   },
   {
@@ -610,6 +730,16 @@
     ]
   },
   {
+    "name": "final String getValueSync(String key)",
+    "description": "de.mischmaschine.database.redis.AbstractRedis.getValueSync",
+    "location": "-database-lib/de.mischmaschine.database.redis/-abstract-redis/get-value-sync.html",
+    "searchKeys": [
+      "getValueSync",
+      "final String getValueSync(String key)",
+      "de.mischmaschine.database.redis.AbstractRedis.getValueSync"
+    ]
+  },
+  {
     "name": "final Unit close()",
     "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.close",
     "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/close.html",
@@ -630,13 +760,33 @@
     ]
   },
   {
-    "name": "final Unit deleteAsync(String tableName, String columnName, Object value)",
+    "name": "final Unit deleteAsync(String tableName, String key)",
     "description": "de.mischmaschine.database.sql.AbstractSQL.deleteAsync",
     "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/delete-async.html",
     "searchKeys": [
       "deleteAsync",
-      "final Unit deleteAsync(String tableName, String columnName, Object value)",
+      "final Unit deleteAsync(String tableName, String key)",
       "de.mischmaschine.database.sql.AbstractSQL.deleteAsync"
+    ]
+  },
+  {
+    "name": "final Unit deleteKeyAsync(String key)",
+    "description": "de.mischmaschine.database.redis.AbstractRedis.deleteKeyAsync",
+    "location": "-database-lib/de.mischmaschine.database.redis/-abstract-redis/delete-key-async.html",
+    "searchKeys": [
+      "deleteKeyAsync",
+      "final Unit deleteKeyAsync(String key)",
+      "de.mischmaschine.database.redis.AbstractRedis.deleteKeyAsync"
+    ]
+  },
+  {
+    "name": "final Unit deleteKeySync(String key)",
+    "description": "de.mischmaschine.database.redis.AbstractRedis.deleteKeySync",
+    "location": "-database-lib/de.mischmaschine.database.redis/-abstract-redis/delete-key-sync.html",
+    "searchKeys": [
+      "deleteKeySync",
+      "final Unit deleteKeySync(String key)",
+      "de.mischmaschine.database.redis.AbstractRedis.deleteKeySync"
     ]
   },
   {
@@ -660,12 +810,12 @@
     ]
   },
   {
-    "name": "final Unit deleteSync(String tableName, String columnName, Object value)",
+    "name": "final Unit deleteSync(String tableName, String key)",
     "description": "de.mischmaschine.database.sql.AbstractSQL.deleteSync",
     "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/delete-sync.html",
     "searchKeys": [
       "deleteSync",
-      "final Unit deleteSync(String tableName, String columnName, Object value)",
+      "final Unit deleteSync(String tableName, String key)",
       "de.mischmaschine.database.sql.AbstractSQL.deleteSync"
     ]
   },
@@ -750,6 +900,16 @@
     ]
   },
   {
+    "name": "final Unit publish(String channel, String message)",
+    "description": "de.mischmaschine.database.redis.AbstractRedis.publish",
+    "location": "-database-lib/de.mischmaschine.database.redis/-abstract-redis/publish.html",
+    "searchKeys": [
+      "publish",
+      "final Unit publish(String channel, String message)",
+      "de.mischmaschine.database.redis.AbstractRedis.publish"
+    ]
+  },
+  {
     "name": "final Unit renameCollectionAsync(String collection, String newCollectionName)",
     "description": "de.mischmaschine.database.mongodb.AbstractMongoDB.renameCollectionAsync",
     "location": "-database-lib/de.mischmaschine.database.mongodb/-abstract-mongo-d-b/rename-collection-async.html",
@@ -770,12 +930,32 @@
     ]
   },
   {
-    "name": "final Unit updateAsync(String tableName, String columnName, Object value, String targetColumnName, String targetValue)",
+    "name": "final Unit subscribe(String channel, Function2<String, String, Unit> function)",
+    "description": "de.mischmaschine.database.redis.AbstractRedis.subscribe",
+    "location": "-database-lib/de.mischmaschine.database.redis/-abstract-redis/subscribe.html",
+    "searchKeys": [
+      "subscribe",
+      "final Unit subscribe(String channel, Function2<String, String, Unit> function)",
+      "de.mischmaschine.database.redis.AbstractRedis.subscribe"
+    ]
+  },
+  {
+    "name": "final Unit unSubScribe(String channel)",
+    "description": "de.mischmaschine.database.redis.AbstractRedis.unSubScribe",
+    "location": "-database-lib/de.mischmaschine.database.redis/-abstract-redis/un-sub-scribe.html",
+    "searchKeys": [
+      "unSubScribe",
+      "final Unit unSubScribe(String channel)",
+      "de.mischmaschine.database.redis.AbstractRedis.unSubScribe"
+    ]
+  },
+  {
+    "name": "final Unit updateAsync(String tableName, String key, String columnName, Object updatedValue)",
     "description": "de.mischmaschine.database.sql.AbstractSQL.updateAsync",
     "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/update-async.html",
     "searchKeys": [
       "updateAsync",
-      "final Unit updateAsync(String tableName, String columnName, Object value, String targetColumnName, String targetValue)",
+      "final Unit updateAsync(String tableName, String key, String columnName, Object updatedValue)",
       "de.mischmaschine.database.sql.AbstractSQL.updateAsync"
     ]
   },
@@ -800,12 +980,32 @@
     ]
   },
   {
-    "name": "final Unit updateSync(String tableName, String columnName, Object value, String targetColumnName, String targetValue)",
+    "name": "final Unit updateKeyAsync(String key, Object data)",
+    "description": "de.mischmaschine.database.redis.AbstractRedis.updateKeyAsync",
+    "location": "-database-lib/de.mischmaschine.database.redis/-abstract-redis/update-key-async.html",
+    "searchKeys": [
+      "updateKeyAsync",
+      "final Unit updateKeyAsync(String key, Object data)",
+      "de.mischmaschine.database.redis.AbstractRedis.updateKeyAsync"
+    ]
+  },
+  {
+    "name": "final Unit updateKeySync(String key, Object data)",
+    "description": "de.mischmaschine.database.redis.AbstractRedis.updateKeySync",
+    "location": "-database-lib/de.mischmaschine.database.redis/-abstract-redis/update-key-sync.html",
+    "searchKeys": [
+      "updateKeySync",
+      "final Unit updateKeySync(String key, Object data)",
+      "de.mischmaschine.database.redis.AbstractRedis.updateKeySync"
+    ]
+  },
+  {
+    "name": "final Unit updateSync(String tableName, String key, String columnName, Object updatedValue)",
     "description": "de.mischmaschine.database.sql.AbstractSQL.updateSync",
     "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/update-sync.html",
     "searchKeys": [
       "updateSync",
-      "final Unit updateSync(String tableName, String columnName, Object value, String targetColumnName, String targetValue)",
+      "final Unit updateSync(String tableName, String key, String columnName, Object updatedValue)",
       "de.mischmaschine.database.sql.AbstractSQL.updateSync"
     ]
   },
@@ -880,6 +1080,16 @@
     ]
   },
   {
+    "name": "public abstract class AbstractRedis implements Database",
+    "description": "de.mischmaschine.database.redis.AbstractRedis",
+    "location": "-database-lib/de.mischmaschine.database.redis/-abstract-redis/index.html",
+    "searchKeys": [
+      "AbstractRedis",
+      "public abstract class AbstractRedis implements Database",
+      "de.mischmaschine.database.redis.AbstractRedis"
+    ]
+  },
+  {
     "name": "public abstract class AbstractSQL",
     "description": "de.mischmaschine.database.sql.AbstractSQL",
     "location": "-database-lib/de.mischmaschine.database.sql/-abstract-s-q-l/index.html",
@@ -950,12 +1160,12 @@
     ]
   },
   {
-    "name": "public final class Configuration",
+    "name": "public final class Configuration<T extends Database>",
     "description": "de.mischmaschine.database.database.Configuration",
     "location": "-database-lib/de.mischmaschine.database.database/-configuration/index.html",
     "searchKeys": [
       "Configuration",
-      "public final class Configuration",
+      "public final class Configuration<T extends Database>",
       "de.mischmaschine.database.database.Configuration"
     ]
   },
