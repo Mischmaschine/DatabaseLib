@@ -162,7 +162,7 @@ abstract class AbstractRedis(database: Int) : Database {
             functions[channel]?.invoke(channel, message) ?: let {
                 logger.log(
                     Level.WARNING,
-                    "There is no function for channel '$channel'. Channel '$channel' will be ignored."
+                    "Received message on channel '$channel' but no function was registered for this channel."
                 )
                 unSubScribe(channel)
             }
