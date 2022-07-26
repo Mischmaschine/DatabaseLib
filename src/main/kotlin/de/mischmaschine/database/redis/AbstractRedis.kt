@@ -34,13 +34,19 @@ abstract class AbstractRedis(database: Int) : Database {
         val host = Configuration.getHost(AbstractRedis::class)
         val port = Configuration.getPort(AbstractRedis::class)
         val password = Configuration.getPassword(AbstractRedis::class)
-        System.setProperty("slf4j.detectLoggerNameMismatch", "true")
-        this.client = RedisClient.create(
-            RedisURI.Builder.redis(
-                host,
-                port
-            ).withPassword(password.toCharArray()).withDatabase(database).build()
-        ).also {
+
+        if (host.isEmpty()) throw IllegalArgumentException("No host specified for Redis database $database")
+        if (port == 0) throw IllegalArgumentException("No port specified for Redis database $database")
+
+        this.client = when (password.isEmpty()) {
+            true -> {
+                RedisClient.create(RedisURI.Builder.redis(host, port).build())
+            }
+
+            false -> {
+                RedisClient.create(RedisURI.Builder.redis(host, port).withPassword(password.toCharArray()).build())
+            }
+        }.also {
             this@AbstractRedis.connection = it.connect().also { statefulRedisConnection ->
                 statefulRedisConnection.run {
                     this@AbstractRedis.redisAsync = this.async()
@@ -50,7 +56,6 @@ abstract class AbstractRedis(database: Int) : Database {
             this@AbstractRedis.pubSub = it.connectPubSub().also { pubSub -> pubSub.addListener(Listener()) }
 
         }
-
     }
 
     /**
