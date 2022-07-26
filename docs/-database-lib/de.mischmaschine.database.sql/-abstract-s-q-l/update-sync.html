@@ -31,7 +31,6 @@
         </a>
     </div>
     <div>
-        0.1.0-beta.0.47+20220704T175154Z
     </div>
     <div class="pull-right d-flex">
         <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
@@ -44,7 +43,7 @@
     </div>
     <div id="main">
         <div class="main-content" id="content"
-             pageIds="DatabaseLib::de.mischmaschine.database.sql/AbstractSQL/updateSync/#kotlin.String#kotlin.String#kotlin.Any#kotlin.String#kotlin.String/PointingToDeclaration//769193423">
+             pageIds="DatabaseLib::de.mischmaschine.database.sql/AbstractSQL/updateSync/#kotlin.String#kotlin.String#kotlin.String#kotlin.Any/PointingToDeclaration//769193423">
             <div class="breadcrumbs"><a href="../../../index.html">DatabaseLib</a><span class="delimiter">/</span><a
                     href="../index.html">de.mischmaschine.database.sql</a><span class="delimiter">/</span><a
                     href="index.html">AbstractSQL</a><span class="delimiter">/</span><a href="update-sync.html">updateSync</a>
@@ -65,16 +64,13 @@
                             href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> tableName<span
                             class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span
                             class="token keyword"></span><a
+                            href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> key<span
+                            class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span
+                            class="token keyword"></span><a
                             href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> columnName<span
                             class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span
                             class="token keyword"></span><a
-                            href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> value<span
-                            class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span
-                            class="token keyword"></span><a
-                            href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> targetColumnName<span
-                            class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span
-                            class="token keyword"></span><a
-                            href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> targetValue</span></span><span
+                            href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> updatedValue</span></span><span
                             class="token punctuation">)</span><span class="top-right-position"><span
                             class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span
                             class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div>
@@ -98,6 +94,19 @@
                             <div class="table-row" data-filterable-current=":dokkaHtml/main"
                                  data-filterable-set=":dokkaHtml/main">
                                 <div class="main-subrow keyValue WithExtraAttributes">
+                                    <div class=""><span class="inline-flex"><div><span><span>key</span></span></div></span>
+                                    </div>
+                                    <div>
+                                        <div class="title">
+                                            <div data-togglable="Parameters"><p class="paragraph">Indicates the key of
+                                                the row which is updated</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                 data-filterable-set=":dokkaHtml/main">
+                                <div class="main-subrow keyValue WithExtraAttributes">
                                     <div class=""><span class="inline-flex"><div><span>column</span><wbr></wbr><span><span>Name</span></span></div></span>
                                     </div>
                                     <div>
@@ -111,38 +120,12 @@
                             <div class="table-row" data-filterable-current=":dokkaHtml/main"
                                  data-filterable-set=":dokkaHtml/main">
                                 <div class="main-subrow keyValue WithExtraAttributes">
-                                    <div class=""><span class="inline-flex"><div><span><span>value</span></span></div></span>
+                                    <div class=""><span class="inline-flex"><div><span>updated</span><wbr></wbr><span><span>Value</span></span></div></span>
                                     </div>
                                     <div>
                                         <div class="title">
-                                            <div data-togglable="Parameters"><p class="paragraph">Data to be updated</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-row" data-filterable-current=":dokkaHtml/main"
-                                 data-filterable-set=":dokkaHtml/main">
-                                <div class="main-subrow keyValue WithExtraAttributes">
-                                    <div class=""><span class="inline-flex"><div><span>target</span><wbr></wbr><span>Column</span><wbr></wbr><span><span>Name</span></span></div></span>
-                                    </div>
-                                    <div>
-                                        <div class="title">
-                                            <div data-togglable="Parameters"><p class="paragraph">Column name where for
-                                                which row the data should be updated</p></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-row" data-filterable-current=":dokkaHtml/main"
-                                 data-filterable-set=":dokkaHtml/main">
-                                <div class="main-subrow keyValue WithExtraAttributes">
-                                    <div class=""><span class="inline-flex"><div><span>target</span><wbr></wbr><span><span>Value</span></span></div></span>
-                                    </div>
-                                    <div>
-                                        <div class="title">
-                                            <div data-togglable="Parameters"><p class="paragraph">Value to find the row,
-                                                where the data should be updated</p></div>
+                                            <div data-togglable="Parameters"><p class="paragraph">Specifies the new
+                                                value which should be set to the column.</p></div>
                                         </div>
                                     </div>
                                 </div>
