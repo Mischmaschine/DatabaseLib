@@ -11,6 +11,7 @@ import io.lettuce.core.api.async.RedisAsyncCommands
 import io.lettuce.core.api.sync.RedisCommands
 import io.lettuce.core.pubsub.RedisPubSubAdapter
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection
+import java.util.logging.Level
 
 /**
  * ## AbstractRedis
@@ -33,19 +34,24 @@ abstract class AbstractRedis(database: Int) : Database {
         val host = Configuration.getHost(AbstractRedis::class)
         val port = Configuration.getPort(AbstractRedis::class)
         val password = Configuration.getPassword(AbstractRedis::class)
-
+        System.setProperty("slf4j.detectLoggerNameMismatch", "true")
         this.client = RedisClient.create(
             RedisURI.Builder.redis(
                 host,
                 port
             ).withPassword(password.toCharArray()).withDatabase(database).build()
-        )
-        this.connection = client.connect()
-        this.redisAsync = connection.async()
-        this.redisSync = connection.sync()
-        this.pubSub = client.connectPubSub().also { it.addListener(Listener()) }
-    }
+        ).also {
+            this@AbstractRedis.connection = it.connect().also { statefulRedisConnection ->
+                statefulRedisConnection.run {
+                    this@AbstractRedis.redisAsync = this.async()
+                    this@AbstractRedis.redisSync = this.sync()
+                }
+            }
+            this@AbstractRedis.pubSub = it.connectPubSub().also { pubSub -> pubSub.addListener(Listener()) }
 
+        }
+
+    }
 
     /**
      * Updates the value of the given key asynchronously.
@@ -54,7 +60,10 @@ abstract class AbstractRedis(database: Int) : Database {
      * @param data The data to update the key with.
      */
     fun updateKeyAsync(key: String, data: Any) {
-        redisAsync.set(key, gson.toJson(data))
+        when (data is String || data is Number || data is Boolean) {
+            true -> redisAsync.set(key, data.toString())
+            false -> redisAsync.set(key, gson.toJson(data))
+        }
     }
 
     /**
@@ -64,11 +73,14 @@ abstract class AbstractRedis(database: Int) : Database {
      * @param data The data to update the key with.
      */
     fun updateKeySync(key: String, data: Any) {
-        redisSync.set(key, gson.toJson(data))
+        when (data is String || data is Number || data is Boolean) {
+            true -> redisSync.set(key, data.toString())
+            false -> redisSync.set(key, gson.toJson(data))
+        }
     }
 
     /**
-     * Gets the value of the given key asynchronously.
+     * Gets the value of the given key synchronously.
      *
      * @param key The key to get the value of.
      *
@@ -77,7 +89,7 @@ abstract class AbstractRedis(database: Int) : Database {
     fun getValueSync(key: String): String? = redisSync.get(key)
 
     /**
-     * Gets the value of the given key synchronously.
+     * Gets the value of the given key asynchronously.
      *
      * @param key The key to get the value of.
      *
@@ -122,7 +134,7 @@ abstract class AbstractRedis(database: Int) : Database {
      */
     fun unSubScribe(vararg channel: String) {
         pubSub.async().unsubscribe(*channel)
-        println("Unsubscribed from ${channel.joinToString(", ")}")
+        logger.info("Unsubscribed from ${channel.joinToString(", ")}")
     }
 
     /**
@@ -131,9 +143,9 @@ abstract class AbstractRedis(database: Int) : Database {
      * @param channel The channel to publish to.
      * @param message The message to publish.
      */
-    fun publish(channel: String, message: String) {
+    fun publish(channel: String, message: String?) {
         client.connectPubSub().async().publish(channel, message)
-        println("Published to $channel: $message")
+        logger.info("Published to channel '$channel': '$message'")
     }
 
     fun getAsyncClient() = connection.async()
@@ -143,7 +155,10 @@ abstract class AbstractRedis(database: Int) : Database {
 
         override fun message(channel: String, message: String) =
             functions[channel]?.invoke(channel, message) ?: let {
-                println("There is no executor for channel $channel. Channel $channel will be ignored.")
+                logger.log(
+                    Level.WARNING,
+                    "There is no function for channel '$channel'. Channel '$channel' will be ignored."
+                )
                 unSubScribe(channel)
             }
     }
