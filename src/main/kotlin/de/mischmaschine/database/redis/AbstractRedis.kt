@@ -40,11 +40,14 @@ abstract class AbstractRedis(database: Int) : Database {
 
         this.client = when (password.isEmpty()) {
             true -> {
-                RedisClient.create(RedisURI.Builder.redis(host, port).build())
+                RedisClient.create(RedisURI.Builder.redis(host, port).withDatabase(database).build())
             }
 
             false -> {
-                RedisClient.create(RedisURI.Builder.redis(host, port).withPassword(password.toCharArray()).build())
+                RedisClient.create(
+                    RedisURI.Builder.redis(host, port).withPassword(password.toCharArray()).withDatabase(database)
+                        .build()
+                )
             }
         }.also {
             this@AbstractRedis.connection = it.connect().also { statefulRedisConnection ->
@@ -54,7 +57,6 @@ abstract class AbstractRedis(database: Int) : Database {
                 }
             }
             this@AbstractRedis.pubSub = it.connectPubSub().also { pubSub -> pubSub.addListener(Listener()) }
-
         }
     }
 
@@ -148,8 +150,11 @@ abstract class AbstractRedis(database: Int) : Database {
      * @param channel The channel to publish to.
      * @param message The message to publish.
      */
-    fun publish(channel: String, message: String?) {
-        client.connectPubSub().async().publish(channel, message)
+    fun publish(channel: String, message: Any) {
+        when (message is String || message is Number || message is Boolean) {
+            true -> client.connectPubSub().async().publish(channel, message.toString())
+            false -> client.connectPubSub().async().publish(channel, gson.toJson(message))
+        }
         logger.info("Published to channel '$channel': '$message'")
     }
 
