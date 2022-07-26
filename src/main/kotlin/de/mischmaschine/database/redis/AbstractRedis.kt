@@ -11,6 +11,7 @@ import io.lettuce.core.api.async.RedisAsyncCommands
 import io.lettuce.core.api.sync.RedisCommands
 import io.lettuce.core.pubsub.RedisPubSubAdapter
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection
+import java.util.logging.Level
 
 /**
  * ## AbstractRedis
@@ -29,10 +30,11 @@ abstract class AbstractRedis(database: Int) : Database {
     private val pubSub: StatefulRedisPubSubConnection<String, String>
 
     init {
+
         val host = Configuration.getHost(AbstractRedis::class)
         val port = Configuration.getPort(AbstractRedis::class)
         val password = Configuration.getPassword(AbstractRedis::class)
-
+        System.setProperty("slf4j.detectLoggerNameMismatch", "true")
         this.client = RedisClient.create(
             RedisURI.Builder.redis(
                 host,
@@ -132,7 +134,7 @@ abstract class AbstractRedis(database: Int) : Database {
      */
     fun unSubScribe(vararg channel: String) {
         pubSub.async().unsubscribe(*channel)
-        println("Unsubscribed from ${channel.joinToString(", ")}")
+        logger.info("Unsubscribed from ${channel.joinToString(", ")}")
     }
 
     /**
@@ -141,9 +143,9 @@ abstract class AbstractRedis(database: Int) : Database {
      * @param channel The channel to publish to.
      * @param message The message to publish.
      */
-    fun publish(channel: String, message: String) {
+    fun publish(channel: String, message: String?) {
         client.connectPubSub().async().publish(channel, message)
-        println("Published to $channel: $message")
+        logger.info("Published to channel '$channel': '$message'")
     }
 
     fun getAsyncClient() = connection.async()
@@ -153,7 +155,10 @@ abstract class AbstractRedis(database: Int) : Database {
 
         override fun message(channel: String, message: String) =
             functions[channel]?.invoke(channel, message) ?: let {
-                println("There is no executor for channel $channel. Channel $channel will be ignored.")
+                logger.log(
+                    Level.WARNING,
+                    "There is no function for channel '$channel'. Channel '$channel' will be ignored."
+                )
                 unSubScribe(channel)
             }
     }
