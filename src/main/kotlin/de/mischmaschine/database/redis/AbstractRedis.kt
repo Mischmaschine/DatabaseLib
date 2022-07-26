@@ -51,7 +51,6 @@ abstract class AbstractRedis(database: Int) : Database {
 
     }
 
-
     /**
      * Updates the value of the given key asynchronously.
      *
@@ -59,7 +58,10 @@ abstract class AbstractRedis(database: Int) : Database {
      * @param data The data to update the key with.
      */
     fun updateKeyAsync(key: String, data: Any) {
-        redisAsync.set(key, gson.toJson(data))
+        when (data is String || data is Number || data is Boolean) {
+            true -> redisAsync.set(key, data.toString())
+            false -> redisAsync.set(key, gson.toJson(data))
+        }
     }
 
     /**
@@ -69,7 +71,10 @@ abstract class AbstractRedis(database: Int) : Database {
      * @param data The data to update the key with.
      */
     fun updateKeySync(key: String, data: Any) {
-        redisSync.set(key, gson.toJson(data))
+        when (data is String || data is Number || data is Boolean) {
+            true -> redisSync.set(key, data.toString())
+            false -> redisSync.set(key, gson.toJson(data))
+        }
     }
 
     /**
