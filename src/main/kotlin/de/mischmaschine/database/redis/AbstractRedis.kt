@@ -19,7 +19,7 @@ import java.util.logging.Level
  * It provides the basic functionality to connect to a Redis server and to execute commands/listen to channels (pubSub).
  * It is not intended to be used directly, but rather as a base class for concrete implementations.
  */
-abstract class AbstractRedis(database: Int) : Database {
+abstract class AbstractRedis(database: Int, logging: Boolean) : Database {
 
     private val client: RedisClient
     private val connection: StatefulRedisConnection<String, String>
@@ -58,6 +58,10 @@ abstract class AbstractRedis(database: Int) : Database {
             }
             this@AbstractRedis.pubSub = it.connectPubSub().also { pubSub -> pubSub.addListener(Listener()) }
         }
+
+
+        if (!logging) this.logger.level = Level.OFF
+
     }
 
     /**
