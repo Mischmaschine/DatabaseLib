@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" content="width=device-width, initial-scale=1" name="viewport">
+    <title>AbstractRedis</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    const savedDarkMode = storage ? JSON.parse(storage) : false
+    if (savedDarkMode === true) {
+        document.getElementsByTagName("html")[0].classList.add("theme-dark")
+    }</script>
+    <script async="async" src="../../../scripts/sourceset_dependencies.js" type="text/javascript"></script>
+    <link href="../../../styles/style.css" rel="Stylesheet">
+    <link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+    <link href="../../../styles/main.css" rel="Stylesheet">
+    <link href="../../../styles/prism.css" rel="Stylesheet">
+    <link href="../../../styles/logo-styles.css" rel="Stylesheet">
+    <script async="async" src="../../../scripts/clipboard.js" type="text/javascript"></script>
+    <script async="async" src="../../../scripts/navigation-loader.js" type="text/javascript"></script>
+    <script async="async" src="../../../scripts/platform-content-handler.js" type="text/javascript"></script>
+    <script defer="defer" src="../../../scripts/main.js" type="text/javascript"></script>
+    <script async="async" src="../../../scripts/prism.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+        <a href="../../../index.html">
+            <span>DatabaseLib</span>
+        </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+        <div class="main-content" id="content"
+             pageIds="DatabaseLib::de.mischmaschine.database.redis/AbstractRedis///PointingToDeclaration//769193423">
+            <div class="breadcrumbs"><a href="../../../index.html">DatabaseLib</a><span class="delimiter">/</span><a
+                    href="../index.html">de.mischmaschine.database.redis</a><span class="delimiter">/</span><a
+                    href="index.html">AbstractRedis</a></div>
+            <div class="cover ">
+                <h1 class="cover"><span>Abstract</span>
+                    <wbr></wbr>
+                    <span><span>Redis</span></span></h1>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                    <div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/main">
+                        <div class="symbol monospace"><span class="token keyword">public </span><span
+                                class="token keyword">abstract </span><span class="token keyword"></span><span
+                                class="token keyword">class </span><a href="index.html">AbstractRedis</a><span
+                                class="token keyword"> implements </span><a
+                                href="../../de.mischmaschine.database.database/-database/index.html">Database</a><span
+                                class="top-right-position"><span class="copy-icon"></span><div
+                                class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                        </div>
+                        <h2 class=""> AbstractRedis</h2>
+                        <p class="paragraph">This class is the base class for all Redis implementations. It provides the
+                            basic functionality to connect to a Redis server and to execute commands/listen to channels
+                            (pubSub). It is not intended to be used directly, but rather as a base class for concrete
+                            implementations.</p></div>
+                </div>
+            </div>
+            <div class="tabbedcontent">
+                <div class="tabs-section" tabs-section="tabs-section">
+                    <button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button>
+                    <button class="section-tab" data-togglable="Functions">Functions</button>
+                    <button class="section-tab" data-togglable="Properties">Properties</button>
+                </div>
+                <div class="tabs-section-body">
+                    <h2 class="tabbedcontent">Constructors</h2>
+                    <div class="table" data-togglable="Constructors"><a anchor-label="AbstractRedis"
+                                                                        data-filterable-set=":dokkaHtml/main"
+                                                                        data-name="550588860%2FConstructors%2F769193423"
+                                                                        id="550588860%2FConstructors%2F769193423"></a>
+                        <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                             data-filterable-set=":dokkaHtml/main">
+                            <div class="main-subrow keyValue TabbedContent">
+                                <div class=""><span class="inline-flex">
+                <div><a href="-abstract-redis.html"><span>Abstract</span><wbr></wbr><span><span>Redis</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="550588860%2FConstructors%2F769193423"></span>
+                  <div class="copy-popup-wrapper "><span
+                          class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+                                <div>
+                                    <div class="title">
+                                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                                            <div class="content sourceset-depenent-content" data-active=""
+                                                 data-togglable=":dokkaHtml/main">
+                                                <div class="symbol monospace block"><span
+                                                        class="token keyword"></span><a
+                                                        href="index.html">AbstractRedis</a> <a
+                                                        href="-abstract-redis.html"><span class="token function">AbstractRedis</span></a><span
+                                                        class="token punctuation">(</span><span
+                                                        class="parameters "><span class="parameter "><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> database</span></span><span
+                                                        class="token punctuation">)</span><span
+                                                        class="top-right-position"><span class="copy-icon"></span><div
+                                                        class="copy-popup-wrapper popup-to-left"><span
+                                                        class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 class="">Functions</h2>
+                    <div class="table" data-togglable="Functions"><a anchor-label="deleteKeyAsync"
+                                                                     data-filterable-set=":dokkaHtml/main"
+                                                                     data-name="1576036217%2FFunctions%2F769193423"
+                                                                     id="1576036217%2FFunctions%2F769193423"></a>
+                        <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                             data-filterable-set=":dokkaHtml/main">
+                            <div class="main-subrow keyValue ">
+                                <div class=""><span class="inline-flex">
+                <div><a href="delete-key-async.html"><span>delete</span><wbr></wbr><span>Key</span><wbr></wbr><span><span>Async</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1576036217%2FFunctions%2F769193423"></span>
+                  <div class="copy-popup-wrapper "><span
+                          class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+                                <div>
+                                    <div class="title">
+                                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                                            <div class="content sourceset-depenent-content" data-active=""
+                                                 data-togglable=":dokkaHtml/main">
+                                                <div class="symbol monospace block"><span
+                                                        class="token keyword">final </span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a
+                                                        href="delete-key-async.html"><span class="token function">deleteKeyAsync</span></a><span
+                                                        class="token punctuation">(</span><span
+                                                        class="parameters "><span class="parameter "><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> key</span></span><span
+                                                        class="token punctuation">)</span><span
+                                                        class="top-right-position"><span class="copy-icon"></span><div
+                                                        class="copy-popup-wrapper popup-to-left"><span
+                                                        class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                                                </div>
+                                                <div class="brief "><p class="paragraph">Deletes the given key
+                                                    asynchronously.</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a anchor-label="deleteKeySync" data-filterable-set=":dokkaHtml/main"
+                           data-name="1533062092%2FFunctions%2F769193423" id="1533062092%2FFunctions%2F769193423"></a>
+                        <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                             data-filterable-set=":dokkaHtml/main">
+                            <div class="main-subrow keyValue ">
+                                <div class=""><span class="inline-flex">
+                <div><a href="delete-key-sync.html"><span>delete</span><wbr></wbr><span>Key</span><wbr></wbr><span><span>Sync</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1533062092%2FFunctions%2F769193423"></span>
+                  <div class="copy-popup-wrapper "><span
+                          class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+                                <div>
+                                    <div class="title">
+                                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                                            <div class="content sourceset-depenent-content" data-active=""
+                                                 data-togglable=":dokkaHtml/main">
+                                                <div class="symbol monospace block"><span
+                                                        class="token keyword">final </span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a
+                                                        href="delete-key-sync.html"><span class="token function">deleteKeySync</span></a><span
+                                                        class="token punctuation">(</span><span
+                                                        class="parameters "><span class="parameter "><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> key</span></span><span
+                                                        class="token punctuation">)</span><span
+                                                        class="top-right-position"><span class="copy-icon"></span><div
+                                                        class="copy-popup-wrapper popup-to-left"><span
+                                                        class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                                                </div>
+                                                <div class="brief "><p class="paragraph">Deletes the given key
+                                                    synchronously.</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a anchor-label="getAsyncClient" data-filterable-set=":dokkaHtml/main"
+                           data-name="-1797194286%2FFunctions%2F769193423" id="-1797194286%2FFunctions%2F769193423"></a>
+                        <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                             data-filterable-set=":dokkaHtml/main">
+                            <div class="main-subrow keyValue ">
+                                <div class=""><span class="inline-flex">
+                <div><a href="get-async-client.html"><span>get</span><wbr></wbr><span>Async</span><wbr></wbr><span><span>Client</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1797194286%2FFunctions%2F769193423"></span>
+                  <div class="copy-popup-wrapper "><span
+                          class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+                                <div>
+                                    <div class="title">
+                                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                                            <div class="content sourceset-depenent-content" data-active=""
+                                                 data-togglable=":dokkaHtml/main">
+                                                <div class="symbol monospace block"><span
+                                                        class="token keyword">final </span><span
+                                                        class="token keyword"></span><span
+                                                        data-unresolved-link="io.lettuce.core.api.async/RedisAsyncCommands///PointingToDeclaration/">RedisAsyncCommands</span><span
+                                                        class="token operator">&lt;</span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                        class="token punctuation">, </span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                        class="token operator">&gt;</span> <a
+                                                        href="get-async-client.html"><span class="token function">getAsyncClient</span></a><span
+                                                        class="token punctuation">(</span><span
+                                                        class="token punctuation">)</span><span
+                                                        class="top-right-position"><span class="copy-icon"></span><div
+                                                        class="copy-popup-wrapper popup-to-left"><span
+                                                        class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a anchor-label="getLogger" data-filterable-set=":dokkaHtml/main"
+                           data-name="423751665%2FFunctions%2F769193423" id="423751665%2FFunctions%2F769193423"></a>
+                        <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                             data-filterable-set=":dokkaHtml/main">
+                            <div class="main-subrow keyValue ">
+                                <div class=""><span class="inline-flex">
+                <div><a href="get-logger.html"><span>get</span><wbr></wbr><span><span>Logger</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="423751665%2FFunctions%2F769193423"></span>
+                  <div class="copy-popup-wrapper "><span
+                          class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+                                <div>
+                                    <div class="title">
+                                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                                            <div class="content sourceset-depenent-content" data-active=""
+                                                 data-togglable=":dokkaHtml/main">
+                                                <div class="symbol monospace block"><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html">Logger</a> <a
+                                                        href="get-logger.html"><span
+                                                        class="token function">getLogger</span></a><span
+                                                        class="token punctuation">(</span><span
+                                                        class="token punctuation">)</span><span
+                                                        class="top-right-position"><span class="copy-icon"></span><div
+                                                        class="copy-popup-wrapper popup-to-left"><span
+                                                        class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a anchor-label="getSyncClient" data-filterable-set=":dokkaHtml/main"
+                           data-name="-1074937061%2FFunctions%2F769193423" id="-1074937061%2FFunctions%2F769193423"></a>
+                        <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                             data-filterable-set=":dokkaHtml/main">
+                            <div class="main-subrow keyValue ">
+                                <div class=""><span class="inline-flex">
+                <div><a href="get-sync-client.html"><span>get</span><wbr></wbr><span>Sync</span><wbr></wbr><span><span>Client</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1074937061%2FFunctions%2F769193423"></span>
+                  <div class="copy-popup-wrapper "><span
+                          class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+                                <div>
+                                    <div class="title">
+                                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                                            <div class="content sourceset-depenent-content" data-active=""
+                                                 data-togglable=":dokkaHtml/main">
+                                                <div class="symbol monospace block"><span
+                                                        class="token keyword">final </span><span
+                                                        class="token keyword"></span><span
+                                                        data-unresolved-link="io.lettuce.core.api.sync/RedisCommands///PointingToDeclaration/">RedisCommands</span><span
+                                                        class="token operator">&lt;</span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                        class="token punctuation">, </span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                        class="token operator">&gt;</span> <a
+                                                        href="get-sync-client.html"><span class="token function">getSyncClient</span></a><span
+                                                        class="token punctuation">(</span><span
+                                                        class="token punctuation">)</span><span
+                                                        class="top-right-position"><span class="copy-icon"></span><div
+                                                        class="copy-popup-wrapper popup-to-left"><span
+                                                        class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a anchor-label="getValueAsync" data-filterable-set=":dokkaHtml/main"
+                           data-name="140622670%2FFunctions%2F769193423" id="140622670%2FFunctions%2F769193423"></a>
+                        <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                             data-filterable-set=":dokkaHtml/main">
+                            <div class="main-subrow keyValue ">
+                                <div class=""><span class="inline-flex">
+                <div><a href="get-value-async.html"><span>get</span><wbr></wbr><span>Value</span><wbr></wbr><span><span>Async</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="140622670%2FFunctions%2F769193423"></span>
+                  <div class="copy-popup-wrapper "><span
+                          class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+                                <div>
+                                    <div class="title">
+                                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                                            <div class="content sourceset-depenent-content" data-active=""
+                                                 data-togglable=":dokkaHtml/main">
+                                                <div class="symbol monospace block"><span
+                                                        class="token keyword">final </span><span
+                                                        class="token keyword"></span><span
+                                                        data-unresolved-link="io.lettuce.core/RedisFuture///PointingToDeclaration/">RedisFuture</span><span
+                                                        class="token operator">&lt;</span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                        class="token operator">&gt;</span> <a
+                                                        href="get-value-async.html"><span class="token function">getValueAsync</span></a><span
+                                                        class="token punctuation">(</span><span
+                                                        class="parameters "><span class="parameter "><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> key</span></span><span
+                                                        class="token punctuation">)</span><span
+                                                        class="top-right-position"><span class="copy-icon"></span><div
+                                                        class="copy-popup-wrapper popup-to-left"><span
+                                                        class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                                                </div>
+                                                <div class="brief "><p class="paragraph">Gets the value of the given key
+                                                    asynchronously.</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a anchor-label="getValueSync" data-filterable-set=":dokkaHtml/main"
+                           data-name="-709144585%2FFunctions%2F769193423" id="-709144585%2FFunctions%2F769193423"></a>
+                        <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                             data-filterable-set=":dokkaHtml/main">
+                            <div class="main-subrow keyValue ">
+                                <div class=""><span class="inline-flex">
+                <div><a href="get-value-sync.html"><span>get</span><wbr></wbr><span>Value</span><wbr></wbr><span><span>Sync</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-709144585%2FFunctions%2F769193423"></span>
+                  <div class="copy-popup-wrapper "><span
+                          class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+                                <div>
+                                    <div class="title">
+                                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                                            <div class="content sourceset-depenent-content" data-active=""
+                                                 data-togglable=":dokkaHtml/main">
+                                                <div class="symbol monospace block"><span
+                                                        class="token keyword">final </span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> <a
+                                                        href="get-value-sync.html"><span class="token function">getValueSync</span></a><span
+                                                        class="token punctuation">(</span><span
+                                                        class="parameters "><span class="parameter "><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> key</span></span><span
+                                                        class="token punctuation">)</span><span
+                                                        class="top-right-position"><span class="copy-icon"></span><div
+                                                        class="copy-popup-wrapper popup-to-left"><span
+                                                        class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                                                </div>
+                                                <div class="brief "><p class="paragraph">Gets the value of the given key
+                                                    synchronously.</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a anchor-label="publish" data-filterable-set=":dokkaHtml/main"
+                           data-name="660104258%2FFunctions%2F769193423" id="660104258%2FFunctions%2F769193423"></a>
+                        <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                             data-filterable-set=":dokkaHtml/main">
+                            <div class="main-subrow keyValue ">
+                                <div class=""><span class="inline-flex">
+                <div><a href="publish.html"><span><span>publish</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="660104258%2FFunctions%2F769193423"></span>
+                  <div class="copy-popup-wrapper "><span
+                          class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+                                <div>
+                                    <div class="title">
+                                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                                            <div class="content sourceset-depenent-content" data-active=""
+                                                 data-togglable=":dokkaHtml/main">
+                                                <div class="symbol monospace block"><span
+                                                        class="token keyword">final </span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a
+                                                        href="publish.html"><span class="token function">publish</span></a><span
+                                                        class="token punctuation">(</span><span
+                                                        class="parameters "><span class="parameter "><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> channel<span
+                                                        class="token punctuation">, </span></span><span
+                                                        class="parameter "><span class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> message</span></span><span
+                                                        class="token punctuation">)</span><span
+                                                        class="top-right-position"><span class="copy-icon"></span><div
+                                                        class="copy-popup-wrapper popup-to-left"><span
+                                                        class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                                                </div>
+                                                <div class="brief "><p class="paragraph">This method publishes the given
+                                                    message to the given channel.</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a anchor-label="subscribe" data-filterable-set=":dokkaHtml/main"
+                           data-name="-1013472284%2FFunctions%2F769193423" id="-1013472284%2FFunctions%2F769193423"></a>
+                        <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                             data-filterable-set=":dokkaHtml/main">
+                            <div class="main-subrow keyValue ">
+                                <div class=""><span class="inline-flex">
+                <div><a href="subscribe.html"><span><span>subscribe</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1013472284%2FFunctions%2F769193423"></span>
+                  <div class="copy-popup-wrapper "><span
+                          class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+                                <div>
+                                    <div class="title">
+                                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                                            <div class="content sourceset-depenent-content" data-active=""
+                                                 data-togglable=":dokkaHtml/main">
+                                                <div class="symbol monospace block"><span
+                                                        class="token keyword">final </span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a
+                                                        href="subscribe.html"><span
+                                                        class="token function">subscribe</span></a><span
+                                                        class="token punctuation">(</span><span
+                                                        class="parameters "><span class="parameter "><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> channel<span
+                                                        class="token punctuation">, </span></span><span
+                                                        class="parameter "><span class="token keyword"></span><span
+                                                        data-unresolved-link="kotlin.jvm.functions/Function2///PointingToDeclaration/">Function2</span><span
+                                                        class="token operator">&lt;</span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                        class="token punctuation">, </span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                        class="token punctuation">, </span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                        class="token operator">&gt;</span> function</span></span><span
+                                                        class="token punctuation">)</span><span
+                                                        class="top-right-position"><span class="copy-icon"></span><div
+                                                        class="copy-popup-wrapper popup-to-left"><span
+                                                        class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                                                </div>
+                                                <div class="brief "><p class="paragraph">Subscribes to the given
+                                                    channel. The given function will be called when a message is
+                                                    received.</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a anchor-label="unSubScribe" data-filterable-set=":dokkaHtml/main"
+                           data-name="1812805038%2FFunctions%2F769193423" id="1812805038%2FFunctions%2F769193423"></a>
+                        <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                             data-filterable-set=":dokkaHtml/main">
+                            <div class="main-subrow keyValue ">
+                                <div class=""><span class="inline-flex">
+                <div><a href="un-sub-scribe.html"><span>un</span><wbr></wbr><span>Sub</span><wbr></wbr><span><span>Scribe</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1812805038%2FFunctions%2F769193423"></span>
+                  <div class="copy-popup-wrapper "><span
+                          class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+                                <div>
+                                    <div class="title">
+                                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                                            <div class="content sourceset-depenent-content" data-active=""
+                                                 data-togglable=":dokkaHtml/main">
+                                                <div class="symbol monospace block"><span
+                                                        class="token keyword">final </span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a
+                                                        href="un-sub-scribe.html"><span class="token function">unSubScribe</span></a><span
+                                                        class="token punctuation">(</span><span
+                                                        class="parameters "><span class="parameter "><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> channel</span></span><span
+                                                        class="token punctuation">)</span><span
+                                                        class="top-right-position"><span class="copy-icon"></span><div
+                                                        class="copy-popup-wrapper popup-to-left"><span
+                                                        class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                                                </div>
+                                                <div class="brief "><p class="paragraph">Unsubscribes the given
+                                                    channel.</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a anchor-label="updateKeyAsync" data-filterable-set=":dokkaHtml/main"
+                           data-name="-2059510631%2FFunctions%2F769193423" id="-2059510631%2FFunctions%2F769193423"></a>
+                        <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                             data-filterable-set=":dokkaHtml/main">
+                            <div class="main-subrow keyValue ">
+                                <div class=""><span class="inline-flex">
+                <div><a href="update-key-async.html"><span>update</span><wbr></wbr><span>Key</span><wbr></wbr><span><span>Async</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2059510631%2FFunctions%2F769193423"></span>
+                  <div class="copy-popup-wrapper "><span
+                          class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+                                <div>
+                                    <div class="title">
+                                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                                            <div class="content sourceset-depenent-content" data-active=""
+                                                 data-togglable=":dokkaHtml/main">
+                                                <div class="symbol monospace block"><span
+                                                        class="token keyword">final </span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a
+                                                        href="update-key-async.html"><span class="token function">updateKeyAsync</span></a><span
+                                                        class="token punctuation">(</span><span
+                                                        class="parameters "><span class="parameter "><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> key<span
+                                                        class="token punctuation">, </span></span><span
+                                                        class="parameter "><span class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> data</span></span><span
+                                                        class="token punctuation">)</span><span
+                                                        class="top-right-position"><span class="copy-icon"></span><div
+                                                        class="copy-popup-wrapper popup-to-left"><span
+                                                        class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                                                </div>
+                                                <div class="brief "><p class="paragraph">Updates the value of the given
+                                                    key asynchronously.</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a anchor-label="updateKeySync" data-filterable-set=":dokkaHtml/main"
+                           data-name="-1096740958%2FFunctions%2F769193423" id="-1096740958%2FFunctions%2F769193423"></a>
+                        <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                             data-filterable-set=":dokkaHtml/main">
+                            <div class="main-subrow keyValue ">
+                                <div class=""><span class="inline-flex">
+                <div><a href="update-key-sync.html"><span>update</span><wbr></wbr><span>Key</span><wbr></wbr><span><span>Sync</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1096740958%2FFunctions%2F769193423"></span>
+                  <div class="copy-popup-wrapper "><span
+                          class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+                                <div>
+                                    <div class="title">
+                                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                                            <div class="content sourceset-depenent-content" data-active=""
+                                                 data-togglable=":dokkaHtml/main">
+                                                <div class="symbol monospace block"><span
+                                                        class="token keyword">final </span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a
+                                                        href="update-key-sync.html"><span class="token function">updateKeySync</span></a><span
+                                                        class="token punctuation">(</span><span
+                                                        class="parameters "><span class="parameter "><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> key<span
+                                                        class="token punctuation">, </span></span><span
+                                                        class="parameter "><span class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> data</span></span><span
+                                                        class="token punctuation">)</span><span
+                                                        class="top-right-position"><span class="copy-icon"></span><div
+                                                        class="copy-popup-wrapper popup-to-left"><span
+                                                        class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                                                </div>
+                                                <div class="brief "><p class="paragraph">Updates the value of the given
+                                                    key synchronously.</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 class="">Properties</h2>
+                    <div class="table" data-togglable="Properties"><a anchor-label="logger"
+                                                                      data-filterable-set=":dokkaHtml/main"
+                                                                      data-name="-660920771%2FProperties%2F769193423"
+                                                                      id="-660920771%2FProperties%2F769193423"></a>
+                        <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                             data-filterable-set=":dokkaHtml/main">
+                            <div class="main-subrow keyValue ">
+                                <div class=""><span class="inline-flex">
+                <div><a href="../../de.mischmaschine.database.sql.network.postgresql/-abstract-postgre-s-q-l/index.html#-660920771%2FProperties%2F769193423">logger</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-660920771%2FProperties%2F769193423"></span>
+                  <div class="copy-popup-wrapper "><span
+                          class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+                                <div>
+                                    <div class="title">
+                                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"
+                                             data-togglable="Properties">
+                                            <div class="content sourceset-depenent-content" data-active=""
+                                                 data-togglable=":dokkaHtml/main"><a
+                                                    anchor-label="logger"
+                                                    data-filterable-set=":dokkaHtml/main"
+                                                    data-name="-660920771%2FProperties%2F769193423"
+                                                    id="-660920771%2FProperties%2F769193423"></a>
+                                                <div class="symbol monospace block"><span
+                                                        class="token keyword">private </span><span
+                                                        class="token keyword">final </span><span
+                                                        class="token keyword"></span><a
+                                                        href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html">Logger</a> <a
+                                                        href="../../de.mischmaschine.database.sql.network.postgresql/-abstract-postgre-s-q-l/index.html#-660920771%2FProperties%2F769193423">logger</a><span
+                                                        class="top-right-position"><span class="copy-icon"></span><div
+                                                        class="copy-popup-wrapper popup-to-left"><span
+                                                        class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2022 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+        </div>
+    </div>
+</div>
+</body>
+</html>
