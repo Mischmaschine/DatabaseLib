@@ -1,16 +1,12 @@
 package de.mischmaschine.database.redis
 
-import com.google.gson.GsonBuilder
 import de.mischmaschine.database.database.Configuration
 import de.mischmaschine.database.database.Database
-import io.lettuce.core.RedisClient
-import io.lettuce.core.RedisFuture
-import io.lettuce.core.RedisURI
-import io.lettuce.core.api.StatefulRedisConnection
-import io.lettuce.core.api.async.RedisAsyncCommands
-import io.lettuce.core.api.sync.RedisCommands
-import io.lettuce.core.pubsub.RedisPubSubAdapter
-import io.lettuce.core.pubsub.StatefulRedisPubSubConnection
+import org.redisson.Redisson
+import org.redisson.api.RFuture
+import org.redisson.api.RedissonClient
+import org.redisson.codec.JsonJacksonCodec
+import org.redisson.config.Config
 import java.util.logging.Level
 
 /**
@@ -19,37 +15,29 @@ import java.util.logging.Level
  * It provides the basic functionality to connect to a Redis server and to execute commands/listen to channels (pubSub).
  * It is not intended to be used directly, but rather as a base class for concrete implementations.
  */
-abstract class AbstractRedis(database: Int) : Database {
+abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Database {
 
-    private val client: RedisClient
-    private val connection: StatefulRedisConnection<String, String>
-    private val gson = GsonBuilder().serializeNulls().create()
-    private val redisSync: RedisCommands<String, String>
-    private val redisAsync: RedisAsyncCommands<String, String>
-    private val functions = mutableMapOf<String, (String, String) -> Unit>()
-    private val pubSub: StatefulRedisPubSubConnection<String, String>
+    private val redissonClient: RedissonClient
 
     init {
 
         val host = Configuration.getHost(AbstractRedis::class)
         val port = Configuration.getPort(AbstractRedis::class)
         val password = Configuration.getPassword(AbstractRedis::class)
-        System.setProperty("slf4j.detectLoggerNameMismatch", "true")
-        this.client = RedisClient.create(
-            RedisURI.Builder.redis(
-                host,
-                port
-            ).withPassword(password.toCharArray()).withDatabase(database).build()
-        ).also {
-            this@AbstractRedis.connection = it.connect().also { statefulRedisConnection ->
-                statefulRedisConnection.run {
-                    this@AbstractRedis.redisAsync = this.async()
-                    this@AbstractRedis.redisSync = this.sync()
-                }
-            }
-            this@AbstractRedis.pubSub = it.connectPubSub().also { pubSub -> pubSub.addListener(Listener()) }
 
+        if (host.isEmpty()) throw IllegalArgumentException("No host specified for Redis database $database")
+        if (port == 0) throw IllegalArgumentException("No port specified for Redis database $database")
+        Config().also {
+            it.useSingleServer().apply {
+                this.address = if (ssl) "rediss://$host:$port" else "redis://$host:$port"
+                this.password = password
+                this.database = database
+            }
+        }.also {
+            this.redissonClient = Redisson.create(it)
         }
+
+        if (!logging) this.logger.level = Level.OFF
 
     }
 
@@ -59,11 +47,8 @@ abstract class AbstractRedis(database: Int) : Database {
      * @param key The key to update.
      * @param data The data to update the key with.
      */
-    fun updateKeyAsync(key: String, data: Any) {
-        when (data is String || data is Number || data is Boolean) {
-            true -> redisAsync.set(key, data.toString())
-            false -> redisAsync.set(key, gson.toJson(data))
-        }
+    fun <T> updateKeyAsync(key: String, data: T) {
+        this.redissonClient.getBucket<T>(key, JsonJacksonCodec()).setAsync(data)
     }
 
     /**
@@ -72,11 +57,8 @@ abstract class AbstractRedis(database: Int) : Database {
      * @param key The key to update.
      * @param data The data to update the key with.
      */
-    fun updateKeySync(key: String, data: Any) {
-        when (data is String || data is Number || data is Boolean) {
-            true -> redisSync.set(key, data.toString())
-            false -> redisSync.set(key, gson.toJson(data))
-        }
+    fun <T> updateKeySync(key: String, data: T) {
+        this.redissonClient.getBucket<T>(key, JsonJacksonCodec()).set(data)
     }
 
     /**
@@ -86,7 +68,8 @@ abstract class AbstractRedis(database: Int) : Database {
      *
      * @return the value of the given key, or null if the key does not exist.
      */
-    fun getValueSync(key: String): String? = redisSync.get(key)
+    fun <T> getValueSync(key: String): RFuture<T?> =
+        this.redissonClient.getBucket<T>(key, JsonJacksonCodec()).async
 
     /**
      * Gets the value of the given key asynchronously.
@@ -95,15 +78,18 @@ abstract class AbstractRedis(database: Int) : Database {
      *
      * @return the value of the given key, or null if the key does not exist.
      */
-    fun getValueAsync(key: String): RedisFuture<String?> = redisAsync.get(key)
+    fun <T> getValueAsync(key: String): RFuture<T?> =
+        this.redissonClient.getBucket<T>(key, JsonJacksonCodec()).async
 
     /**
      * Deletes the given key synchronously.
      * @param key The key to delete.
      * @see [redisSync]
      */
-    fun deleteKeySync(vararg key: String) {
-        redisSync.del(*key)
+    fun <T> deleteKeySync(vararg key: String) {
+        key.forEach {
+            this.redissonClient.getBucket<T>(it, JsonJacksonCodec()).delete()
+        }
     }
 
     /**
@@ -112,8 +98,10 @@ abstract class AbstractRedis(database: Int) : Database {
      *
      * @see [redisAsync]
      */
-    fun deleteKeyAsync(vararg key: String) {
-        redisAsync.del(*key)
+    fun <T> deleteKeyAsync(vararg key: String) {
+        key.forEach {
+            this.redissonClient.getBucket<T>(it, JsonJacksonCodec()).deleteAsync()
+        }
     }
 
     /**
@@ -122,9 +110,8 @@ abstract class AbstractRedis(database: Int) : Database {
      * @param channel The channel to subscribe to.
      * @param function The function to call when a message is received.
      */
-    fun subscribe(channel: String, function: (String, String) -> Unit) {
-        pubSub.async().subscribe(channel)
-        functions[channel] = function
+    fun subscribe(channel: String, type: Class<*>, function: (String, Any) -> Unit) {
+        Listener(channel, type, function)
     }
 
     /**
@@ -132,8 +119,10 @@ abstract class AbstractRedis(database: Int) : Database {
      *
      * @param channel The channel to unsubscribe from.
      */
-    fun unSubScribe(vararg channel: String) {
-        pubSub.async().unsubscribe(*channel)
+    fun unsubscribe(vararg channel: String) {
+        channel.forEach {
+            this.redissonClient.getTopic(it, JsonJacksonCodec()).removeAllListeners()
+        }
         logger.info("Unsubscribed from ${channel.joinToString(", ")}")
     }
 
@@ -143,23 +132,19 @@ abstract class AbstractRedis(database: Int) : Database {
      * @param channel The channel to publish to.
      * @param message The message to publish.
      */
-    fun publish(channel: String, message: String?) {
-        client.connectPubSub().async().publish(channel, message)
+    fun publish(channel: String, message: Any) {
+        this.redissonClient.getTopic(channel, JsonJacksonCodec()).publishAsync(message)
         logger.info("Published to channel '$channel': '$message'")
     }
 
-    fun getAsyncClient() = connection.async()
-    fun getSyncClient() = connection.sync()
+    fun getRedissonClient() = this.redissonClient
 
-    private inner class Listener : RedisPubSubAdapter<String, String>() {
-
-        override fun message(channel: String, message: String) =
-            functions[channel]?.invoke(channel, message) ?: let {
-                logger.log(
-                    Level.WARNING,
-                    "There is no function for channel '$channel'. Channel '$channel' will be ignored."
-                )
-                unSubScribe(channel)
-            }
+    private inner class Listener(channel: String, type: Class<*>, function: (String, Any) -> Unit) {
+        init {
+            this@AbstractRedis.redissonClient.getTopic(channel, JsonJacksonCodec())
+                .addListenerAsync(type) { _, message ->
+                    function.invoke(channel, message)
+                }
+        }
     }
 }
