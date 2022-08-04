@@ -1,6 +1,5 @@
 package de.mischmaschine.database.redis
 
-import com.google.gson.GsonBuilder
 import de.mischmaschine.database.database.Configuration
 import de.mischmaschine.database.database.Database
 import org.redisson.Redisson
@@ -18,7 +17,6 @@ import java.util.logging.Level
  */
 abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Database {
 
-    private val gson = GsonBuilder().serializeNulls().create()
     private val redissonClient: RedissonClient
 
     init {
