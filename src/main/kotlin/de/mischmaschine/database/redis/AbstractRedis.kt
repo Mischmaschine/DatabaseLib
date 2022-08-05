@@ -4,13 +4,15 @@ import com.google.gson.GsonBuilder
 import de.mischmaschine.database.database.Configuration
 import de.mischmaschine.database.database.Database
 import io.lettuce.core.RedisClient
-import io.lettuce.core.RedisFuture
 import io.lettuce.core.RedisURI
 import io.lettuce.core.api.StatefulRedisConnection
 import io.lettuce.core.api.async.RedisAsyncCommands
 import io.lettuce.core.api.sync.RedisCommands
 import io.lettuce.core.pubsub.RedisPubSubAdapter
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.util.logging.Level
 
 /**
@@ -19,7 +21,7 @@ import java.util.logging.Level
  * It provides the basic functionality to connect to a Redis server and to execute commands/listen to channels (pubSub).
  * It is not intended to be used directly, but rather as a base class for concrete implementations.
  */
-abstract class AbstractRedis(database: Int, logging: Boolean) : Database {
+abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Database {
 
     private val client: RedisClient
     private val connection: StatefulRedisConnection<String, String>
@@ -28,6 +30,10 @@ abstract class AbstractRedis(database: Int, logging: Boolean) : Database {
     private val redisAsync: RedisAsyncCommands<String, String>
     private val functions = mutableMapOf<String, (String, String) -> Unit>()
     private val pubSub: StatefulRedisPubSubConnection<String, String>
+    val json = Json {
+        encodeDefaults = true
+        prettyPrint = true
+    }
 
     init {
 
@@ -46,6 +52,7 @@ abstract class AbstractRedis(database: Int, logging: Boolean) : Database {
             false -> {
                 RedisClient.create(
                     RedisURI.Builder.redis(host, port).withPassword(password.toCharArray()).withDatabase(database)
+                        .withSsl(ssl)
                         .build()
                 )
             }
@@ -83,10 +90,10 @@ abstract class AbstractRedis(database: Int, logging: Boolean) : Database {
      * @param key The key to update.
      * @param data The data to update the key with.
      */
-    fun updateKeySync(key: String, data: Any) {
+    inline fun <reified T> updateKeySync(key: String, data: T) {
         when (data is String || data is Number || data is Boolean) {
-            true -> redisSync.set(key, data.toString())
-            false -> redisSync.set(key, gson.toJson(data))
+            true -> getSyncClient().set(key, data.toString())
+            false -> getSyncClient().set(key, json.encodeToString(data))
         }
     }
 
@@ -97,7 +104,7 @@ abstract class AbstractRedis(database: Int, logging: Boolean) : Database {
      *
      * @return the value of the given key, or null if the key does not exist.
      */
-    fun getValueSync(key: String): String? = redisSync.get(key)
+    inline fun <reified T> getValueSync(key: String): T? = json.decodeFromString(getSyncClient().get(key))
 
     /**
      * Gets the value of the given key asynchronously.
@@ -106,7 +113,16 @@ abstract class AbstractRedis(database: Int, logging: Boolean) : Database {
      *
      * @return the value of the given key, or null if the key does not exist.
      */
-    fun getValueAsync(key: String): RedisFuture<String?> = redisAsync.get(key)
+    inline fun <reified T> getValueAsync(key: String): FutureAction<T?> = FutureAction {
+        getAsyncClient().get(key).whenComplete { result, throwable ->
+            throwable?.let {
+                this.completeExceptionally(throwable)
+            } ?: result?.let {
+                this.complete(json.decodeFromString(it))
+            } ?: this.completeExceptionally(NullPointerException("No result found for key $key"))
+        }
+    }
+
 
     /**
      * Deletes the given key synchronously.
@@ -157,7 +173,7 @@ abstract class AbstractRedis(database: Int, logging: Boolean) : Database {
     fun publish(channel: String, message: Any) {
         when (message is String || message is Number || message is Boolean) {
             true -> client.connectPubSub().async().publish(channel, message.toString())
-            false -> client.connectPubSub().async().publish(channel, gson.toJson(message))
+            false -> client.connectPubSub().async().publish(channel, this.json.encodeToString(message))
         }
         logger.info("Published to channel '$channel': '$message'")
     }
