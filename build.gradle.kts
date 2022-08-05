@@ -22,7 +22,7 @@ dependencies {
     compileOnly("org.postgresql:postgresql:42.3.6")
     compileOnly("com.h2database:h2:2.1.214")
     compileOnly("org.xerial:sqlite-jdbc:3.36.0.3")
-    compileOnly("org.mariadb.jdbc:mariadb-java-client:3.0.5")
+    compileOnly("org.mariadb.jdbc:mariadb-java-client:3.0.6")
     compileOnly("org.mongodb:mongodb-driver-sync:4.6.0")
     compileOnly("org.redisson:redisson:3.17.5")
 
