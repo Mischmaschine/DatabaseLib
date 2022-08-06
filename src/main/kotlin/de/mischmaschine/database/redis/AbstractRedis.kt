@@ -111,7 +111,7 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      *
      * @return the value of the given key, or null if the key does not exist.
      */
-    inline fun <reified T> getValueAsync(key: String): FutureAction<T?> = FutureAction {
+    inline fun <reified T> getValueAsync(key: String): FutureAction<T> = FutureAction {
         getAsyncClient().get(key).whenComplete { result, throwable ->
             throwable?.let {
                 this.completeExceptionally(throwable)
