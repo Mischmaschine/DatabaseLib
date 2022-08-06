@@ -75,10 +75,10 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @param key The key to update.
      * @param data The data to update the key with.
      */
-    fun updateKeyAsync(key: String, data: Any) {
+    inline fun <reified T> updateKeyAsync(key: String, data: T) {
         when (data is String || data is Number || data is Boolean) {
-            true -> redisAsync.set(key, data.toString())
-            false -> redisAsync.set(key, json.encodeToString(data))
+            true -> getAsyncClient().set(key, data.toString())
+            false -> getAsyncClient().set(key, json.encodeToString(data))
         }
     }
 
