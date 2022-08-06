@@ -24,7 +24,7 @@ dependencies {
     compileOnly("com.h2database:h2:2.1.214")
     compileOnly("org.xerial:sqlite-jdbc:3.36.0.3")
     compileOnly("org.mariadb.jdbc:mariadb-java-client:3.0.6")
-    compileOnly("org.mongodb:mongodb-driver-sync:4.6.0")
+    compileOnly("org.mongodb:mongodb-driver-sync:4.7.1")
     compileOnly("io.lettuce:lettuce-core:6.2.0.RELEASE")
 
     testImplementation("io.lettuce:lettuce-core:6.2.0.RELEASE")
