@@ -31,7 +31,6 @@ dependencies {
     testImplementation("org.mongodb:mongodb-driver-sync:4.6.0")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
-    implementation("com.google.code.gson:gson:2.9.0")
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.10")
     implementation(kotlin("reflect"))
 }
