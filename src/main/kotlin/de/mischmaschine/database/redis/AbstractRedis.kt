@@ -1,6 +1,5 @@
 package de.mischmaschine.database.redis
 
-import com.google.gson.GsonBuilder
 import de.mischmaschine.database.database.Configuration
 import de.mischmaschine.database.database.Database
 import io.lettuce.core.RedisClient
@@ -25,7 +24,6 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
 
     private val client: RedisClient
     private val connection: StatefulRedisConnection<String, String>
-    private val gson = GsonBuilder().serializeNulls().create()
     private val redisSync: RedisCommands<String, String>
     private val redisAsync: RedisAsyncCommands<String, String>
     private val functions = mutableMapOf<String, (String, String) -> Unit>()
@@ -80,7 +78,7 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
     fun updateKeyAsync(key: String, data: Any) {
         when (data is String || data is Number || data is Boolean) {
             true -> redisAsync.set(key, data.toString())
-            false -> redisAsync.set(key, gson.toJson(data))
+            false -> redisAsync.set(key, json.encodeToString(data))
         }
     }
 
