@@ -176,6 +176,10 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
         logger.info("Published to channel '$channel': '$message'")
     }
 
+    fun closeConnection() {
+        connection.close()
+    }
+
     fun getAsyncClient() = connection.async()
     fun getSyncClient() = connection.sync()
 
