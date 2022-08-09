@@ -1,7 +1,7 @@
 package de.mischmaschine.database.sql
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.sql.Connection
 import java.util.concurrent.CompletableFuture
 
@@ -20,7 +20,7 @@ abstract class AbstractSQL {
      */
     fun updateSync(tableName: String, key: String, columnName: String, updatedValue: Any) {
         val serializedValue = if (updatedValue !is String && updatedValue !is Boolean && updatedValue !is Number) {
-            gson.toJson(updatedValue)
+            json.encodeToString(updatedValue)
         } else {
             updatedValue
         }
@@ -59,7 +59,7 @@ abstract class AbstractSQL {
         val serializedList = mutableListOf<Any>()
         tableValues.forEach {
             val toAdd = if (it !is String && it !is Boolean && it !is Number) {
-                gson.toJson(it)
+                json.encodeToString(it)
             } else {
                 it
             }
@@ -178,6 +178,9 @@ abstract class AbstractSQL {
     }
 
     companion object {
-        private val gson: Gson = GsonBuilder().serializeNulls().create()
+        private val json: Json = Json {
+            encodeDefaults = true
+            prettyPrint = true
+        }
     }
 }
