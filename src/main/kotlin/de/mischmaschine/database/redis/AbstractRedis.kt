@@ -50,7 +50,7 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
                 )
             }
         }.also {
-            this.pubSub = it.connectPubSub().also { it.addListener(Listener()) }
+            this.pubSub = it.connectPubSub().also { pubSub -> pubSub.addListener(Listener()) }
         }
 
         if (!logging) this.logger.level = Level.OFF
@@ -164,8 +164,9 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @param channel The channel to subscribe to.
      * @param function The function to call when a message is received.
      */
-    fun subscribe(channel: String, type: Class<*>, function: (String, Any) -> Unit) {
-        Listener(channel, type, function)
+    fun subscribe(channel: String, function: (String, String) -> Unit) {
+        pubSub.async().subscribe(channel)
+        functions[channel] = function
     }
 
     /**
