@@ -28,7 +28,7 @@ dependencies {
     compileOnly("io.lettuce:lettuce-core:6.2.0.RELEASE")
 
     testImplementation("io.lettuce:lettuce-core:6.2.0.RELEASE")
-    testImplementation("org.mongodb:mongodb-driver-sync:4.6.0")
+    testImplementation("org.mongodb:mongodb-driver-sync:4.7.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.10")
@@ -50,7 +50,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "de.mischmaschine"
             artifactId = "DatabaseLib"
-            version = "1.0"
+            version = "1.1"
 
             from(components["java"])
         }
