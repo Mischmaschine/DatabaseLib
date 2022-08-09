@@ -5,6 +5,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.0.0"
     id("org.jetbrains.dokka") version "1.6.21"
     id("maven-publish")
+    kotlin("plugin.serialization") version "1.7.10"
 }
 
 group = "de.mischmaschine"
@@ -22,14 +23,15 @@ dependencies {
     compileOnly("org.postgresql:postgresql:42.3.6")
     compileOnly("com.h2database:h2:2.1.214")
     compileOnly("org.xerial:sqlite-jdbc:3.36.0.3")
-    compileOnly("org.mariadb.jdbc:mariadb-java-client:3.0.5")
-    compileOnly("org.mongodb:mongodb-driver-sync:4.6.0")
-    compileOnly("org.redisson:redisson:3.17.5")
+    compileOnly("org.mariadb.jdbc:mariadb-java-client:3.0.6")
+    compileOnly("org.mongodb:mongodb-driver-sync:4.7.1")
+    compileOnly("io.lettuce:lettuce-core:6.2.0.RELEASE")
 
-    testImplementation("org.redisson:redisson:3.17.5")
-    testImplementation("org.mongodb:mongodb-driver-sync:4.6.0")
+    testImplementation("io.lettuce:lettuce-core:6.2.0.RELEASE")
+    testImplementation("org.mongodb:mongodb-driver-sync:4.7.1")
 
-    implementation("com.google.code.gson:gson:2.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
+
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.10")
     implementation(kotlin("reflect"))
 }
@@ -49,7 +51,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "de.mischmaschine"
             artifactId = "DatabaseLib"
-            version = "1.0"
+            version = "1.1"
 
             from(components["java"])
         }
