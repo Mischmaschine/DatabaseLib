@@ -26,7 +26,6 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
         encodeDefaults = true
         prettyPrint = true
     }
-    private val pubSub: StatefulRedisPubSubConnection<String, String>
 
     init {
 
@@ -49,8 +48,6 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
                         .build()
                 )
             }
-        }.also {
-            this.pubSub = it.connectPubSub().also { pubSub -> pubSub.addListener(Listener()) }
         }
 
         if (!logging) this.logger.level = Level.OFF
@@ -165,7 +162,9 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @param function The function to call when a message is received.
      */
     fun subscribe(channel: String, function: (String, String) -> Unit) {
-        pubSub.async().subscribe(channel)
+        val connection = getClient().connectPubSub()
+        connection.addListener(Listener())
+        connection.async().subscribe(channel)
         functions[channel] = function
     }
 
