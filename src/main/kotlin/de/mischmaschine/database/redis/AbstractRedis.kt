@@ -6,7 +6,6 @@ import io.lettuce.core.RedisClient
 import io.lettuce.core.RedisURI
 import io.lettuce.core.api.StatefulRedisConnection
 import io.lettuce.core.pubsub.RedisPubSubAdapter
-import io.lettuce.core.pubsub.StatefulRedisPubSubConnection
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -60,15 +59,21 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @param key The key to update.
      * @param data The data to update the key with.
      */
-    inline fun <reified T> updateKeyAsync(key: String, data: T) {
-        val connection = getNewConnection()
-        when (data is String || data is Number || data is Boolean) {
-            true -> connection.async().set(key, data.toString()).thenAccept {
-                connection.closeAsync()
-            }
+    inline fun <reified T> updateKeyAsync(key: String, data: T): FutureAction<Unit> {
+        return FutureAction {
+            val connection = getNewConnection()
+            when (data is String || data is Number || data is Boolean) {
+                true -> connection.async().set(key, data.toString()).thenAccept {
+                    connection.closeAsync().thenAccept {
+                        this.complete(Unit)
+                    }
+                }
 
-            false -> connection.async().set(key, json.encodeToString(data)).thenAccept {
-                connection.closeAsync()
+                false -> connection.async().set(key, json.encodeToString(data)).thenAccept {
+                    connection.closeAsync().thenAccept {
+                        this.complete(Unit)
+                    }
+                }
             }
         }
     }
@@ -148,10 +153,15 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      *
      * @see [redisAsync]
      */
-    fun deleteKeyAsync(vararg key: String) {
-        val connection = getNewConnection()
-        connection.async().del(*key).thenAccept {
-            connection.closeAsync()
+    fun deleteKeyAsync(vararg key: String): FutureAction<Unit> {
+        return FutureAction {
+            val connection = getNewConnection()
+            connection.async().del(*key).thenAccept {
+                it ?: this.completeExceptionally(NullPointerException("No result found for key $key"))
+                connection.closeAsync().thenAccept {
+                    this.complete(Unit)
+                }
+            }
         }
     }
 
@@ -187,18 +197,23 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @param channel The channel to publish to.
      * @param message The message to publish.
      */
-    inline fun <reified T> publish(channel: String, message: T) {
-        val pubSubConnection = getClient().connectPubSub()
-        when (message is String || message is Number || message is Boolean) {
-            true -> pubSubConnection.async().publish(channel, message.toString()).thenAccept {
-                pubSubConnection.closeAsync()
-            }
+    inline fun <reified T> publish(channel: String, message: T): FutureAction<Unit> {
+        return FutureAction {
+            val pubSubConnection = getClient().connectPubSub()
+            when (message is String || message is Number || message is Boolean) {
+                true -> pubSubConnection.async().publish(channel, message.toString()).thenAccept {
+                    pubSubConnection.closeAsync()
+                    this.complete(Unit)
+                }
 
-            false -> pubSubConnection.async().publish(channel, this.json.encodeToString(message)).thenAccept {
-                pubSubConnection.closeAsync()
+                false -> pubSubConnection.async().publish(channel, this@AbstractRedis.json.encodeToString(message))
+                    .thenAccept {
+                        pubSubConnection.closeAsync()
+                        this.complete(Unit)
+                    }
             }
+            logger.info("Published to channel '$channel': '$message'")
         }
-        logger.info("Published to channel '$channel': '$message'")
     }
 
 
