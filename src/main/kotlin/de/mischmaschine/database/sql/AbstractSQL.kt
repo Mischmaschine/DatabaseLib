@@ -8,7 +8,6 @@ import java.util.concurrent.CompletableFuture
 abstract class AbstractSQL {
 
     private var tableData = mutableListOf<String>()
-    private var uniqueId = "unique_id"
 
     /**
      * This method is for updating synchronized  row in the database.
@@ -18,14 +17,14 @@ abstract class AbstractSQL {
      * @param columnName Specifies to which column name a value should be changed.
      * @param updatedValue Specifies the new value which should be set to the column.
      */
-    fun updateSync(tableName: String, key: String, columnName: String, updatedValue: Any) {
+    fun updateSync(tableName: String, identifier: String, key: String, columnName: String, updatedValue: Any) {
         val serializedValue = if (updatedValue !is String && updatedValue !is Boolean && updatedValue !is Number) {
             json.encodeToString(updatedValue)
         } else {
             updatedValue
         }
         if (!tableData.contains(columnName)) throw IllegalArgumentException("Column $columnName does not exist in table $tableName")
-        val query = "UPDATE $tableName SET $columnName='$serializedValue' WHERE $uniqueId='$key'"
+        val query = "UPDATE $tableName SET $columnName='$serializedValue' WHERE $identifier='$key'"
         updateQuery(query)
     }
 
@@ -37,9 +36,9 @@ abstract class AbstractSQL {
      * @param columnName Specifies to which column name a value should be changed.
      * @param updatedValue Specifies the new value which should be set to the column.
      */
-    fun updateAsync(tableName: String, key: String, columnName: String, updatedValue: Any) {
+    fun updateAsync(tableName: String, identifier: String, key: String, columnName: String, updatedValue: Any) {
         CompletableFuture.runAsync {
-            updateSync(tableName, key, columnName, updatedValue)
+            updateSync(tableName, identifier, key, columnName, updatedValue)
         }
     }
 
@@ -100,8 +99,8 @@ abstract class AbstractSQL {
      *
      * @return the MySQLResult or null
      */
-    fun getResultSync(tableName: String, key: String, additionalQuery: String = ""): MySQLResult {
-        val queryString = "SELECT * FROM $tableName WHERE $uniqueId='$key' $additionalQuery"
+    fun getResultSync(tableName: String, identifier: String, key: String, additionalQuery: String = ""): MySQLResult {
+        val queryString = "SELECT * FROM $tableName WHERE $identifier='$key' $additionalQuery"
         val connection = getFreeDatabase()
         val prepareStatement = connection.prepareStatement(queryString)
         return MySQLResult(connection, prepareStatement, prepareStatement.executeQuery())
@@ -117,11 +116,12 @@ abstract class AbstractSQL {
      */
     fun getResultAsync(
         tableName: String,
+        identifier: String,
         key: String,
         additionalQuery: String = ""
     ): CompletableFuture<MySQLResult?> {
         return CompletableFuture.supplyAsync {
-            getResultSync(tableName, key, additionalQuery)
+            getResultSync(tableName, identifier, key, additionalQuery)
         }
     }
 
@@ -132,7 +132,7 @@ abstract class AbstractSQL {
      * @param key which row should be deleted specified by the key
      */
     fun deleteSync(tableName: String, key: String) =
-        deleteQuery("DELETE FROM $tableName WHERE $uniqueId='$key'")
+        deleteQuery("DELETE FROM $tableName WHERE $key='$key'")
 
     /**
      * This method is for deleting asynchronously data from the database
