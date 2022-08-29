@@ -119,7 +119,7 @@ abstract class AbstractSQL {
         identifier: String,
         key: String,
         additionalQuery: String = ""
-    ): CompletableFuture<MySQLResult?> {
+    ): CompletableFuture<MySQLResult> {
         return CompletableFuture.supplyAsync {
             getResultSync(tableName, identifier, key, additionalQuery)
         }
