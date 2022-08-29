@@ -77,7 +77,7 @@ dependencies {
 #### Kotlin
 
 ```kotlin
-import de.mischmaschine.database.database.configuration.Configuration
+import de.mischmaschine.database.configuration.Configuration
 
 Configuration("host", port, "username", "password", AbstractRedis::class)
 ```
@@ -85,7 +85,7 @@ Configuration("host", port, "username", "password", AbstractRedis::class)
 #### Java
 
 ```java
-import de.mischmaschine.database.database.configuration.Configuration;
+import de.mischmaschine.database.configuration.Configuration;
 
 new Configuration("host",port,"username","password",AbstractRedis.class);
 ```
