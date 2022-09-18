@@ -221,6 +221,10 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
         return client.connect()
     }
 
+    fun shutdown() {
+        client.shutdown()
+    }
+
     fun getClient() = this.client
 
     private inner class Listener : RedisPubSubAdapter<String, String>() {

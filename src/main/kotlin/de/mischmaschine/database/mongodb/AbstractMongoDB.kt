@@ -12,8 +12,10 @@ import com.mongodb.client.model.Filters
 import com.mongodb.client.model.WriteModel
 import de.mischmaschine.database.database.Configuration
 import de.mischmaschine.database.database.Database
+import de.mischmaschine.database.redis.FutureAction
 import org.bson.Document
 import java.util.concurrent.CompletableFuture
+import java.util.concurrent.Executors
 
 /**
  * ## AbstractMongoDB
@@ -25,6 +27,7 @@ abstract class AbstractMongoDB(
     private val mongoClient: MongoClient
     private val mongoDatabase: MongoDatabase
     private val identifier = "uniqueId_key"
+    private val executor = Executors.newCachedThreadPool()
 
     init {
         val host = Configuration.getHost(AbstractMongoDB::class)
@@ -77,14 +80,19 @@ abstract class AbstractMongoDB(
      * @see MongoCollection
      * @see Filters
      * @see Document
-     * @see CompletableFuture
+     * @see FutureAction
      *
      * @return A future that will contain the document with the given key.
      */
-    fun getDocumentAsync(collection: String, key: String): CompletableFuture<Document?> {
-        return CompletableFuture.supplyAsync {
-            getDocumentSync(collection, key)
+    fun getDocumentAsync(collection: String, key: String): FutureAction<Document> {
+        return FutureAction {
+            executor.submit {
+                getDocumentSync(collection, key)?.let {
+                    this.complete(it)
+                } ?: this.completeExceptionally(Exception("Document not found"))
+            }
         }
+
     }
 
     /**
@@ -111,9 +119,11 @@ abstract class AbstractMongoDB(
      *
      * @return A list with the documents from the collection.
      */
-    fun getAllDocumentsAsync(collection: String): CompletableFuture<List<Document>> {
-        return CompletableFuture.supplyAsync {
-            getAllDocumentsSync(collection)
+    fun getAllDocumentsAsync(collection: String): FutureAction<List<Document>> {
+        return FutureAction {
+            executor.submit {
+                this.complete(getAllDocumentsSync(collection))
+            }
         }
     }
 
@@ -136,9 +146,11 @@ abstract class AbstractMongoDB(
      *
      * @return A future that will contain the number of documents in the given collection.
      */
-    fun countDocumentsAsync(collection: String): CompletableFuture<Long> {
-        return CompletableFuture.supplyAsync {
-            countDocumentsSync(collection)
+    fun countDocumentsAsync(collection: String): FutureAction<Long> {
+        return FutureAction {
+            executor.submit {
+                this.complete(countDocumentsSync(collection))
+            }
         }
     }
 
@@ -386,9 +398,13 @@ abstract class AbstractMongoDB(
      *
      * @return A nullable result of the deletion.
      */
-    fun deleteDocumentAsync(collection: String, key: String): CompletableFuture<Document?> {
-        return CompletableFuture.supplyAsync {
-            deleteDocumentSync(collection, key)
+    fun deleteDocumentAsync(collection: String, key: String): FutureAction<Document> {
+        return FutureAction {
+            executor.submit {
+                deleteDocumentSync(collection, key)?.let {
+                    this.complete(it)
+                } ?: this.completeExceptionally(NoSuchElementException())
+            }
         }
     }
 
@@ -445,7 +461,11 @@ abstract class AbstractMongoDB(
      *
      * @return a boolean if the document exist else false
      */
-    fun existAsync(collection: String, key: String): CompletableFuture<Boolean> {
-        return CompletableFuture.supplyAsync { getDocumentSync(collection, key) != null }
+    fun existAsync(collection: String, key: String): FutureAction<Boolean> {
+        return FutureAction {
+            executor.submit {
+                this.complete(getDocumentSync(collection, key) != null)
+            }
+        }
     }
 }

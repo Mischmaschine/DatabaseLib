@@ -26,7 +26,7 @@
 <dependency>
     <groupId>com.github.Mischmaschine</groupId>
     <artifactId>DatabaseLib</artifactId>
-    <version>Tag</version>
+    <version>master-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -77,17 +77,120 @@ dependencies {
 #### Kotlin
 
 ```kotlin
-import de.mischmaschine.database.database.configuration.Configuration
+import de.mischmaschine.database.configuration.Configuration
 
-Configuration("host", port, "username", "password", AbstractMySQL::class)
+Configuration("host", port, "username", "password", AbstractRedis::class)
 ```
 
 #### Java
 
 ```java
-import de.mischmaschine.database.database.configuration.Configuration;
+import de.mischmaschine.database.configuration.Configuration;
 
-new Configuration("host", port, "username", "password", AbstractMySQL.class);
+new Configuration("host",port,"username","password",AbstractRedis.class);
+```
+
+<br>
+
+### Set up the connection to your individual database
+
+#### Kotlin
+
+```kotlin
+import de.mischmaschine.database.redis.AbstractRedis;
+
+//Create a class which extends AbstractRedis
+class Redis : AbstractRedis(database = 0, ssl = false, logging = true)
+
+//Go to your main class and create an instance of your database class
+main {
+    //Create an instance of your class
+    //This will automatically connect to the database
+    val redis = Redis()
+
+    //Do something with the database
+    with(redis) {
+
+        //Set a value in the database with the key "key" and the value "value"
+        //Returns a FutureAction out of a Unit (void) type to check when the action is completed
+        updateKeyAsync("key", "value")
+
+        //Get the value of the key "key"
+        //This will return a FutureAction which will be completed with the value. 
+        //Use .onSuccess to get the value if present
+        //Use .onFailure to get the exception if present
+        getValueAsync("key")
+    }
+
+    //Disconnect from the database
+    redis.shutdown()
+}
+```
+
+#### Java
+
+```java
+import de.mischmaschine.database.redis.AbstractRedis;
+
+//Create a class which extends AbstractRedis
+public class Redis extends AbstractRedis() {
+
+    public Redis(){
+        super(0, false, true);
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+        //Create an instance of your class
+        //This will automatically connect to the database
+        Redis redis = new Redis();
+
+        //Set a value in the database with the key "key" and the value "value"
+        //Returns a FutureAction out of a Unit (void) type to check when the action is completed
+        redis.updateKeyAsync("key", "value");
+
+        //Get the value of the key "key"
+        //This will return a FutureAction which will be completed with the value. 
+        //Use .onSuccess to get the value if present
+        //Use .onFailure to get the exception if present
+        redis.getValueAsync("key");
+
+
+        redis.shutdown();
+    }
+}
+```
+
+This is an example for Redis. You can use the process for all other databases like AbstractMongoDB.
+
+### Redis-PubSub Example
+
+#### Kotlin
+
+```kotlin
+import de.mischmaschine.database.redis.AbstractRedis
+
+main {
+
+    val redis = ...
+    redis.subscribe("channel") { channel, message ->
+        //In this case, the message would be "Hello World"
+        println("Received message: $message")
+    }
+
+    //This will publish to the channel "channel" the message "Hello World!"
+    redis.publish("channel", "Hello World!")
+
+
+    //If you no longer want to subscribe to the channel "channel", you can unsubscribe
+    redis.unsubscribe("channel")
+
+    //Shutdown this client and close all open connections once this method is called. Once all connections are closed, the associated ClientResources are shut down/released gracefully considering quiet time and the shutdown timeout
+    redis.shutdown()
+}
+
 ```
 
 ## Contributing
