@@ -348,9 +348,9 @@ abstract class AbstractMongoDB(
      * @see Document
      * @see Filters
      */
-    fun updateDocumentSync(collection: String, key: String, document: Document) {
+    fun updateDocumentSync(collection: String, key: String, document: Document): Document? {
         document[identifier] = key
-        this.getCollection(collection).findOneAndReplace(Filters.eq(identifier, key), document)
+        return this.getCollection(collection).findOneAndReplace(Filters.eq(identifier, key), document)
     }
 
     /**
@@ -364,11 +364,16 @@ abstract class AbstractMongoDB(
      * @see Filters
      * @see CompletableFuture
      */
-    fun updateDocumentAsync(collection: String, key: String, document: Document) {
-        CompletableFuture.runAsync {
-            updateDocumentSync(collection, key, document)
+    fun updateDocumentAsync(collection: String, key: String, document: Document): FutureAction<Document> {
+        return FutureAction {
+            executor.submit {
+                updateDocumentSync(collection, key, document)?.let {
+                    this.complete(it)
+                } ?: this.completeExceptionally(NoSuchElementException("Document not found"))
+            }
         }
     }
+
 
     /**
      * This function deletes the document blocking with the given key.
