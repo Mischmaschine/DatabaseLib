@@ -338,6 +338,43 @@ abstract class AbstractMongoDB(
     }
 
     /**
+     * This function replaces the document blocking with the given key.
+     *
+     * @param collection The collection to update the document in.
+     * @param key The key of the document.
+     * @param document The document to update.
+     *
+     * @see MongoCollection
+     * @see Document
+     * @see Filters
+     */
+    fun replaceDocumentSync(collection: String, key: String, document: Document): Document? {
+        document[identifier] = key
+        return this.getCollection(collection).findOneAndReplace(Filters.eq(identifier, key), document)
+    }
+
+    /**
+     * This function replaces the document non-blocking with the given key.
+     *
+     * @param collection The collection to update the document in.
+     * @param key The key of the document.
+     *
+     * @see MongoCollection
+     * @see Document
+     * @see Filters
+     * @see CompletableFuture
+     */
+    fun replaceDocumentAsync(collection: String, key: String, document: Document): FutureAction<Document> {
+        return FutureAction {
+            executor.submit {
+                replaceDocumentSync(collection, key, document)?.let {
+                    this.complete(it)
+                } ?: this.completeExceptionally(NoSuchElementException("Document not found"))
+            }
+        }
+    }
+
+    /**
      * This function updates the document blocking with the given key.
      *
      * @param collection The collection to update the document in.
@@ -350,7 +387,7 @@ abstract class AbstractMongoDB(
      */
     fun updateDocumentSync(collection: String, key: String, document: Document): Document? {
         document[identifier] = key
-        return this.getCollection(collection).findOneAndReplace(Filters.eq(identifier, key), document)
+        return this.getCollection(collection).findOneAndUpdate(Filters.eq(identifier, key), Document("\$set", document))
     }
 
     /**
@@ -373,7 +410,6 @@ abstract class AbstractMongoDB(
             }
         }
     }
-
 
     /**
      * This function deletes the document blocking with the given key.
