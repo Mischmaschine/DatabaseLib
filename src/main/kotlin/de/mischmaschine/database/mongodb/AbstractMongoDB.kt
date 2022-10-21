@@ -1,8 +1,6 @@
 package de.mischmaschine.database.mongodb
 
-import com.mongodb.ConnectionString
-import com.mongodb.MongoClientSettings
-import com.mongodb.MongoNamespace
+import com.mongodb.*
 import com.mongodb.bulk.BulkWriteResult
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
@@ -10,6 +8,7 @@ import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.WriteModel
+import com.mongodb.client.result.InsertOneResult
 import de.mischmaschine.database.database.Configuration
 import de.mischmaschine.database.database.Database
 import de.mischmaschine.database.redis.FutureAction
@@ -164,25 +163,35 @@ abstract class AbstractMongoDB(
      * @see MongoCollection
      * @see Document
      */
-    fun insertDocumentSync(collection: String, key: String, document: Document) {
+    fun insertDocumentSync(collection: String, key: String, document: Document): InsertOneResult? {
         document[identifier] = key
-        this.getCollection(collection).insertOne(document)
+        return try {
+            this.getCollection(collection).insertOne(document)
+        } catch (exception: MongoServerException) {
+            null
+        } catch (exception: RuntimeException) {
+            null
+        }
     }
 
     /**
-     * This function inserts the document non-blocking into the given collection.
-     *
-     * @param collection The collection to insert the document into.
-     * @param key The key of the document.
-     * @param document The document to insert.
-     *
-     * @see MongoCollection
-     * @see Document
-     * @see CompletableFuture
-     */
-    fun insertDocumentAsync(collection: String, key: String, document: Document) {
-        CompletableFuture.runAsync {
-            insertDocumentSync(collection, key, document)
+    * This function inserts the document non-blocking into the given collection.
+    *
+    * @param collection The collection to insert the document into.
+    * @param key The key of the document.
+    * @param document The document to insert.
+    *
+    * @see MongoCollection
+    * @see Document
+    * @see CompletableFuture
+    */
+    fun insertDocumentAsync(collection: String, key: String, document: Document): FutureAction<InsertOneResult> {
+        return FutureAction {
+            executor.submit {
+                insertDocumentSync(collection, key, document)?.let {
+                    this.complete(it)
+                } ?: this.completeExceptionally(MongoException("Could not write to database. For a more detailed message, use the sync function temporally."))
+            }
         }
     }
 
