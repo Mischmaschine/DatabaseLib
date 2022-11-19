@@ -87,7 +87,7 @@ Configuration("host", port, "username", "password", AbstractRedis::class)
 ```java
 import de.mischmaschine.database.configuration.Configuration;
 
-new Configuration("host",port,"username","password", AbstractRedis.class);
+new Configuration("host", port, "username", "password", AbstractRedis.class);
 ```
 
 <br>
