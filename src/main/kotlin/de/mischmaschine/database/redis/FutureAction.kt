@@ -32,12 +32,26 @@ class FutureAction<T>(future: CompletableFuture<T>.() -> Unit) : CompletableFutu
         return this
     }
 
+    fun onFailureAsync(action: (Throwable) -> Unit): FutureAction<T> {
+        whenCompleteAsync { _, throwable ->
+            throwable?.let { action(it) }
+        }
+        return this
+    }
+
     /**
      * Is only called if the future is completed normally.
      * @param action The value that caused the future to be completed normally.
      */
     fun onSuccess(action: (T) -> Unit): FutureAction<T> {
         whenComplete { result, throwable ->
+            throwable ?: action(result)
+        }
+        return this
+    }
+
+    fun onSuccessAsync(action: (T) -> Unit): FutureAction<T> {
+        whenCompleteAsync { result, throwable ->
             throwable ?: action(result)
         }
         return this
