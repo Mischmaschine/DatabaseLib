@@ -37,7 +37,7 @@ abstract class AbstractMongoDB(
 
         if (host.isEmpty()) throw IllegalArgumentException("Host is empty")
         if (dataBaseName.isEmpty()) throw IllegalArgumentException("CollectionName is empty")
-        if(uri.isNotEmpty()) {
+        if(uri.isEmpty()) {
             uri = if (username.isEmpty() && password.isEmpty()) {
                 "mongodb://$host:$port/?authSource=$dataBaseName"
             } else {
