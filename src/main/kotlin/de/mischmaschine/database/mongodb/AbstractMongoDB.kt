@@ -22,6 +22,7 @@ import java.util.concurrent.Executors
  */
 abstract class AbstractMongoDB(
     dataBaseName: String,
+    var uri: String = ""
 ) : Database {
     private val mongoClient: MongoClient
     private val mongoDatabase: MongoDatabase
@@ -36,11 +37,14 @@ abstract class AbstractMongoDB(
 
         if (host.isEmpty()) throw IllegalArgumentException("Host is empty")
         if (dataBaseName.isEmpty()) throw IllegalArgumentException("CollectionName is empty")
-        val uri = if (username.isEmpty() && password.isEmpty()) {
-            "mongodb://$host:$port/?authSource=$dataBaseName"
-        } else {
-            "mongodb://$username:$password@$host:$port/?authSource=$dataBaseName"
+        if(uri.isNotEmpty()) {
+            uri = if (username.isEmpty() && password.isEmpty()) {
+                "mongodb://$host:$port/?authSource=$dataBaseName"
+            } else {
+                "mongodb://$username:$password@$host:$port/?authSource=$dataBaseName"
+            }
         }
+
 
         val connectionString = ConnectionString(uri)
         val settings = MongoClientSettings.builder()
