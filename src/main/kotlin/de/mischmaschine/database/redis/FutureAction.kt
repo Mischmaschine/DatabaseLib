@@ -1,6 +1,8 @@
 package de.mischmaschine.database.redis
 
+import java.util.concurrent.CancellationException
 import java.util.concurrent.CompletableFuture
+import java.util.concurrent.ExecutionException
 
 class FutureAction<T>(future: CompletableFuture<T>.() -> Unit) : CompletableFuture<T>() {
 
@@ -64,7 +66,11 @@ class FutureAction<T>(future: CompletableFuture<T>.() -> Unit) : CompletableFutu
     fun getBlockingOrNull(): T? {
         return try {
             this.get()
-        } catch (_: NullPointerException) {
+        } catch (_: CancellationException) {
+            null
+        } catch (_: InterruptedException) {
+            null
+        } catch (_: ExecutionException) {
             null
         }
     }
