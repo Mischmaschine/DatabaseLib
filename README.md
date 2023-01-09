@@ -1,7 +1,7 @@
 # DatabaseLib
 
     This project is a library for working with databases.
-    It supports MariaDB, MySQL, PostgreSQL, H2SQL, SQLite MongoDB and Redis.
+    It supports MariaDB, MySQL, PostgreSQL, H2SQL, SQLite, MongoDB and Redis.
 
 ## Import
 
@@ -87,7 +87,7 @@ Configuration("host", port, "username", "password", AbstractRedis::class)
 ```java
 import de.mischmaschine.database.configuration.Configuration;
 
-new Configuration("host",port,"username","password",AbstractRedis.class);
+new Configuration("host", port, "username", "password", AbstractRedis.class);
 ```
 
 <br>
