@@ -34,6 +34,7 @@ dependencies {
     testImplementation("org.mariadb.jdbc:mariadb-java-client:3.0.6")
     
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
+    implementation("io.github.reactivecircus.cache4k:cache4k:0.9.0")
 
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.20")
     implementation(kotlin("reflect"))
