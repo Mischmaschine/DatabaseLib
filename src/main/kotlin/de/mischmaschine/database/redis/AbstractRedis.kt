@@ -2,6 +2,7 @@ package de.mischmaschine.database.redis
 
 import de.mischmaschine.database.database.Configuration
 import de.mischmaschine.database.database.Database
+import io.github.reactivecircus.cache4k.Cache
 import io.lettuce.core.RedisClient
 import io.lettuce.core.RedisURI
 import io.lettuce.core.api.StatefulRedisConnection
@@ -10,6 +11,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.logging.Level
+import kotlin.time.Duration.Companion.minutes
 
 /**
  * ## AbstractRedis
@@ -25,6 +27,10 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
         encodeDefaults = true
         prettyPrint = true
     }
+    val redisCacheMap = Cache.Builder()
+        .maximumCacheSize(100)
+        .expireAfterWrite(30.minutes)
+        .build<String, Any>()
 
     init {
 
@@ -61,19 +67,8 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      */
     inline fun <reified T> updateKeyAsync(key: String, data: T): FutureAction<Unit> {
         return FutureAction {
-            val connection = getNewConnection()
-            when (data is String || data is Number || data is Boolean) {
-                true -> connection.async().set(key, data.toString()).thenAccept {
-                    connection.closeAsync().thenAccept {
-                        this.complete(Unit)
-                    }
-                }
-
-                false -> connection.async().set(key, json.encodeToString(data)).thenAccept {
-                    connection.closeAsync().thenAccept {
-                        this.complete(Unit)
-                    }
-                }
+            this.completeAsync {
+                updateKeySync(key, data)
             }
         }
     }
@@ -85,6 +80,9 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @param data The data to update the key with.
      */
     inline fun <reified T> updateKeySync(key: String, data: T) {
+        this.redisCacheMap.invalidate(key)
+        this.redisCacheMap.put(key, data as Any)
+        this.logger.log(Level.INFO, "Updated key $key with data $data")
         val connection = getNewConnection()
         when (data is String || data is Number || data is Boolean) {
             true -> connection.sync().set(key, data.toString())
@@ -101,12 +99,18 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @return the value of the given key, or null if the key does not exist.
      */
     inline fun <reified T> getValueSync(key: String): T? {
+        val mapValue = redisCacheMap.get(key)
+        if (mapValue != null) {
+            this.logger.log(Level.INFO, "Got value $mapValue from cache for key $key")
+            return mapValue as T
+        }
         val connection = getNewConnection()
         var value = connection.sync().get(key) as T
         if (T::class != String::class) {
             value = json.decodeFromString(value.toString()) as T
         }
         connection.closeAsync()
+        this.redisCacheMap.put(key, value as Any)
         return value
     }
 
@@ -118,22 +122,11 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @return the value of the given key, or null if the key does not exist.
      */
     inline fun <reified T> getValueAsync(key: String): FutureAction<T> = FutureAction {
-        val connection = getNewConnection()
-        connection.async().get(key).whenComplete { result, throwable ->
-            throwable?.let {
-                this.completeExceptionally(throwable)
-            } ?: result?.let {
-                if (T::class == String::class) {
-                    this.complete(it as T)
-                } else {
-                    this.complete(json.decodeFromString<T>(it))
-                }
-            } ?: this.completeExceptionally(NullPointerException("No result found for key $key"))
-            connection.closeAsync().also {
-                println("Closed connection")
-            }
+        this.completeAsync {
+            getValueSync<T>(key)
         }
     }
+
 
     /**
      * Deletes the given key synchronously.
@@ -141,6 +134,9 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @see [redisSync]
      */
     fun deleteKeySync(vararg key: String) {
+        key.forEach {
+            this.redisCacheMap.invalidate(it)
+        }
         getNewConnection().let {
             it.sync().del(*key)
             it.closeAsync()
@@ -155,12 +151,8 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      */
     fun deleteKeyAsync(vararg key: String): FutureAction<Unit> {
         return FutureAction {
-            val connection = getNewConnection()
-            connection.async().del(*key).thenAccept {
-                it ?: this.completeExceptionally(NullPointerException("No result found for key $key"))
-                connection.closeAsync().thenAccept {
-                    this.complete(Unit)
-                }
+            this.completeAsync {
+                deleteKeySync(*key)
             }
         }
     }
