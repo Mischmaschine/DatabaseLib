@@ -12,9 +12,11 @@ import com.mongodb.client.result.InsertOneResult
 import de.mischmaschine.database.database.Configuration
 import de.mischmaschine.database.database.Database
 import de.mischmaschine.database.redis.FutureAction
+import io.github.reactivecircus.cache4k.Cache
 import org.bson.Document
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
+import kotlin.time.Duration.Companion.minutes
 
 /**
  * ## AbstractMongoDB
@@ -22,12 +24,17 @@ import java.util.concurrent.Executors
  */
 abstract class AbstractMongoDB(
     dataBaseName: String,
-    var uri: String = ""
+    var uri: String = "",
 ) : Database {
     private val mongoClient: MongoClient
     private val mongoDatabase: MongoDatabase
     private val identifier = "uniqueId_key"
     private val executor = Executors.newCachedThreadPool()
+    private val documentCache = Cache.Builder()
+        .maximumCacheSize(100)
+        .expireAfterWrite(30.minutes)
+        .build<String, Document>()
+
 
     init {
         val host = Configuration.getHost(AbstractMongoDB::class)
@@ -37,7 +44,7 @@ abstract class AbstractMongoDB(
 
         if (host.isEmpty()) throw IllegalArgumentException("Host is empty")
         if (dataBaseName.isEmpty()) throw IllegalArgumentException("CollectionName is empty")
-        if(uri.isEmpty()) {
+        if (uri.isEmpty()) {
             uri = if (username.isEmpty() && password.isEmpty()) {
                 "mongodb://$host:$port/?authSource=$dataBaseName"
             } else {
@@ -73,6 +80,10 @@ abstract class AbstractMongoDB(
      * @return The document with the given key.
      */
     fun getDocumentSync(collection: String, key: String): Document? {
+        val value = documentCache.get(key)
+        if (value != null) {
+            return value
+        }
         return this.getCollection(collection).find().filter(Filters.eq(identifier, key)).first()
     }
 
@@ -109,6 +120,10 @@ abstract class AbstractMongoDB(
      */
     fun getAllDocumentsSync(collection: String): List<Document> {
         return this.getCollection(collection).find().toList()
+    }
+
+    fun getAllCachedDocuments(collection: String): List<Document> {
+        return documentCache.asMap().values.toList()
     }
 
     /**
@@ -170,6 +185,7 @@ abstract class AbstractMongoDB(
     fun insertDocumentSync(collection: String, key: String, document: Document): InsertOneResult? {
         document[identifier] = key
         return try {
+            this.documentCache.put(key, document)
             this.getCollection(collection).insertOne(document)
         } catch (exception: MongoServerException) {
             null
@@ -179,16 +195,16 @@ abstract class AbstractMongoDB(
     }
 
     /**
-    * This function inserts the document non-blocking into the given collection.
-    *
-    * @param collection The collection to insert the document into.
-    * @param key The key of the document.
-    * @param document The document to insert.
-    *
-    * @see MongoCollection
-    * @see Document
-    * @see CompletableFuture
-    */
+     * This function inserts the document non-blocking into the given collection.
+     *
+     * @param collection The collection to insert the document into.
+     * @param key The key of the document.
+     * @param document The document to insert.
+     *
+     * @see MongoCollection
+     * @see Document
+     * @see CompletableFuture
+     */
     fun insertDocumentAsync(collection: String, key: String, document: Document): FutureAction<InsertOneResult> {
         return FutureAction {
             executor.submit {
@@ -261,7 +277,7 @@ abstract class AbstractMongoDB(
      */
     fun bulkWriteAsync(
         collection: String,
-        writeModelList: List<WriteModel<Document>>
+        writeModelList: List<WriteModel<Document>>,
     ): CompletableFuture<BulkWriteResult> {
         return CompletableFuture.supplyAsync {
             bulkWriteSync(collection, writeModelList)
@@ -278,6 +294,7 @@ abstract class AbstractMongoDB(
      * @see Filters
      */
     fun deleteManySync(collection: String, key: String) {
+        this.documentCache.invalidate(key)
         this.getCollection(collection).deleteMany(Filters.eq(identifier, key))
     }
 
@@ -363,6 +380,8 @@ abstract class AbstractMongoDB(
      */
     fun replaceDocumentSync(collection: String, key: String, document: Document): Document? {
         document[identifier] = key
+        this.documentCache.invalidate(key)
+        this.documentCache.put(key, document)
         return this.getCollection(collection).findOneAndReplace(Filters.eq(identifier, key), document)
     }
 
@@ -400,6 +419,8 @@ abstract class AbstractMongoDB(
      */
     fun updateDocumentSync(collection: String, key: String, document: Document): Document? {
         document[identifier] = key
+        this.documentCache.invalidate(key)
+        this.documentCache.put(key, document)
         return this.getCollection(collection).findOneAndUpdate(Filters.eq(identifier, key), Document("\$set", document))
     }
 
@@ -436,6 +457,7 @@ abstract class AbstractMongoDB(
      * @see Document
      */
     fun deleteDocumentSync(collection: String, key: String): Document? {
+        this.documentCache.invalidate(key)
         return this.getCollection(collection).findOneAndDelete(Filters.eq(identifier, key))
     }
 
