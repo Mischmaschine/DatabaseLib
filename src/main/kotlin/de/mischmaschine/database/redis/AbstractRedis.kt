@@ -105,9 +105,11 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
             return mapValue as T
         }
         val connection = getNewConnection()
-        var value = connection.sync().get(key) as T
-        if (T::class != String::class) {
-            value = json.decodeFromString(value.toString()) as T
+        val result = connection.sync().get(key)
+        val value = if (T::class != String::class) {
+            json.decodeFromString(result.toString()) as T
+        } else {
+            result as T
         }
         connection.closeAsync()
         this.redisCacheMap.put(key, value as Any)
