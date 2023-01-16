@@ -58,14 +58,14 @@ publishing {
     }
 }
 
-val targetCompatibility = JavaVersion.VERSION_17.toString()
+val targetCompatibility = JavaVersion.VERSION_1_8.toString()
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = targetCompatibility
 }
 
 tasks.withType<JavaCompile> {
-    sourceCompatibility = targetCompatibility
+    sourceCompatibility = JavaVersion.VERSION_17.toString()
     targetCompatibility = targetCompatibility
 }
 
