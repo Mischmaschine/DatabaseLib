@@ -1,11 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.0"
+    kotlin("jvm") version "1.8.0"
     id("com.github.johnrengelman.shadow") version "7.0.0"
     id("org.jetbrains.dokka") version "1.6.21"
     id("maven-publish")
-    kotlin("plugin.serialization") version "1.7.10"
+    kotlin("plugin.serialization") version "1.8.0"
 }
 
 group = "de.mischmaschine"
@@ -46,10 +46,6 @@ tasks {
     }
 }
 
-/*tasks.test {
-    useJUnitPlatform()
-}*/
-
 publishing {
     publications {
         create<MavenPublication>("maven") {
@@ -64,5 +60,5 @@ publishing {
 
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "17"
 }
