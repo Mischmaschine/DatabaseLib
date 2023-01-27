@@ -99,21 +99,25 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @return the value of the given key, or null if the key does not exist.
      */
     inline fun <reified T> getValueSync(key: String): T? {
-        val mapValue = redisCacheMap.get(key)
-        if (mapValue != null) {
-            this.logger.log(Level.INFO, "Got value $mapValue from cache for key $key")
-            return mapValue as T
+        return try {
+            val mapValue = redisCacheMap.get(key)
+            if (mapValue != null) {
+                this.logger.log(Level.INFO, "Got value $mapValue from cache for key $key")
+                return mapValue as T
+            }
+            val connection = getNewConnection()
+            val result = connection.sync().get(key)
+            val value = if (T::class != String::class) {
+                json.decodeFromString(result) as T
+            } else {
+                result as T
+            }
+            connection.closeAsync()
+            this.redisCacheMap.put(key, value as Any)
+            return value
+        } catch (e: NullPointerException) {
+            null
         }
-        val connection = getNewConnection()
-        val result = connection.sync().get(key)
-        val value = if (T::class != String::class) {
-            json.decodeFromString(result.toString()) as T
-        } else {
-            result as T
-        }
-        connection.closeAsync()
-        this.redisCacheMap.put(key, value as Any)
-        return value
     }
 
     /**
