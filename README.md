@@ -133,7 +133,7 @@ main {
 import de.mischmaschine.database.redis.AbstractRedis;
 
 //Create a class which extends AbstractRedis
-public class Redis extends AbstractRedis() {
+public class Redis extends AbstractRedis {
 
     public Redis(){
         super(0, false, true);
