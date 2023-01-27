@@ -10,6 +10,8 @@ import io.lettuce.core.pubsub.RedisPubSubAdapter
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import java.util.logging.Level
 import kotlin.time.Duration.Companion.minutes
 
@@ -31,6 +33,8 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
         .maximumCacheSize(100)
         .expireAfterWrite(30.minutes)
         .build<String, Any>()
+
+    val executor: ExecutorService = Executors.newCachedThreadPool()
 
     init {
 
@@ -127,10 +131,17 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      *
      * @return the value of the given key, or null if the key does not exist.
      */
-    inline fun <reified T> getValueAsync(key: String): FutureAction<T> = FutureAction {
-        this.completeAsync {
-            getValueSync<T>(key)
-        }.completeExceptionally(NullPointerException("Key $key does not exist."))
+    inline fun <reified T> getValueAsync(key: String): FutureAction<T> {
+        return FutureAction {
+            executor.submit {
+                val result = getValueSync<T>(key)
+                if (result != null) {
+                    this.complete(result)
+                } else {
+                    this.completeExceptionally(NullPointerException("Key $key does not exist."))
+                }
+            }
+        }
     }
 
 
