@@ -130,7 +130,7 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
     inline fun <reified T> getValueAsync(key: String): FutureAction<T> = FutureAction {
         this.completeAsync {
             getValueSync<T>(key)
-        }
+        }.completeExceptionally(NullPointerException("Key $key does not exist."))
     }
 
 
