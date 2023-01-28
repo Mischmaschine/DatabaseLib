@@ -72,6 +72,7 @@ abstract class AbstractMongoDB(
     /**
      * @param collection The collection to get the document from.
      * @param key The key of the document.
+     * @param documentIdentifier The identifier of the document.
      *
      * @see MongoCollection
      * @see Filters
@@ -79,29 +80,30 @@ abstract class AbstractMongoDB(
      *
      * @return The document with the given key.
      */
-    fun getDocumentSync(collection: String, key: String): Document? {
+    fun getDocumentSync(collection: String, key: String, documentIdentifier: String = identifier): Document? {
         val value = documentCache.get(key)
         if (value != null) {
             return value
         }
-        return this.getCollection(collection).find().filter(Filters.eq(identifier, key)).first()
+        return this.getCollection(collection).find().filter(Filters.eq(documentIdentifier, key)).first()
     }
 
     /**
      * @param collection The collection to get the document from.
      * @param key The key of the document.
+     * @param documentIdentifier The identifier of the document.
      *
      * @see MongoCollection
      * @see Filters
      * @see Document
      * @see FutureAction
      *
-     * @return A future that will contain the document with the given key.
+     * @return A future which will contain the document with the given key.
      */
-    fun getDocumentAsync(collection: String, key: String): FutureAction<Document> {
+    fun getDocumentAsync(collection: String, key: String, documentIdentifier: String = identifier): FutureAction<Document> {
         return FutureAction {
             executor.submit {
-                getDocumentSync(collection, key)?.let {
+                getDocumentSync(collection, key, documentIdentifier)?.let {
                     this.complete(it)
                 } ?: this.completeExceptionally(Exception("Document not found"))
             }
@@ -162,7 +164,7 @@ abstract class AbstractMongoDB(
      * @see MongoCollection
      * @see CompletableFuture
      *
-     * @return A future that will contain the number of documents in the given collection.
+     * @return A future which will contain the number of documents in the given collection.
      */
     fun countDocumentsAsync(collection: String): FutureAction<Long> {
         return FutureAction {
@@ -178,12 +180,13 @@ abstract class AbstractMongoDB(
      * @param collection The collection to insert the document into.
      * @param key The key of the document.
      * @param document The document to insert.
+     * @param documentIdentifier The identifier of the document.
      *
      * @see MongoCollection
      * @see Document
      */
-    fun insertDocumentSync(collection: String, key: String, document: Document): InsertOneResult? {
-        document[identifier] = key
+    fun insertDocumentSync(collection: String, key: String, document: Document, documentIdentifier: String = identifier): InsertOneResult? {
+        document[documentIdentifier] = key
         return try {
             this.documentCache.put(key, document)
             this.getCollection(collection).insertOne(document)
@@ -200,15 +203,16 @@ abstract class AbstractMongoDB(
      * @param collection The collection to insert the document into.
      * @param key The key of the document.
      * @param document The document to insert.
+     * @param documentIdentifier The identifier of the document.
      *
      * @see MongoCollection
      * @see Document
      * @see CompletableFuture
      */
-    fun insertDocumentAsync(collection: String, key: String, document: Document): FutureAction<InsertOneResult> {
+    fun insertDocumentAsync(collection: String, key: String, document: Document, documentIdentifier: String = identifier): FutureAction<InsertOneResult> {
         return FutureAction {
             executor.submit {
-                insertDocumentSync(collection, key, document)?.let {
+                insertDocumentSync(collection, key, document, documentIdentifier)?.let {
                     this.complete(it)
                 } ?: this.completeExceptionally(MongoException("Could not write to database. For a more detailed message, use the sync function temporally."))
             }
@@ -289,13 +293,14 @@ abstract class AbstractMongoDB(
      *
      * @param collection The collection to update the document in.
      * @param key The key of the document.
+     * @param documentIdentifier The identifier of the documents.
      *
      * @see MongoCollection
      * @see Filters
      */
-    fun deleteManySync(collection: String, key: String) {
+    fun deleteManySync(collection: String, key: String, documentIdentifier: String = identifier) {
         this.documentCache.invalidate(key)
-        this.getCollection(collection).deleteMany(Filters.eq(identifier, key))
+        this.getCollection(collection).deleteMany(Filters.eq(documentIdentifier, key))
     }
 
     /**
@@ -303,14 +308,15 @@ abstract class AbstractMongoDB(
      *
      * @param collection The collection to delete the document from.
      * @param key The key of the document.
+     * @param documentIdentifier The identifier of the documents.
      *
      * @see MongoCollection
      * @see Filters
      * @see CompletableFuture
      */
-    fun deleteManyAsync(collection: String, key: String) {
+    fun deleteManyAsync(collection: String, key: String, documentIdentifier: String = identifier) {
         CompletableFuture.runAsync {
-            deleteManySync(collection, key)
+            deleteManySync(collection, key, documentIdentifier)
         }
     }
 
@@ -373,16 +379,17 @@ abstract class AbstractMongoDB(
      * @param collection The collection to update the document in.
      * @param key The key of the document.
      * @param document The document to update.
+     * @param documentIdentifier The identifier of the document.
      *
      * @see MongoCollection
      * @see Document
      * @see Filters
      */
-    fun replaceDocumentSync(collection: String, key: String, document: Document): Document? {
-        document[identifier] = key
+    fun replaceDocumentSync(collection: String, key: String, document: Document, documentIdentifier: String = identifier): Document? {
+        document[documentIdentifier] = key
         this.documentCache.invalidate(key)
         this.documentCache.put(key, document)
-        return this.getCollection(collection).findOneAndReplace(Filters.eq(identifier, key), document)
+        return this.getCollection(collection).findOneAndReplace(Filters.eq(documentIdentifier, key), document)
     }
 
     /**
@@ -390,16 +397,17 @@ abstract class AbstractMongoDB(
      *
      * @param collection The collection to update the document in.
      * @param key The key of the document.
+     * @param document The document to update.
      *
      * @see MongoCollection
      * @see Document
      * @see Filters
      * @see CompletableFuture
      */
-    fun replaceDocumentAsync(collection: String, key: String, document: Document): FutureAction<Document> {
+    fun replaceDocumentAsync(collection: String, key: String, document: Document, documentIdentifier: String = identifier): FutureAction<Document> {
         return FutureAction {
             executor.submit {
-                replaceDocumentSync(collection, key, document)?.let {
+                replaceDocumentSync(collection, key, document, documentIdentifier)?.let {
                     this.complete(it)
                 } ?: this.completeExceptionally(NoSuchElementException("Document not found"))
             }
@@ -412,16 +420,17 @@ abstract class AbstractMongoDB(
      * @param collection The collection to update the document in.
      * @param key The key of the document.
      * @param document The document to update.
+     * @param documentIdentifier The identifier of the document.
      *
      * @see MongoCollection
      * @see Document
      * @see Filters
      */
-    fun updateDocumentSync(collection: String, key: String, document: Document): Document? {
-        document[identifier] = key
+    fun updateDocumentSync(collection: String, key: String, document: Document, documentIdentifier: String = identifier): Document? {
+        document[documentIdentifier] = key
         this.documentCache.invalidate(key)
         this.documentCache.put(key, document)
-        return this.getCollection(collection).findOneAndUpdate(Filters.eq(identifier, key), Document("\$set", document))
+        return this.getCollection(collection).findOneAndUpdate(Filters.eq(documentIdentifier, key), Document("\$set", document))
     }
 
     /**
@@ -429,16 +438,18 @@ abstract class AbstractMongoDB(
      *
      * @param collection The collection to update the document in.
      * @param key The key of the document.
+     * @param document The document to update.
+     * @param documentIdentifier The identifier of the document.
      *
      * @see MongoCollection
      * @see Document
      * @see Filters
      * @see CompletableFuture
      */
-    fun updateDocumentAsync(collection: String, key: String, document: Document): FutureAction<Document> {
+    fun updateDocumentAsync(collection: String, key: String, document: Document, documentIdentifier: String = identifier): FutureAction<Document> {
         return FutureAction {
             executor.submit {
-                updateDocumentSync(collection, key, document)?.let {
+                updateDocumentSync(collection, key, document, documentIdentifier)?.let {
                     this.complete(it)
                 } ?: this.completeExceptionally(NoSuchElementException("Document not found"))
             }
@@ -450,15 +461,16 @@ abstract class AbstractMongoDB(
      *
      * @param collection The collection to delete the document from.
      * @param key The key of the document.
+     * @param documentIdentifier The identifier of the document.
      * @return A nullable result of the deletion.
      *
      * @see MongoCollection
      * @see Filters
      * @see Document
      */
-    fun deleteDocumentSync(collection: String, key: String): Document? {
+    fun deleteDocumentSync(collection: String, key: String, documentIdentifier: String = identifier): Document? {
         this.documentCache.invalidate(key)
-        return this.getCollection(collection).findOneAndDelete(Filters.eq(identifier, key))
+        return this.getCollection(collection).findOneAndDelete(Filters.eq(documentIdentifier, key))
     }
 
     /**
@@ -466,6 +478,7 @@ abstract class AbstractMongoDB(
      *
      * @param collection The collection to delete the document from.
      * @param key The key of the document.
+     * @param documentIdentifier The identifier of the document.
      *
      * @see MongoCollection
      * @see Filters
@@ -474,10 +487,10 @@ abstract class AbstractMongoDB(
      *
      * @return A nullable result of the deletion.
      */
-    fun deleteDocumentAsync(collection: String, key: String): FutureAction<Document> {
+    fun deleteDocumentAsync(collection: String, key: String, documentIdentifier: String = identifier): FutureAction<Document> {
         return FutureAction {
             executor.submit {
-                deleteDocumentSync(collection, key)?.let {
+                deleteDocumentSync(collection, key, documentIdentifier)?.let {
                     this.complete(it)
                 } ?: this.completeExceptionally(NoSuchElementException())
             }
