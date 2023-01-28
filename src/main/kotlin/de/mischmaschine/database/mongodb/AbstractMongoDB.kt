@@ -72,6 +72,7 @@ abstract class AbstractMongoDB(
     /**
      * @param collection The collection to get the document from.
      * @param key The key of the document.
+     * @param documentIdentifier The identifier of the document.
      *
      * @see MongoCollection
      * @see Filters
@@ -79,12 +80,12 @@ abstract class AbstractMongoDB(
      *
      * @return The document with the given key.
      */
-    fun getDocumentSync(collection: String, key: String): Document? {
+    fun getDocumentSync(collection: String, key: String, documentIdentifier: String = identifier): Document? {
         val value = documentCache.get(key)
         if (value != null) {
             return value
         }
-        return this.getCollection(collection).find().filter(Filters.eq(identifier, key)).first()
+        return this.getCollection(collection).find().filter(Filters.eq(documentIdentifier, key)).first()
     }
 
     /**
@@ -96,12 +97,12 @@ abstract class AbstractMongoDB(
      * @see Document
      * @see FutureAction
      *
-     * @return A future that will contain the document with the given key.
+     * @return A future which will contain the document with the given key.
      */
-    fun getDocumentAsync(collection: String, key: String): FutureAction<Document> {
+    fun getDocumentAsync(collection: String, key: String, documentIdentifier: String = identifier): FutureAction<Document> {
         return FutureAction {
             executor.submit {
-                getDocumentSync(collection, key)?.let {
+                getDocumentSync(collection, key, documentIdentifier)?.let {
                     this.complete(it)
                 } ?: this.completeExceptionally(Exception("Document not found"))
             }
@@ -162,7 +163,7 @@ abstract class AbstractMongoDB(
      * @see MongoCollection
      * @see CompletableFuture
      *
-     * @return A future that will contain the number of documents in the given collection.
+     * @return A future which will contain the number of documents in the given collection.
      */
     fun countDocumentsAsync(collection: String): FutureAction<Long> {
         return FutureAction {
