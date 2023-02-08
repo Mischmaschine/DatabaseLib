@@ -22,7 +22,7 @@ class Configuration<T : Database>(
     private val port: Int,
     private val username: String,
     private val password: String,
-    private val kClazz: KClass<T>
+    private val kClazz: KClass<T>,
 ) {
 
     /**
@@ -44,19 +44,12 @@ class Configuration<T : Database>(
         port: Int,
         username: String,
         password: String,
-        clazz: Class<T>
+        clazz: Class<T>,
     ) : this(host, port, username, password, clazz.kotlin)
 
     init {
-        // Checks if the class is abstract.
-        if (!this.kClazz.isAbstract) {
-            throw IllegalArgumentException("Class must be abstract")
-        }
-
-        // Check if the class is a subclass of the Database interface
-        if (!this.kClazz.isSubclassOf(Database::class)) {
-            throw IllegalArgumentException("Class must be subclass of Configuration")
-        }
+        require(!this.kClazz.isAbstract) { "Class must be abstract" }
+        require(this.kClazz.isSubclassOf(Database::class)) { "Class must be subclass of Configuration" }
 
         setConnectionCredentials()
     }
@@ -66,7 +59,9 @@ class Configuration<T : Database>(
      * @return The simple name of the class.
      */
     private fun resolveConfigurationSimpleName(): String {
-        return this.kClazz.simpleName ?: throw IllegalArgumentException("Class must have a simple name")
+        val simpleName = this.kClazz.simpleName
+        require(simpleName != null) { "Class must have a simple name" }
+        return simpleName
     }
 
     /**
@@ -92,8 +87,9 @@ class Configuration<T : Database>(
          */
         @JvmStatic
         fun getHost(kClass: KClass<*>): String {
-            return (connectionMap[kClass.simpleName]?.host
-                ?: throw IllegalArgumentException("Class is not configured"))
+            val result = connectionMap[kClass.simpleName]
+            require(result != null) { "Class is not configured" }
+            return result.host
         }
 
         /**
@@ -105,8 +101,9 @@ class Configuration<T : Database>(
          */
         @JvmStatic
         fun getPort(kClass: KClass<*>): Int {
-            return (connectionMap[kClass.simpleName]?.port
-                ?: throw IllegalArgumentException("Class is not configured"))
+            val result = connectionMap[kClass.simpleName]
+            require(result != null) { "Class is not configured" }
+            return result.port
         }
 
         /**
@@ -118,8 +115,9 @@ class Configuration<T : Database>(
          */
         @JvmStatic
         fun getUsername(kClass: KClass<*>): String {
-            return (connectionMap[kClass.simpleName]?.username
-                ?: throw IllegalArgumentException("Class is not configured"))
+            val result = connectionMap[kClass.simpleName]
+            require(result != null) { "Class is not configured" }
+            return result.username
         }
 
         /**
@@ -131,8 +129,9 @@ class Configuration<T : Database>(
          */
         @JvmStatic
         fun getPassword(kClass: KClass<*>): String {
-            return (connectionMap[kClass.simpleName]?.password
-                ?: throw IllegalArgumentException("Class is not configured"))
+            val result = connectionMap[kClass.simpleName]
+            require(result != null) { "Class is not configured" }
+            return result.password
         }
     }
 

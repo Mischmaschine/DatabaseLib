@@ -42,8 +42,8 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
         val port = Configuration.getPort(AbstractRedis::class)
         val password = Configuration.getPassword(AbstractRedis::class)
 
-        if (host.isEmpty()) throw IllegalArgumentException("No host specified for Redis database $database")
-        if (port == 0) throw IllegalArgumentException("No port specified for Redis database $database")
+        require(host.isNotEmpty()) { "No host specified for Redis database $database" }
+        require(port != 0) { "No port specified for Redis database $database" }
 
         this.client = when (password.isEmpty()) {
             true -> {
