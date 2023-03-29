@@ -48,9 +48,6 @@ class Configuration<T : Database>(
     ) : this(host, port, username, password, clazz.kotlin)
 
     init {
-        require(!this.kClazz.isAbstract) { "Class must be abstract" }
-        require(this.kClazz.isSubclassOf(Database::class)) { "Class must be subclass of Configuration" }
-
         setConnectionCredentials()
     }
 
