@@ -1,6 +1,8 @@
 package de.mischmaschine.database.redis
 
+import java.util.concurrent.CancellationException
 import java.util.concurrent.CompletableFuture
+import java.util.concurrent.ExecutionException
 
 class FutureAction<T>(future: CompletableFuture<T>.() -> Unit) : CompletableFuture<T>() {
 
@@ -32,12 +34,26 @@ class FutureAction<T>(future: CompletableFuture<T>.() -> Unit) : CompletableFutu
         return this
     }
 
+    fun onFailureAsync(action: (Throwable) -> Unit): FutureAction<T> {
+        whenCompleteAsync { _, throwable ->
+            throwable?.let { action(it) }
+        }
+        return this
+    }
+
     /**
      * Is only called if the future is completed normally.
      * @param action The value that caused the future to be completed normally.
      */
     fun onSuccess(action: (T) -> Unit): FutureAction<T> {
         whenComplete { result, throwable ->
+            throwable ?: action(result)
+        }
+        return this
+    }
+
+    fun onSuccessAsync(action: (T) -> Unit): FutureAction<T> {
+        whenCompleteAsync { result, throwable ->
             throwable ?: action(result)
         }
         return this
@@ -50,7 +66,11 @@ class FutureAction<T>(future: CompletableFuture<T>.() -> Unit) : CompletableFutu
     fun getBlockingOrNull(): T? {
         return try {
             this.get()
-        } catch (_: NullPointerException) {
+        } catch (_: CancellationException) {
+            null
+        } catch (_: InterruptedException) {
+            null
+        } catch (_: ExecutionException) {
             null
         }
     }

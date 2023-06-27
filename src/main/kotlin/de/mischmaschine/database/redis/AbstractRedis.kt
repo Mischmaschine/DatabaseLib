@@ -2,15 +2,18 @@ package de.mischmaschine.database.redis
 
 import de.mischmaschine.database.database.Configuration
 import de.mischmaschine.database.database.Database
+import io.github.reactivecircus.cache4k.Cache
 import io.lettuce.core.RedisClient
 import io.lettuce.core.RedisURI
 import io.lettuce.core.api.StatefulRedisConnection
 import io.lettuce.core.pubsub.RedisPubSubAdapter
-import io.lettuce.core.pubsub.StatefulRedisPubSubConnection
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import java.util.logging.Level
+import kotlin.time.Duration.Companion.minutes
 
 /**
  * ## AbstractRedis
@@ -26,7 +29,12 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
         encodeDefaults = true
         prettyPrint = true
     }
-    private val pubSub: StatefulRedisPubSubConnection<String, String>
+    val redisCacheMap = Cache.Builder()
+        .maximumCacheSize(100)
+        .expireAfterWrite(30.minutes)
+        .build<String, Any>()
+
+    val executor: ExecutorService = Executors.newCachedThreadPool()
 
     init {
 
@@ -34,8 +42,8 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
         val port = Configuration.getPort(AbstractRedis::class)
         val password = Configuration.getPassword(AbstractRedis::class)
 
-        if (host.isEmpty()) throw IllegalArgumentException("No host specified for Redis database $database")
-        if (port == 0) throw IllegalArgumentException("No port specified for Redis database $database")
+        require(host.isNotEmpty()) { "No host specified for Redis database $database" }
+        require(port != 0) { "No port specified for Redis database $database" }
 
         this.client = when (password.isEmpty()) {
             true -> {
@@ -49,8 +57,6 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
                         .build()
                 )
             }
-        }.also {
-            this.pubSub = it.connectPubSub().also { it.addListener(Listener()) }
         }
 
         if (!logging) this.logger.level = Level.OFF
@@ -63,15 +69,10 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @param key The key to update.
      * @param data The data to update the key with.
      */
-    inline fun <reified T> updateKeyAsync(key: String, data: T) {
-        val connection = getNewConnection()
-        when (data is String || data is Number || data is Boolean) {
-            true -> connection.async().set(key, data.toString()).thenAccept {
-                connection.closeAsync()
-            }
-
-            false -> connection.async().set(key, json.encodeToString(data)).thenAccept {
-                connection.closeAsync()
+    inline fun <reified T> updateKeyAsync(key: String, data: T): FutureAction<Unit> {
+        return FutureAction {
+            this.completeAsync {
+                updateKeySync(key, data)
             }
         }
     }
@@ -83,6 +84,9 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @param data The data to update the key with.
      */
     inline fun <reified T> updateKeySync(key: String, data: T) {
+        this.redisCacheMap.invalidate(key)
+        this.redisCacheMap.put(key, data as Any)
+        this.logger.log(Level.INFO, "Updated key $key with data $data")
         val connection = getNewConnection()
         when (data is String || data is Number || data is Boolean) {
             true -> connection.sync().set(key, data.toString())
@@ -99,13 +103,25 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @return the value of the given key, or null if the key does not exist.
      */
     inline fun <reified T> getValueSync(key: String): T? {
-        val connection = getNewConnection()
-        var value = connection.sync().get(key) as T
-        if (T::class != String::class) {
-            value = json.decodeFromString(value.toString()) as T
+        return try {
+            val mapValue = redisCacheMap.get(key)
+            if (mapValue != null) {
+                this.logger.log(Level.INFO, "Got value $mapValue from cache for key $key")
+                return mapValue as T
+            }
+            val connection = getNewConnection()
+            val result = connection.sync().get(key)
+            val value = if (T::class != String::class) {
+                json.decodeFromString(result) as T
+            } else {
+                result as T
+            }
+            connection.closeAsync()
+            this.redisCacheMap.put(key, value as Any)
+            return value
+        } catch (e: NullPointerException) {
+            null
         }
-        connection.closeAsync()
-        return value
     }
 
     /**
@@ -115,23 +131,19 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      *
      * @return the value of the given key, or null if the key does not exist.
      */
-    inline fun <reified T> getValueAsync(key: String): FutureAction<T> = FutureAction {
-        val connection = getNewConnection()
-        connection.async().get(key).whenComplete { result, throwable ->
-            throwable?.let {
-                this.completeExceptionally(throwable)
-            } ?: result?.let {
-                if (T::class == String::class) {
-                    this.complete(it as T)
+    inline fun <reified T> getValueAsync(key: String): FutureAction<T> {
+        return FutureAction {
+            executor.submit {
+                val result = getValueSync<T>(key)
+                if (result != null) {
+                    this.complete(result)
                 } else {
-                    this.complete(json.decodeFromString<T>(it))
+                    this.completeExceptionally(NullPointerException("Key $key does not exist."))
                 }
-            } ?: this.completeExceptionally(NullPointerException("No result found for key $key"))
-            connection.closeAsync().also {
-                println("Closed connection")
             }
         }
     }
+
 
     /**
      * Deletes the given key synchronously.
@@ -139,6 +151,9 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @see [redisSync]
      */
     fun deleteKeySync(vararg key: String) {
+        key.forEach {
+            this.redisCacheMap.invalidate(it)
+        }
         getNewConnection().let {
             it.sync().del(*key)
             it.closeAsync()
@@ -151,10 +166,11 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      *
      * @see [redisAsync]
      */
-    fun deleteKeyAsync(vararg key: String) {
-        val connection = getNewConnection()
-        connection.async().del(*key).thenAccept {
-            connection.closeAsync()
+    fun deleteKeyAsync(vararg key: String): FutureAction<Unit> {
+        return FutureAction {
+            this.completeAsync {
+                deleteKeySync(*key)
+            }
         }
     }
 
@@ -164,8 +180,11 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @param channel The channel to subscribe to.
      * @param function The function to call when a message is received.
      */
-    fun subscribe(channel: String, type: Class<*>, function: (String, Any) -> Unit) {
-        Listener(channel, type, function)
+    fun subscribe(channel: String, function: (String, String) -> Unit) {
+        val connection = getClient().connectPubSub()
+        connection.addListener(Listener())
+        connection.async().subscribe(channel)
+        functions[channel] = function
     }
 
     /**
@@ -187,23 +206,32 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
      * @param channel The channel to publish to.
      * @param message The message to publish.
      */
-    inline fun <reified T> publish(channel: String, message: T) {
-        val pubSubConnection = getClient().connectPubSub()
-        when (message is String || message is Number || message is Boolean) {
-            true -> pubSubConnection.async().publish(channel, message.toString()).thenAccept {
-                pubSubConnection.closeAsync()
-            }
+    inline fun <reified T> publish(channel: String, message: T): FutureAction<Unit> {
+        return FutureAction {
+            val pubSubConnection = getClient().connectPubSub()
+            when (message is String || message is Number || message is Boolean) {
+                true -> pubSubConnection.async().publish(channel, message.toString()).thenAccept {
+                    pubSubConnection.closeAsync()
+                    this.complete(Unit)
+                }
 
-            false -> pubSubConnection.async().publish(channel, this.json.encodeToString(message)).thenAccept {
-                pubSubConnection.closeAsync()
+                false -> pubSubConnection.async().publish(channel, this@AbstractRedis.json.encodeToString(message))
+                    .thenAccept {
+                        pubSubConnection.closeAsync()
+                        this.complete(Unit)
+                    }
             }
+            logger.info("Published to channel '$channel': '$message'")
         }
-        logger.info("Published to channel '$channel': '$message'")
     }
 
 
     fun getNewConnection(): StatefulRedisConnection<String, String> {
         return client.connect()
+    }
+
+    fun shutdown() {
+        client.shutdown()
     }
 
     fun getClient() = this.client
