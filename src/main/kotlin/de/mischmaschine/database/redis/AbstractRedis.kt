@@ -7,12 +7,12 @@ import io.lettuce.core.RedisClient
 import io.lettuce.core.RedisURI
 import io.lettuce.core.api.StatefulRedisConnection
 import io.lettuce.core.pubsub.RedisPubSubAdapter
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import ch.qos.logback.classic.Level
+import ch.qos.logback.classic.Logger
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import java.util.logging.Level
 import kotlin.time.Duration.Companion.minutes
 
 /**
@@ -59,8 +59,9 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
             }
         }
 
-        if (!logging) this.logger.level = Level.OFF
-
+        if (!logging) {
+            (this.logger as Logger).level = Level.OFF
+        }
     }
 
     /**
@@ -86,11 +87,11 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
     inline fun <reified T> updateKeySync(key: String, data: T) {
         this.redisCacheMap.invalidate(key)
         this.redisCacheMap.put(key, data as Any)
-        this.logger.log(Level.INFO, "Updated key $key with data $data")
+        this.logger.info("Updated key $key with data $data")
         val connection = getNewConnection()
         when (data is String || data is Number || data is Boolean) {
-            true -> connection.sync().set(key, data.toString())
-            false -> connection.sync().set(key, json.encodeToString(data))
+            true -> connection.sync()[key] = data.toString()
+            false -> connection.sync()[key] = json.encodeToString(data)
         }
         connection.closeAsync()
     }
@@ -106,11 +107,11 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
         return try {
             val mapValue = redisCacheMap.get(key)
             if (mapValue != null) {
-                this.logger.log(Level.INFO, "Got value $mapValue from cache for key $key")
+                this.logger.info("Got value $mapValue from cache for key $key")
                 return mapValue as T
             }
             val connection = getNewConnection()
-            val result = connection.sync().get(key)
+            val result = connection.sync()[key]
             val value = if (T::class != String::class) {
                 json.decodeFromString(result) as T
             } else {
@@ -240,8 +241,7 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
 
         override fun message(channel: String, message: String) =
             functions[channel]?.invoke(channel, message) ?: let {
-                logger.log(
-                    Level.WARNING,
+                logger.error(
                     "Received message on channel '$channel' but no function was registered for this channel."
                 )
                 unsubscribe(channel)

@@ -1,6 +1,7 @@
 package de.mischmaschine.database.database
 
-import java.util.logging.Logger
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 
 /**
@@ -11,6 +12,6 @@ import java.util.logging.Logger
 interface Database {
 
     val logger: Logger
-        get() = Logger.getLogger(this::class.simpleName)
+        get() = LoggerFactory.getLogger(this::class.simpleName)
 
 }
