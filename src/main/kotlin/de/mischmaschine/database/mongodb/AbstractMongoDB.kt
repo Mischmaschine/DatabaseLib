@@ -14,6 +14,7 @@ import de.mischmaschine.database.database.Database
 import de.mischmaschine.database.redis.FutureAction
 import io.github.reactivecircus.cache4k.Cache
 import org.bson.Document
+import org.slf4j.Logger
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
 import kotlin.time.Duration.Companion.minutes
@@ -30,10 +31,12 @@ abstract class AbstractMongoDB(
     private val mongoDatabase: MongoDatabase
     private val identifier = "uniqueId_key"
     private val executor = Executors.newCachedThreadPool()
-    private val documentCache = Cache.Builder()
+    private val documentCache = Cache.Builder<String, Document>()
         .maximumCacheSize(100)
         .expireAfterWrite(30.minutes)
-        .build<String, Document>()
+        .build()
+
+    final override var logger: Logger? = null
 
 
     init {
@@ -100,7 +103,11 @@ abstract class AbstractMongoDB(
      *
      * @return A future which will contain the document with the given key.
      */
-    fun getDocumentAsync(collection: String, key: String, documentIdentifier: String = identifier): FutureAction<Document> {
+    fun getDocumentAsync(
+        collection: String,
+        key: String,
+        documentIdentifier: String = identifier
+    ): FutureAction<Document> {
         return FutureAction {
             executor.submit {
                 getDocumentSync(collection, key, documentIdentifier)?.let {
@@ -185,7 +192,12 @@ abstract class AbstractMongoDB(
      * @see MongoCollection
      * @see Document
      */
-    fun insertDocumentSync(collection: String, key: String, document: Document, documentIdentifier: String = identifier): InsertOneResult? {
+    fun insertDocumentSync(
+        collection: String,
+        key: String,
+        document: Document,
+        documentIdentifier: String = identifier
+    ): InsertOneResult? {
         document[documentIdentifier] = key
         return try {
             this.documentCache.put(key, document)
@@ -209,12 +221,18 @@ abstract class AbstractMongoDB(
      * @see Document
      * @see CompletableFuture
      */
-    fun insertDocumentAsync(collection: String, key: String, document: Document, documentIdentifier: String = identifier): FutureAction<InsertOneResult> {
+    fun insertDocumentAsync(
+        collection: String,
+        key: String,
+        document: Document,
+        documentIdentifier: String = identifier
+    ): FutureAction<InsertOneResult> {
         return FutureAction {
             executor.submit {
                 insertDocumentSync(collection, key, document, documentIdentifier)?.let {
                     this.complete(it)
-                } ?: this.completeExceptionally(MongoException("Could not write to database. For a more detailed message, use the sync function temporally."))
+                }
+                    ?: this.completeExceptionally(MongoException("Could not write to database. For a more detailed message, use the sync function temporally."))
             }
         }
     }
@@ -385,7 +403,12 @@ abstract class AbstractMongoDB(
      * @see Document
      * @see Filters
      */
-    fun replaceDocumentSync(collection: String, key: String, document: Document, documentIdentifier: String = identifier): Document? {
+    fun replaceDocumentSync(
+        collection: String,
+        key: String,
+        document: Document,
+        documentIdentifier: String = identifier
+    ): Document? {
         document[documentIdentifier] = key
         this.documentCache.invalidate(key)
         this.documentCache.put(key, document)
@@ -404,7 +427,12 @@ abstract class AbstractMongoDB(
      * @see Filters
      * @see CompletableFuture
      */
-    fun replaceDocumentAsync(collection: String, key: String, document: Document, documentIdentifier: String = identifier): FutureAction<Document> {
+    fun replaceDocumentAsync(
+        collection: String,
+        key: String,
+        document: Document,
+        documentIdentifier: String = identifier
+    ): FutureAction<Document> {
         return FutureAction {
             executor.submit {
                 replaceDocumentSync(collection, key, document, documentIdentifier)?.let {
@@ -426,11 +454,17 @@ abstract class AbstractMongoDB(
      * @see Document
      * @see Filters
      */
-    fun updateDocumentSync(collection: String, key: String, document: Document, documentIdentifier: String = identifier): Document? {
+    fun updateDocumentSync(
+        collection: String,
+        key: String,
+        document: Document,
+        documentIdentifier: String = identifier
+    ): Document? {
         document[documentIdentifier] = key
         this.documentCache.invalidate(key)
         this.documentCache.put(key, document)
-        return this.getCollection(collection).findOneAndUpdate(Filters.eq(documentIdentifier, key), Document("\$set", document))
+        return this.getCollection(collection)
+            .findOneAndUpdate(Filters.eq(documentIdentifier, key), Document("\$set", document))
     }
 
     /**
@@ -446,7 +480,12 @@ abstract class AbstractMongoDB(
      * @see Filters
      * @see CompletableFuture
      */
-    fun updateDocumentAsync(collection: String, key: String, document: Document, documentIdentifier: String = identifier): FutureAction<Document> {
+    fun updateDocumentAsync(
+        collection: String,
+        key: String,
+        document: Document,
+        documentIdentifier: String = identifier
+    ): FutureAction<Document> {
         return FutureAction {
             executor.submit {
                 updateDocumentSync(collection, key, document, documentIdentifier)?.let {
@@ -487,7 +526,11 @@ abstract class AbstractMongoDB(
      *
      * @return A nullable result of the deletion.
      */
-    fun deleteDocumentAsync(collection: String, key: String, documentIdentifier: String = identifier): FutureAction<Document> {
+    fun deleteDocumentAsync(
+        collection: String,
+        key: String,
+        documentIdentifier: String = identifier
+    ): FutureAction<Document> {
         return FutureAction {
             executor.submit {
                 deleteDocumentSync(collection, key, documentIdentifier)?.let {

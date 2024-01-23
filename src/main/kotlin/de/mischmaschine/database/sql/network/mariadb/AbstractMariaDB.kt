@@ -4,6 +4,7 @@ import de.mischmaschine.database.database.Configuration
 import de.mischmaschine.database.database.Database
 import de.mischmaschine.database.sql.DataBaseType
 import de.mischmaschine.database.sql.network.AbstractNetworkSQL
+import org.slf4j.Logger
 
 /**
  * ## AbstractMariaDB
@@ -18,4 +19,6 @@ abstract class AbstractMariaDB(
     Configuration.getPassword(AbstractMariaDB::class),
     database,
     DataBaseType.MARIADB,
-), Database
+), Database {
+    override var logger: Logger? = null
+}

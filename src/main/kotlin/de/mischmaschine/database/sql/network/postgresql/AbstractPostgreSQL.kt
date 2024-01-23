@@ -4,6 +4,7 @@ import de.mischmaschine.database.database.Configuration
 import de.mischmaschine.database.database.Database
 import de.mischmaschine.database.sql.DataBaseType
 import de.mischmaschine.database.sql.network.AbstractNetworkSQL
+import org.slf4j.Logger
 
 /**
  * ## PostgreSQL
@@ -19,4 +20,6 @@ abstract class AbstractPostgreSQL(
     Configuration.getPassword(AbstractPostgreSQL::class),
     database,
     DataBaseType.POSTGRESQL
-), Database
+), Database {
+    override var logger: Logger? = null
+}

@@ -9,8 +9,8 @@ import io.lettuce.core.api.StatefulRedisConnection
 import io.lettuce.core.pubsub.RedisPubSubAdapter
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import ch.qos.logback.classic.Level
-import ch.qos.logback.classic.Logger
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.time.Duration.Companion.minutes
@@ -29,12 +29,13 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
         encodeDefaults = true
         prettyPrint = true
     }
-    val redisCacheMap = Cache.Builder()
+    val redisCacheMap = Cache.Builder<String, Any>()
         .maximumCacheSize(100)
         .expireAfterWrite(30.minutes)
-        .build<String, Any>()
+        .build()
 
     val executor: ExecutorService = Executors.newCachedThreadPool()
+    final override var logger: Logger? = null
 
     init {
 
@@ -59,9 +60,7 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
             }
         }
 
-        if (!logging) {
-            (this.logger as Logger).level = Level.OFF
-        }
+        if (logging) logger = LoggerFactory.getLogger(this::class.simpleName)
     }
 
     /**
@@ -87,7 +86,7 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
     inline fun <reified T> updateKeySync(key: String, data: T) {
         this.redisCacheMap.invalidate(key)
         this.redisCacheMap.put(key, data as Any)
-        this.logger.info("Updated key $key with data $data")
+        this.logger?.info("Updated key $key with data $data")
         val connection = getNewConnection()
         when (data is String || data is Number || data is Boolean) {
             true -> connection.sync()[key] = data.toString()
@@ -107,7 +106,7 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
         return try {
             val mapValue = redisCacheMap.get(key)
             if (mapValue != null) {
-                this.logger.info("Got value $mapValue from cache for key $key")
+                this.logger?.info("Got value $mapValue from cache for key $key")
                 return mapValue as T
             }
             val connection = getNewConnection()
@@ -198,7 +197,7 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
         pubSubConnection.async().unsubscribe(*channel).thenAccept {
             pubSubConnection.closeAsync()
         }
-        logger.info("Unsubscribed from ${channel.joinToString(", ")}")
+        logger?.info("Unsubscribed from ${channel.joinToString(", ")}")
     }
 
     /**
@@ -222,7 +221,7 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
                         this.complete(Unit)
                     }
             }
-            logger.info("Published to channel '$channel': '$message'")
+            logger?.info("Published to channel '$channel': '$message'")
         }
     }
 
@@ -241,7 +240,7 @@ abstract class AbstractRedis(database: Int, logging: Boolean, ssl: Boolean) : Da
 
         override fun message(channel: String, message: String) =
             functions[channel]?.invoke(channel, message) ?: let {
-                logger.error(
+                logger?.error(
                     "Received message on channel '$channel' but no function was registered for this channel."
                 )
                 unsubscribe(channel)

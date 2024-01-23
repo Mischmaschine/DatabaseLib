@@ -4,6 +4,7 @@ import de.mischmaschine.database.database.Configuration
 import de.mischmaschine.database.database.Database
 import de.mischmaschine.database.sql.DataBaseType
 import de.mischmaschine.database.sql.local.AbstractLocalSQL
+import org.slf4j.Logger
 
 /**
  * ## AbstractSQLite
@@ -16,4 +17,6 @@ abstract class AbstractSQLite(
     Configuration.getPassword(AbstractSQLite::class),
     databasePath,
     DataBaseType.SQLITE
-), Database
+), Database {
+    override var logger: Logger? = null
+}

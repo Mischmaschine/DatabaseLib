@@ -4,6 +4,7 @@ import de.mischmaschine.database.database.Configuration
 import de.mischmaschine.database.database.Database
 import de.mischmaschine.database.sql.DataBaseType
 import de.mischmaschine.database.sql.local.AbstractLocalSQL
+import org.slf4j.Logger
 
 /**
  * ## AbstractH2SQL
@@ -16,4 +17,6 @@ abstract class AbstractH2SQL(
     Configuration.getPassword(AbstractH2SQL::class),
     databasePath,
     DataBaseType.H2
-), Database
+), Database {
+    override var logger: Logger? = null
+}
